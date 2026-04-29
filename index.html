@@ -507,8 +507,8 @@ td.num { text-align: right; font-family: var(--font-mono); font-size: 13px; }
 <div class="app-body">
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <div class="sidebar-section-header">Commodities</div>
-    <div style="padding:2px 16px 10px;font-size:11px;color:var(--text-muted)">Global Indices</div>
+    <div class="sidebar-section-header">Sector</div>
+    <div style="padding:2px 16px 10px;font-size:11px;color:var(--text-muted)">Fertilizers</div>
     <div class="sidebar-group">
       <div class="sidebar-parent open">
         <div class="sidebar-parent-label"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg>Nitrogen</div>
@@ -605,7 +605,7 @@ td.num { text-align: right; font-family: var(--font-mono); font-size: 13px; }
           </div>
           <div id="sub-crop-market" class="sub-panel active">
             <div class="card">
-              <div class="card-header"><span class="card-title">Crop Market Overview</span><div class="card-meta"><span class="live-dot"></span><span>Urea demand by crop segment</span></div></div>
+              <div class="card-header"><span class="card-title">Crop Market Overview</span><div class="card-meta"><span class="live-dot"></span><span>Urea demand by crop</span></div></div>
               <div class="table-wrap"><table id="crop-table"><thead><tr><th onclick="sortCrop(0)">Crop <span class="sort-icon">↕</span></th><th class="num" onclick="sortCrop(1)">Urea Consumption <span class="sort-icon">↕</span></th><th class="num" onclick="sortCrop(2)">Price / ton <span class="sort-icon">↕</span></th><th class="num" onclick="sortCrop(3)">Change % <span class="sort-icon">↕</span></th><th class="num" onclick="sortCrop(4)">Urea/Crop Price <span class="sort-icon">↕</span></th></tr></thead><tbody id="crop-tbody"></tbody></table></div>
               <div class="top-grid">
                 <div class="top-col"><div class="top-col-header">Top Consumers</div><div class="top-item"><span class="top-item-crop">Wheat</span><span class="top-item-value">Egypt · 20</span></div><div class="top-item"><span class="top-item-crop">Corn</span><span class="top-item-value">China · 200</span></div><div class="top-item"><span class="top-item-crop">Soybeans</span><span class="top-item-value">China</span></div><div class="top-item"><span class="top-item-crop">Sugar</span><span class="top-item-value">Brazil</span></div><div class="top-item"><span class="top-item-crop">Rice</span><span class="top-item-value">China</span></div></div>
@@ -620,7 +620,7 @@ td.num { text-align: right; font-family: var(--font-mono); font-size: 13px; }
               <div class="card-header"><span class="card-title">Country Trade Data</span><div class="card-meta"><span>Production · Consumption · Imports · Exports</span></div></div>
               <div class="country-filter-row">
                 <div class="filter-chip active" onclick="filterCountry('all',this)">All</div>
-                <div class="filter-chip" onclick="filterCountry('high-prod',this)">High Production</div>
+                <!-- <div class="filter-chip" onclick="filterCountry('high-prod',this)">High Production</div> -->
                 <div class="filter-chip" onclick="filterCountry('importer',this)">Net Importers</div>
                 <div class="filter-chip" onclick="filterCountry('exporter',this)">Net Exporters</div>
                 <div class="search-mini"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search country…" oninput="searchCountry(this.value)"></div>
