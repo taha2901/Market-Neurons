@@ -905,7 +905,7 @@
     }
 
     /* CROP DETAIL SECTION */
-    .crop-detail-section {
+    /* .crop-detail-section {
       display: none;
       padding: 16px;
       background: var(--surface-2);
@@ -969,8 +969,104 @@
       font-family: var(--font-mono);
       font-size: 11.5px;
       color: var(--text-secondary);
+    } */
+    /* CROP DETAIL SECTION - STYLED CONSISTENTLY */
+    .crop-detail-section {
+      display: none;
+      padding: 20px;
+      background: var(--surface);
+      border-top: 1px solid var(--border-light);
+      margin-top: 8px;
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     }
 
+    .crop-detail-section.active {
+      display: block;
+      animation: fadeUp 0.25s ease-out;
+    }
+
+    .crop-detail-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent-subtle);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -0.2px;
+    }
+    
+    .crop-detail-title svg {
+      stroke: var(--accent);
+    }
+
+        .crop-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);  /* forcing 4 columns side by side */
+      gap: 20px;
+    }
+
+    .detail-col {
+      background: var(--surface-2);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .detail-col-header {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--accent);
+      padding: 10px 14px;
+      margin: 0;
+      border-bottom: none;
+      width: 100%;
+    }
+
+    .detail-items-list {
+      padding: 8px 0;
+    }
+
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 13px;
+    }
+
+    .detail-item:last-child {
+      border-bottom: none;
+    }
+
+    .detail-item-country {
+      font-weight: 500;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .detail-item-country span:first-child {
+      font-size: 16px;
+    }
+
+    .detail-item-value {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--accent-mid);
+      background: rgba(8, 48, 107, 0.08);
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
     .country-filter-row {
       display: flex;
       align-items: center;
@@ -2010,7 +2106,6 @@
                 style="color:var(--accent);font-weight:500">Granular</span>
             </div>
             <h1 class="page-title">Granular Urea</h1>
-            <p class="page-subtitle">Global nitrogen benchmarks and institutional stock performance</p>
           </div>
 
           <!-- MAIN TABS -->
@@ -2023,7 +2118,7 @@
           <!-- TAB 1: FERTILIZERS STOCKS -->
           <div id="tab-fertilizers" class="tab-panel active">
             <div class="filters-row">
-              <div class="filter-group"><span class="filter-label">Home Country</span>
+              <div class="filter-group"><span class="filter-label">  Home Country</span>
                 <div class="filter-select">Egypt<svg fill="none" stroke="currentColor" stroke-width="2"
                     viewBox="0 0 24 24">
                     <polyline points="6 9 12 15 18 9" />
@@ -2555,7 +2650,7 @@
       showCropDetail();
     }
 
-    function showCropDetail() {
+       function showCropDetail() {
       const section = document.getElementById('crop-detail-section');
       const nameEl = document.getElementById('selected-crop-name');
       const gridEl = document.getElementById('crop-detail-grid');
@@ -2568,26 +2663,34 @@
       section.classList.add('active');
       nameEl.textContent = `${CROP_ICONS[selectedCrop.crop]} ${selectedCrop.crop} — Global Trade Data`;
 
-      gridEl.innerHTML = `
-    <div class="detail-col">
-      <div class="detail-col-header">Top Consumers</div>
-      ${selectedCrop.topConsumers.map(d => `<div class="detail-item"><span class="detail-item-country">${FLAG[d.c] || '🌐'} ${d.c}</span><span class="detail-item-value">${d.v}</span></div>`).join('')}
-    </div>
-    <div class="detail-col">
-      <div class="detail-col-header">Top Producers</div>
-      ${selectedCrop.topProducers.map(d => `<div class="detail-item"><span class="detail-item-country">${FLAG[d.c] || '🌐'} ${d.c}</span><span class="detail-item-value">${d.v}</span></div>`).join('')}
-    </div>
-    <div class="detail-col">
-      <div class="detail-col-header">Top Exporters</div>
-      ${selectedCrop.topExporters.map(d => `<div class="detail-item"><span class="detail-item-country">${FLAG[d.c] || '🌐'} ${d.c}</span><span class="detail-item-value">${d.v}</span></div>`).join('')}
-    </div>
-    <div class="detail-col">
-      <div class="detail-col-header">Top Importers</div>
-      ${selectedCrop.topImporters.map(d => `<div class="detail-item"><span class="detail-item-country">${FLAG[d.c] || '🌐'} ${d.c}</span><span class="detail-item-value">${d.v}</span></div>`).join('')}
-    </div>
-  `;
-    }
+      // Helper function to build a column HTML
+      function buildColumn(title, dataList) {
+        if (!dataList || dataList.length === 0) return '';
+        return `
+          <div class="detail-col">
+            <div class="detail-col-header">${title}</div>
+            <div class="detail-items-list">
+              ${dataList.map(d => `
+                <div class="detail-item">
+                  <div class="detail-item-country">
+                    <span>${FLAG[d.c] || '🌐'}</span> 
+                    <span>${d.c}</span>
+                  </div>
+                  <div class="detail-item-value">${d.v}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
 
+      gridEl.innerHTML = `
+        ${buildColumn('Top Consumers', selectedCrop.topConsumers)}
+        ${buildColumn('Top Producers', selectedCrop.topProducers)}
+        ${buildColumn('Top Exporters', selectedCrop.topExporters)}
+        ${buildColumn('Top Importers', selectedCrop.topImporters)}
+      `;
+    }
     function searchCrop(q) {
       filteredCrop = cropData.filter(r => r.crop.toLowerCase().includes(q.toLowerCase()));
       selectedCrop = null;
