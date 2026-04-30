@@ -1,1136 +1,2809 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Market Neurons — Granular Urea</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg: #f0f4f8;
-  --surface: #ffffff;
-  --surface-2: #f5f8fc;
-  --border: #dce5ef;
-  --border-light: #e8f0f7;
-  --text-primary: #0a1628;
-  --text-secondary: #2d4a6e;
-  --text-muted: #7a9bb8;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Market Neurons — Granular Urea</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@600&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  /* PRIMARY BRAND — Navy #08306B */
-  --accent: #08306B;
-  --accent-hover: #062554;
-  --accent-light: #e8f0fb;
-  --accent-subtle: #d0e3f5;
-  --accent-mid: #1a5499;
+    :root {
+      --bg: #f0f4f8;
+      --surface: #ffffff;
+      --surface-2: #f5f8fc;
+      --border: #dce5ef;
+      --border-light: #e8f0f7;
+      --text-primary: #0a1628;
+      --text-secondary: #2d4a6e;
+      --text-muted: #7a9bb8;
 
-  /* Supporting palette derived from navy */
-  --green: #0d7a5f;
-  --green-light: #d0f0e8;
-  --red: #c0392b;
-  --red-light: #fde8e6;
-  --amber: #b45309;
-  --amber-light: #fef3c7;
-  --purple: #5b2d8e;
-  --purple-light: #ede9fe;
+      /* PRIMARY BRAND — Navy #08306B */
+      --accent: #08306B;
+      --accent-hover: #062554;
+      --accent-light: #e8f0fb;
+      --accent-subtle: #d0e3f5;
+      --accent-mid: #1a5499;
 
-  --gold: #c8a84b;
-  --gold-light: #fdf3d9;
+      /* Supporting palette derived from navy */
+      --green: #0d7a5f;
+      --green-light: #d0f0e8;
+      --red: #c0392b;
+      --red-light: #fde8e6;
+      --amber: #b45309;
+      --amber-light: #fef3c7;
+      --purple: #5b2d8e;
+      --purple-light: #ede9fe;
 
-  --sidebar-width: 224px;
-  --navbar-height: 56px;
-  --right-panel: 320px;
-  --radius-sm: 6px;
-  --radius: 10px;
-  --radius-lg: 14px;
-  --shadow-sm: 0 1px 3px rgba(8,48,107,0.08), 0 1px 2px rgba(8,48,107,0.05);
-  --shadow: 0 4px 16px rgba(8,48,107,0.12);
-  --shadow-lg: 0 8px 32px rgba(8,48,107,0.16);
-  --font-mono: 'DM Mono', monospace;
-}
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text-primary);
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
-  font-size: 14px;
-  line-height: 1.5;
-}
+      --gold: #c8a84b;
+      --gold-light: #fdf3d9;
 
-/* NAVBAR */
-.navbar {
-  height: var(--navbar-height);
-  background: var(--accent);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 0 24px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  flex-shrink: 0;
-  box-shadow: 0 2px 12px rgba(8,48,107,0.3);
-}
-.logo { display: flex; align-items: center; gap: 8px; width: var(--sidebar-width); flex-shrink: 0; }
-.logo-icon {
-  width: 30px; height: 30px;
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  backdrop-filter: blur(4px);
-}
-.logo-icon svg { color: #fff; }
-.logo-text { font-size: 15px; font-weight: 600; letter-spacing: -0.3px; color: #fff; }
-.logo-text span { color: var(--gold); }
+      --sidebar-width: 224px;
+      --navbar-height: 56px;
+      --right-panel: 420px;
+      --radius-sm: 6px;
+      --radius: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 3px rgba(8, 48, 107, 0.08), 0 1px 2px rgba(8, 48, 107, 0.05);
+      --shadow: 0 4px 16px rgba(8, 48, 107, 0.12);
+      --shadow-lg: 0 8px 32px rgba(8, 48, 107, 0.16);
+      --font-mono: 'DM Mono', monospace;
+    }
 
-.search-wrap { flex: 1; max-width: 440px; position: relative; }
-.search-wrap svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.5); width: 15px; height: 15px; }
-.search-input {
-  width: 100%; height: 36px;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: var(--radius-sm);
-  padding: 0 40px 0 36px;
-  font-family: 'DM Sans', sans-serif; font-size: 13.5px;
-  color: #fff; outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-.search-input::placeholder { color: rgba(255,255,255,0.45); }
-.search-input:focus { border-color: rgba(255,255,255,0.5); box-shadow: 0 0 0 3px rgba(255,255,255,0.1); }
-.search-hint { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 11px; color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; padding: 2px 5px; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      font-size: 14px;
+      line-height: 1.5;
+    }
 
-.nav-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
-.icon-btn {
-  width: 36px; height: 36px; border-radius: var(--radius-sm);
-  border: 1px solid rgba(255,255,255,0.2);
-  background: rgba(255,255,255,0.08);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; color: rgba(255,255,255,0.8);
-  transition: background 0.15s; position: relative;
-}
-.icon-btn:hover { background: rgba(255,255,255,0.18); }
-.icon-btn svg { width: 16px; height: 16px; }
-.notif-dot { width: 7px; height: 7px; background: var(--gold); border-radius: 50%; position: absolute; top: 6px; right: 6px; border: 1.5px solid var(--accent); }
+    /* NAVBAR */
+    .navbar {
+      height: var(--navbar-height);
+      background: var(--accent);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      flex-shrink: 0;
+      box-shadow: 0 2px 12px rgba(8, 48, 107, 0.3);
+    }
 
-.export-btn {
-  height: 36px;
-  background: var(--gold);
-  color: #fff;
-  border: none; border-radius: var(--radius-sm);
-  padding: 0 16px;
-  font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 600;
-  cursor: pointer; display: flex; align-items: center; gap: 7px;
-  transition: all 0.15s;
-  box-shadow: 0 2px 8px rgba(200,168,75,0.4);
-  letter-spacing: 0.1px;
-}
-.export-btn:hover { background: #b8962e; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200,168,75,0.5); }
-.export-btn svg { width: 14px; height: 14px; }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: var(--sidebar-width);
+      flex-shrink: 0;
+    }
 
-.profile-pill {
-  display: flex; align-items: center; gap: 8px;
-  padding: 0 10px 0 6px; height: 36px;
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  background: rgba(255,255,255,0.1);
-}
-.avatar {
-  width: 24px; height: 24px; border-radius: 50%;
-  background: var(--gold);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0;
-}
-.profile-name { font-size: 12.5px; font-weight: 500; line-height: 1.3; color: #fff; }
-.profile-role { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.2; }
+    .logo-icon {
+      width: 30px;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
 
-/* LAYOUT */
-.app-body { display: flex; flex: 1; overflow: hidden; }
+    .logo-icon svg {
+      color: #fff;
+    }
 
-/* SIDEBAR */
-.sidebar {
-  width: var(--sidebar-width);
-  background: var(--surface);
-  border-right: 1px solid var(--border);
-  flex-shrink: 0; overflow-y: auto;
-  padding: 16px 0;
-}
-.sidebar::-webkit-scrollbar { width: 4px; }
-.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-.sidebar-section-header { padding: 8px 16px 4px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.7px; text-transform: uppercase; color: var(--text-muted); }
-.sidebar-group { margin-bottom: 4px; }
-.sidebar-parent { display: flex; align-items: center; justify-content: space-between; padding: 7px 16px; font-size: 13px; font-weight: 500; color: var(--text-secondary); cursor: pointer; }
-.sidebar-parent:hover { color: var(--text-primary); }
-.sidebar-parent-label { display: flex; align-items: center; gap: 8px; }
-.sidebar-chevron { width: 14px; height: 14px; color: var(--text-muted); transition: transform 0.2s; }
-.sidebar-parent.open .sidebar-chevron { transform: rotate(90deg); }
-.sidebar-item { display: flex; align-items: center; gap: 8px; padding: 6px 16px 6px 28px; font-size: 13px; color: var(--text-secondary); cursor: pointer; position: relative; transition: background 0.1s, color 0.1s; }
-.sidebar-item:hover { background: var(--bg); color: var(--text-primary); }
-.sidebar-item.active { color: var(--accent); background: var(--accent-light); font-weight: 500; }
-.sidebar-item.active::before { content: ''; position: absolute; left: 0; top: 2px; bottom: 2px; width: 3px; background: var(--accent); border-radius: 0 2px 2px 0; }
-.sidebar-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.5; }
-.sidebar-divider { height: 1px; background: var(--border-light); margin: 8px 16px; }
+    .logo-text {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: #fff;
+    }
 
-/* MAIN */
-.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-.main-inner { flex: 1; display: flex; overflow: hidden; }
-.content { flex: 1; overflow-y: auto; padding: 24px; }
-.content::-webkit-scrollbar { width: 5px; }
-.content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    .logo-text span {
+      color: var(--gold);
+    }
 
-/* PAGE HEADER */
-.breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
-.page-header { margin-bottom: 20px; }
-.page-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 600; letter-spacing: -0.5px; color: var(--text-primary); line-height: 1.2; }
-.page-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+    .search-wrap {
+      flex: 1;
+      max-width: 440px;
+      position: relative;
+    }
 
-/* MAIN TABS */
-.main-tabs { display: flex; gap: 2px; padding: 4px; background: var(--surface); border-radius: var(--radius-sm); width: fit-content; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
-.main-tab { padding: 7px 18px; font-size: 13px; font-weight: 500; color: var(--text-muted); cursor: pointer; border-radius: var(--radius-sm); transition: all 0.15s; white-space: nowrap; }
-.main-tab:hover { color: var(--text-secondary); }
-.main-tab.active { background: var(--accent); color: #fff; box-shadow: 0 2px 8px rgba(8,48,107,0.3); }
+    .search-wrap svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.5);
+      width: 15px;
+      height: 15px;
+    }
 
-/* TAB PANELS */
-.tab-panel { display: none; }
-.tab-panel.active { display: block; animation: fadeUp 0.18s ease; }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .search-input {
+      width: 100%;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-sm);
+      padding: 0 40px 0 36px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
 
-/* SHARED TABLE */
-.table-outer { border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow-sm); }
-.table-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-thead tr { background: var(--accent); border-bottom: 1px solid rgba(255,255,255,0.1); }
-th { padding: 10px 16px; text-align: left; font-size: 10.5px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: rgba(255,255,255,0.75); white-space: nowrap; cursor: pointer; user-select: none; }
-th.num { text-align: right; }
-th .sort-icon { display: inline-block; margin-left: 4px; opacity: 0.45; font-size: 9px; }
-tbody tr { border-bottom: 1px solid var(--border-light); transition: background 0.1s; }
-tbody tr:last-child { border-bottom: none; }
-tbody tr:hover { background: var(--accent-light); }
-td { padding: 12px 16px; vertical-align: middle; }
-td.num { text-align: right; font-family: var(--font-mono); font-size: 13px; }
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.45);
+    }
 
-/* FERTILIZER TABLE */
-.ticker-badge { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 5px; font-family: var(--font-mono); font-size: 12px; font-weight: 600; background: var(--accent); color: #fff; letter-spacing: 0.3px; }
-.change-pos { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--green); display: inline-flex; align-items: center; gap: 3px; background: var(--green-light); padding: 2px 7px; border-radius: 4px; }
-.change-neg { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--red); display: inline-flex; align-items: center; gap: 3px; background: var(--red-light); padding: 2px 7px; border-radius: 4px; }
-.ranking-bar-wrap { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
-.ranking-bar { width: 48px; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
-.ranking-bar-fill { height: 100%; background: var(--accent); border-radius: 2px; }
-.exposure-badge { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 8px; border-radius: 4px; }
+    .search-input:focus {
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    }
 
-/* FILTERS */
-.filters-row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
-.filter-group { display: flex; flex-direction: column; gap: 2px; }
-.filter-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-muted); }
-.filter-select { display: flex; align-items: center; gap: 6px; padding: 5px 10px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; color: var(--text-primary); cursor: pointer; min-width: 100px; }
-.filter-select svg { width: 12px; height: 12px; color: var(--text-muted); margin-left: auto; }
+    .search-hint {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      padding: 2px 5px;
+    }
 
-/* MARKET PROFILE */
-.sub-tabs-wrap { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
-.sub-tabs { display: flex; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; background: var(--surface); box-shadow: var(--shadow-sm); }
-.sub-tab { padding: 8px 20px; font-size: 13px; font-weight: 500; color: var(--text-secondary); cursor: pointer; border-right: 1px solid var(--border); transition: all 0.15s; white-space: nowrap; display: flex; align-items: center; gap: 7px; }
-.sub-tab:last-child { border-right: none; }
-.sub-tab:hover { background: var(--bg); color: var(--text-primary); }
-.sub-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-.sub-tab-icon { width: 14px; height: 14px; opacity: 0.8; }
-.sub-tab.active .sub-tab-icon { opacity: 1; }
-.sub-tab-badge { font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 10px; background: rgba(255,255,255,0.2); }
-.sub-tab:not(.active) .sub-tab-badge { background: var(--accent-subtle); color: var(--accent); }
-.live-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s ease-in-out infinite; display: inline-block; }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-.sub-panel { display: none; }
-.sub-panel.active { display: block; animation: fadeUp 0.18s ease; }
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 20px; }
-.card-header { padding: 14px 18px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; background: var(--accent); }
-.card-title { font-size: 13.5px; font-weight: 600; color: #fff; }
-.card-meta { font-size: 12px; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 8px; }
-.crop-name { font-weight: 500; display: flex; align-items: center; gap: 8px; }
-.crop-icon { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
-.price-tag { font-family: var(--font-mono); font-size: 13px; font-weight: 500; }
-.prod-bar-wrap { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
-.prod-bar { width: 52px; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
-.prod-bar-fill { height: 100%; border-radius: 2px; }
-.prod-bar-fill.prod { background: var(--accent); }
-.prod-bar-fill.cons { background: var(--amber); }
-.prod-bar-fill.imp  { background: var(--green); }
-.prod-bar-fill.exp  { background: var(--purple); }
-.top-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); }
-.top-col { padding: 16px; border-right: 1px solid var(--border-light); }
-.top-col:last-child { border-right: none; }
-.top-col-header { font-size: 10.5px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); width: fit-content; }
-.top-item { display: flex; align-items: flex-start; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--border-light); }
-.top-item:last-child { border-bottom: none; }
-.top-item-crop { font-size: 12.5px; font-weight: 500; min-width: 60px; }
-.top-item-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
-.country-filter-row { display: flex; align-items: center; gap: 10px; padding: 12px 18px; background: var(--surface-2); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
-.filter-chip { display: flex; align-items: center; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 1px solid var(--border); background: var(--surface); color: var(--text-secondary); cursor: pointer; transition: all 0.15s; }
-.filter-chip:hover { border-color: var(--accent); color: var(--accent); }
-.filter-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-.search-mini { margin-left: auto; position: relative; }
-.search-mini input { height: 32px; padding: 0 10px 0 30px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 12.5px; color: var(--text-primary); background: var(--surface); outline: none; width: 180px; }
-.search-mini input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(8,48,107,0.1); }
-.search-mini svg { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; color: var(--text-muted); }
-.country-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; }
-.pagination-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; border-top: 1px solid var(--border); background: var(--surface-2); }
-.page-info { font-size: 12.5px; color: var(--text-muted); }
-.page-info strong { color: var(--text-secondary); font-weight: 500; }
-.page-btns { display: flex; gap: 4px; align-items: center; }
-.page-btn { min-width: 32px; height: 32px; padding: 0 8px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text-secondary); font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
-.page-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
-.page-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-.page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-.page-dots { color: var(--text-muted); font-size: 13px; padding: 0 4px; }
+    .nav-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-/* RIGHT PANEL */
-.right-panel {
-  width: var(--right-panel);
-  flex-shrink: 0;
-  border-left: 1px solid var(--border);
-  background: var(--surface);
-  overflow-y: auto;
-  padding: 24px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.right-panel::-webkit-scrollbar { width: 4px; }
-.right-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-.panel-section-title { font-size: 10.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
-.commodity-name { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 6px; color: var(--accent); }
-.commodity-desc { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; }
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.8);
+      transition: background 0.15s;
+      position: relative;
+    }
 
-/* UREA VISUAL */
-.urea-visual {
-  width: 100%; height: 120px; border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: linear-gradient(135deg, #e8f0fb 0%, #c5d9f0 50%, #8ab3d8 100%);
-  overflow: hidden; position: relative;
-}
-.urea-granules { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(9, 1fr); grid-template-rows: repeat(5, 1fr); gap: 4px; padding: 16px; }
-.granule { border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff 0%, #c8dbf0 50%, #7aadda 100%); box-shadow: 0 1px 3px rgba(8,48,107,0.2), inset 0 1px 2px rgba(255,255,255,0.7); opacity: 0; animation: pop 0.4s ease forwards; }
-@keyframes pop { to { opacity: 1; } }
+    .icon-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
 
-/* PRICE BADGE */
-.chart-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
-.chart-title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
-.chart-subtitle { font-size: 11.5px; color: var(--text-muted); margin-top: 1px; }
-.chart-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; font-family: var(--font-mono); }
-.chart-badge.pos { background: var(--green-light); color: var(--green); border: 1px solid #a7f3d0; }
-.chart-badge.neg { background: var(--red-light); color: var(--red); border: 1px solid #fecaca; }
+    .icon-btn svg {
+      width: 16px;
+      height: 16px;
+    }
 
-/* PRICE INFO ROW */
-.price-info-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
-.price-big { font-family: var(--font-mono); font-size: 28px; font-weight: 600; color: var(--accent); letter-spacing: -1px; }
-.price-change-small { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--red); }
-.price-label { font-size: 11px; color: var(--text-muted); }
+    .notif-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      border: 1.5px solid var(--accent);
+    }
 
-/* SVG LINE CHART */
-.line-chart-wrap {
-  width: 100%;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  position: relative;
-}
-.chart-svg { display: block; width: 100%; }
-.chart-x-labels { display: flex; justify-content: space-between; padding: 4px 8px 2px; font-family: var(--font-mono); font-size: 9.5px; color: var(--text-muted); }
-.chart-time-range { display: flex; gap: 4px; margin-top: 8px; }
-.time-range-btn { padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); cursor: pointer; transition: all 0.15s; font-family: var(--font-mono); }
-.time-range-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-.time-range-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+    .export-btn {
+      height: 36px;
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.15s;
+      box-shadow: 0 2px 8px rgba(200, 168, 75, 0.4);
+      letter-spacing: 0.1px;
+    }
 
-/* STAT CARDS */
-.stat-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; position: relative; overflow: hidden; }
-.stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); }
-.stat-card-label { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
-.stat-card-value { font-family: var(--font-mono); font-size: 20px; font-weight: 600; color: var(--accent); letter-spacing: -0.5px; line-height: 1; display: flex; align-items: baseline; gap: 4px; }
-.stat-card-value .unit { font-size: 11px; color: var(--text-muted); font-weight: 400; }
-.stat-change { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 600; margin-top: 4px; padding: 2px 6px; border-radius: 3px; }
-.stat-change.pos { color: var(--green); background: var(--green-light); }
-.stat-change.neg { color: var(--red); background: var(--red-light); }
+    .export-btn:hover {
+      background: #b8962e;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(200, 168, 75, 0.5);
+    }
 
-/* BULLETIN */
-.bulletin-item { padding: 12px 0; border-bottom: 1px solid var(--border-light); }
-.bulletin-item:last-child { border-bottom: none; }
-.bulletin-headline { font-size: 13px; line-height: 1.45; font-weight: 500; margin-bottom: 5px; cursor: pointer; }
-.bulletin-headline:hover { color: var(--accent); }
-.bulletin-meta { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-muted); }
-.bulletin-source { color: var(--accent); font-weight: 600; }
+    .export-btn svg {
+      width: 14px;
+      height: 14px;
+    }
 
-/* ═══════════════════════════════════════════════
-   PRODUCTION INPUTS / PROCESS TAB
-═══════════════════════════════════════════════ */
-.prod-layout { display: flex; gap: 20px; align-items: flex-start; }
-.tree-panel { flex: 1; min-width: 0; }
-.tree-section-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-.tree-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .profile-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 10px 0 6px;
+      height: 36px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.1);
+    }
 
-.route-groups { display: flex; flex-direction: column; gap: 12px; }
-.route-group-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden; }
-.route-group-header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; cursor: pointer; user-select: none; transition: background 0.15s; border-bottom: 1px solid transparent; }
-.route-group-header:hover { background: var(--surface-2); }
-.route-group-header.open { border-bottom-color: var(--border-light); }
-.route-group-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.route-group-icon svg { width: 16px; height: 16px; }
-.route-group-name { font-size: 14px; font-weight: 600; letter-spacing: -0.2px; }
-.route-group-desc { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
-.route-group-toggle { margin-left: auto; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: transform 0.2s; }
-.route-group-header.open .route-group-toggle { transform: rotate(90deg); }
-.route-group-body { display: none; padding: 16px; }
-.route-group-body.open { display: block; animation: fadeUp 0.15s ease; }
+    .avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
 
-.sub-group { margin-bottom: 16px; }
-.sub-group:last-child { margin-bottom: 0; }
-.sub-group-label { font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-.sub-group-label::after { content: ''; flex: 1; height: 1px; background: var(--border-light); }
+    .profile-name {
+      font-size: 12.5px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: #fff;
+    }
 
-.route-nodes { display: flex; flex-wrap: wrap; gap: 8px; }
-.route-node { display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: var(--radius); border: 1.5px solid var(--border); background: var(--surface); cursor: pointer; transition: all 0.15s; font-size: 13px; font-weight: 500; color: var(--text-secondary); position: relative; }
-.route-node:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
-.route-node.active { border-color: var(--accent); background: var(--accent); color: #fff; box-shadow: 0 2px 8px rgba(8,48,107,0.35); }
-.route-node-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: 0.6; flex-shrink: 0; }
-.route-node.active .route-node-dot { opacity: 1; background: rgba(255,255,255,0.8); }
-.route-node-tag { font-size: 9px; font-weight: 600; padding: 1px 5px; border-radius: 3px; background: var(--accent-subtle); color: var(--accent); letter-spacing: 0.3px; }
-.route-node.active .route-node-tag { background: rgba(255,255,255,0.2); color: #fff; }
+    .profile-role {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1.2;
+    }
 
-/* DETAIL PANEL */
-.detail-panel { width: 360px; flex-shrink: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; position: sticky; top: 0; }
-.detail-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 24px; text-align: center; color: var(--text-muted); height: 100%; min-height: 400px; }
-.detail-empty svg { opacity: 0.2; margin-bottom: 12px; color: var(--accent); }
-.detail-empty p { font-size: 13px; line-height: 1.5; max-width: 200px; }
-.detail-content { display: none; }
-.detail-content.visible { display: block; animation: fadeUp 0.2s ease; }
-.detail-header { padding: 16px 18px; border-bottom: 1px solid var(--border); background: var(--accent); display: flex; align-items: flex-start; gap: 12px; }
-.detail-header-icon { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.15); color: #fff; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.2); }
-.detail-header-icon svg { width: 18px; height: 18px; }
-.detail-title { font-size: 15px; font-weight: 600; letter-spacing: -0.2px; color: #fff; }
-.detail-subtitle { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 2px; }
-.detail-body { padding: 0; overflow-y: auto; max-height: calc(100vh - 300px); }
-.detail-body::-webkit-scrollbar { width: 4px; }
-.detail-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    /* LAYOUT */
+    .app-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
 
-.detail-section { border-bottom: 1px solid var(--border-light); }
-.detail-section:last-child { border-bottom: none; }
-.detail-section-header { padding: 10px 18px 6px; font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--accent); background: var(--accent-light); border-bottom: 1px solid var(--accent-subtle); }
+    /* SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      flex-shrink: 0;
+      overflow-y: auto;
+      padding: 16px 0;
+    }
 
-.input-table { width: 100%; border-collapse: collapse; }
-.input-table tr { border-bottom: 1px solid var(--border-light); }
-.input-table tr:last-child { border-bottom: none; }
-.input-table td { padding: 9px 18px; font-size: 12.5px; }
-.input-table td:first-child { color: var(--text-secondary); }
-.input-table td:last-child { text-align: right; font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--accent); }
-.input-table tr:hover { background: var(--surface-2); }
-.input-table .total-row td { font-weight: 700; color: var(--text-primary); background: var(--accent-light); }
-.input-table .total-row td:last-child { color: var(--accent); }
+    .sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
 
-.active-ing-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; }
-.active-ing-label { font-size: 12.5px; color: var(--text-secondary); }
-.active-ing-value { display: flex; align-items: center; gap: 8px; }
-.active-ing-pct { font-family: var(--font-mono); font-size: 16px; font-weight: 600; color: var(--accent); }
-.active-ing-bar { width: 80px; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
-.active-ing-bar-fill { height: 100%; background: var(--green); border-radius: 3px; }
+    .sidebar::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 2px;
+    }
 
-.detail-text-section { padding: 12px 18px; }
-.detail-text-title { font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-.detail-text-title svg { width: 13px; height: 13px; color: var(--accent); }
-.detail-text-body { font-size: 12px; color: var(--text-secondary); line-height: 1.65; }
+    .sidebar-section-header {
+      padding: 8px 16px 4px;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
 
-.process-steps { padding: 12px 18px; display: flex; flex-direction: column; gap: 0; }
-.process-step { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border-light); }
-.process-step:last-child { border-bottom: none; }
-.step-num { width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-.step-content { flex: 1; }
-.step-title { font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
-.step-body { font-size: 11.5px; color: var(--text-secondary); line-height: 1.6; }
+    .sidebar-group {
+      margin-bottom: 4px;
+    }
 
-/* TOOLTIP */
-.chart-tooltip {
-  position: absolute; background: var(--accent); color: #fff;
-  border-radius: 6px; padding: 6px 10px;
-  font-family: var(--font-mono); font-size: 11px; font-weight: 600;
-  pointer-events: none; white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(8,48,107,0.4);
-  transform: translateX(-50%);
-  transition: opacity 0.1s;
-  z-index: 10;
-}
-.chart-tooltip::after {
-  content: ''; position: absolute; top: 100%; left: 50%;
-  transform: translateX(-50%);
-  border: 5px solid transparent;
-  border-top-color: var(--accent);
-}
-</style>
-</head>
-<body>
+    .sidebar-parent {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
 
-<!-- NAVBAR -->
-<nav class="navbar">
-  <div class="logo">
-    <div class="logo-icon">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
-      </svg>
-    </div>
-    <span class="logo-text">Market <span>Neurons</span></span>
-  </div>
-  <div class="search-wrap">
-    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input class="search-input" type="text" placeholder="Search markets, tickers, or reports…">
-    <span class="search-hint">⌘K</span>
-  </div>
-  <div class="nav-actions">
-    <button class="icon-btn"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="notif-dot"></span></button>
-    <button class="icon-btn"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></button>
-    <button class="icon-btn"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></button>
-    <button class="export-btn">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Export Data
-    </button>
-    <div class="profile-pill">
-      <div class="avatar">IT</div>
-      <div>
-        <div class="profile-name">Institutional Trader</div>
-        <div class="profile-role">Terminal v4.2</div>
-      </div>
-    </div>
-  </div>
-</nav>
+    .sidebar-parent:hover {
+      color: var(--text-primary);
+    }
 
-<div class="app-body">
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-section-header">Sector</div>
-    <div style="padding:2px 16px 10px;font-size:11px;color:var(--text-muted)">Fertilizers</div>
-    <div class="sidebar-group">
-      <div class="sidebar-parent open">
-        <div class="sidebar-parent-label"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg>Nitrogen</div>
-        <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-      <div class="sidebar-children">
-        <div class="sidebar-parent" style="font-size:12.5px;font-weight:500;padding-left:28px;color:var(--text-secondary)">
-          <div class="sidebar-parent-label">Urea</div>
-          <svg class="sidebar-chevron" style="width:12px;height:12px" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-        </div>
-        <div class="sidebar-item active">Granular</div>
-        <div class="sidebar-item">Prilled</div>
-        <div class="sidebar-item">UAN Solutions</div>
-        <div class="sidebar-item">Sulfur-coated urea</div>
-        <div class="sidebar-item">Urease inhibitor urea</div>
-        <div class="sidebar-item">Liquid Urea</div>
-      </div>
-    </div>
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-group">
-      <div class="sidebar-parent">
-        <div class="sidebar-parent-label"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>Ammonia</div>
-        <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-    </div>
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-group">
-      <div class="sidebar-parent">
-        <div class="sidebar-parent-label"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Phosphates</div>
-        <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-    </div>
-    <div class="sidebar-group">
-      <div class="sidebar-parent">
-        <div class="sidebar-parent-label"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Potash</div>
-        <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-    </div>
-  </aside>
+    .sidebar-parent-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-  <div class="main">
-    <div class="main-inner">
-      <div class="content">
-        <!-- PAGE HEADER -->
-        <div class="page-header">
-          <div class="breadcrumb"><span>Commodities</span><span>›</span><span>Nitrogen</span><span>›</span><span>Urea</span><span>›</span><span style="color:var(--accent);font-weight:500">Granular</span></div>
-          <h1 class="page-title">Granular Urea</h1>
-          <p class="page-subtitle">Global nitrogen benchmarks and institutional stock performance</p>
-        </div>
+    .sidebar-chevron {
+      width: 14px;
+      height: 14px;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+    }
 
-        <!-- MAIN TABS -->
-        <div class="main-tabs">
-          <div class="main-tab active" onclick="switchMain('fertilizers',this)">Fertilizers Stocks</div>
-          <div class="main-tab" onclick="switchMain('market-profile',this)">Market Profile</div>
-          <div class="main-tab" onclick="switchMain('production',this)">Production Inputs / Process</div>
-        </div>
+    .sidebar-parent.open .sidebar-chevron {
+      transform: rotate(90deg);
+    }
 
-        <!-- TAB 1: FERTILIZERS STOCKS -->
-        <div id="tab-fertilizers" class="tab-panel active">
-          <div class="filters-row">
-            <div class="filter-group"><span class="filter-label">Home Country</span><div class="filter-select">Egypt<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div></div>
-            <div class="filter-group"><span class="filter-label">Export Market</span><div class="filter-select">Europe<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div></div>
-            <div class="filter-group"><span class="filter-label">Exchange</span><div class="filter-select">NASDAQ<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div></div>
-          </div>
-          <div class="table-outer"><div class="table-wrap"><table>
-            <thead><tr><th>Symbol</th><th class="num">Price</th><th class="num">Change %</th><th class="num">Mkt Cap BN</th><th class="num">Ranking / 100</th><th class="num">Exposure</th></tr></thead>
-            <tbody>
-              <tr><td><span class="ticker-badge">ABUK</span></td><td class="num">100</td><td class="num"><span class="change-pos">▲ 5</span></td><td class="num">100</td><td class="num"><div class="ranking-bar-wrap">90<div class="ranking-bar"><div class="ranking-bar-fill" style="width:90%"></div></div></div></td><td class="num"><span class="exposure-badge">60%</span></td></tr>
-              <tr><td><span class="ticker-badge">MPCO</span></td><td class="num">70</td><td class="num"><span class="change-pos">▲ 1</span></td><td class="num">150</td><td class="num"><div class="ranking-bar-wrap">100<div class="ranking-bar"><div class="ranking-bar-fill" style="width:100%"></div></div></div></td><td class="num"><span class="exposure-badge">50%</span></td></tr>
-              <tr><td><span class="ticker-badge">YAR</span></td><td class="num">20</td><td class="num"><span class="change-pos">▲ 2</span></td><td class="num">20</td><td class="num"><div class="ranking-bar-wrap">70<div class="ranking-bar"><div class="ranking-bar-fill" style="width:70%"></div></div></div></td><td class="num"><span class="exposure-badge">70%</span></td></tr>
-              <tr><td><span class="ticker-badge">2020</span></td><td class="num">30</td><td class="num"><span class="change-neg">▼ 1</span></td><td class="num">30</td><td class="num"><div class="ranking-bar-wrap">60<div class="ranking-bar"><div class="ranking-bar-fill" style="width:60%"></div></div></div></td><td class="num"><span class="exposure-badge">50%</span></td></tr>
-              <tr><td><span class="ticker-badge">CF</span></td><td class="num">28</td><td class="num"><span class="change-neg">▼ 5</span></td><td class="num">60</td><td class="num"><div class="ranking-bar-wrap">20<div class="ranking-bar"><div class="ranking-bar-fill" style="width:20%"></div></div></div></td><td class="num"><span class="exposure-badge">30%</span></td></tr>
-              <tr><td><span class="ticker-badge">ABUK</span></td><td class="num">100</td><td class="num"><span class="change-pos">▲ 5</span></td><td class="num">100</td><td class="num"><div class="ranking-bar-wrap">90<div class="ranking-bar"><div class="ranking-bar-fill" style="width:90%"></div></div></div></td><td class="num"><span class="exposure-badge">60%</span></td></tr>
-              <tr><td><span class="ticker-badge">MPCO</span></td><td class="num">70</td><td class="num"><span class="change-pos">▲ 1</span></td><td class="num">150</td><td class="num"><div class="ranking-bar-wrap">100<div class="ranking-bar"><div class="ranking-bar-fill" style="width:100%"></div></div></div></td><td class="num"><span class="exposure-badge">50%</span></td></tr>
-              <tr><td><span class="ticker-badge">YAR</span></td><td class="num">20</td><td class="num"><span class="change-pos">▲ 2</span></td><td class="num">20</td><td class="num"><div class="ranking-bar-wrap">70<div class="ranking-bar"><div class="ranking-bar-fill" style="width:70%"></div></div></div></td><td class="num"><span class="exposure-badge">70%</span></td></tr>
-            </tbody>
-          </table></div></div>
-        </div>
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px 6px 28px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      position: relative;
+      transition: background 0.1s, color 0.1s;
+    }
 
-        <!-- TAB 2: MARKET PROFILE -->
-        <div id="tab-market-profile" class="tab-panel">
-          <div class="sub-tabs-wrap">
-            <div class="sub-tabs">
-              <div class="sub-tab active" onclick="switchSub('crop-market',this)">
-                <svg class="sub-tab-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22V12M12 12C12 7 17 4 17 4M12 12C12 7 7 4 7 4"/></svg>
-                Crop Market<span class="sub-tab-badge">5</span>
-              </div>
-              <div class="sub-tab" onclick="switchSub('country-data',this)">
-                <svg class="sub-tab-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                Country Data<span class="sub-tab-badge">32</span>
-              </div>
-            </div>
-            <div style="font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:6px"><span class="live-dot"></span>Live data · Updated 2 min ago</div>
-          </div>
-          <div id="sub-crop-market" class="sub-panel active">
-            <div class="card">
-              <div class="card-header"><span class="card-title">Crop Market Overview</span><div class="card-meta"><span class="live-dot"></span><span>Urea demand by crop</span></div></div>
-              <div class="table-wrap"><table id="crop-table"><thead><tr><th onclick="sortCrop(0)">Crop <span class="sort-icon">↕</span></th><th class="num" onclick="sortCrop(1)">Urea Consumption <span class="sort-icon">↕</span></th><th class="num" onclick="sortCrop(2)">Price / ton <span class="sort-icon">↕</span></th><th class="num" onclick="sortCrop(3)">Change % <span class="sort-icon">↕</span></th><th class="num" onclick="sortCrop(4)">Urea/Crop Price <span class="sort-icon">↕</span></th></tr></thead><tbody id="crop-tbody"></tbody></table></div>
-              <div class="top-grid">
-                <div class="top-col"><div class="top-col-header">Top Consumers</div><div class="top-item"><span class="top-item-crop">Wheat</span><span class="top-item-value">Egypt · 20</span></div><div class="top-item"><span class="top-item-crop">Corn</span><span class="top-item-value">China · 200</span></div><div class="top-item"><span class="top-item-crop">Soybeans</span><span class="top-item-value">China</span></div><div class="top-item"><span class="top-item-crop">Sugar</span><span class="top-item-value">Brazil</span></div><div class="top-item"><span class="top-item-crop">Rice</span><span class="top-item-value">China</span></div></div>
-                <div class="top-col"><div class="top-col-header">Top Producers</div><div class="top-item"><span class="top-item-crop">Wheat</span><span class="top-item-value">Russia · 300</span></div><div class="top-item"><span class="top-item-crop">Corn</span><span class="top-item-value">US · 50</span></div><div class="top-item"><span class="top-item-crop">Soybeans</span><span class="top-item-value">US</span></div><div class="top-item"><span class="top-item-crop">Sugar</span><span class="top-item-value">Brazil</span></div><div class="top-item"><span class="top-item-crop">Rice</span><span class="top-item-value">China</span></div></div>
-                <div class="top-col"><div class="top-col-header">Top Exporters</div><div class="top-item"><span class="top-item-crop">Wheat</span><span class="top-item-value">US · 400</span></div><div class="top-item"><span class="top-item-crop">Corn</span><span class="top-item-value">Ukraine · 10</span></div><div class="top-item"><span class="top-item-crop">Soybeans</span><span class="top-item-value">US</span></div><div class="top-item"><span class="top-item-crop">Sugar</span><span class="top-item-value">Brazil</span></div><div class="top-item"><span class="top-item-crop">Rice</span><span class="top-item-value">India</span></div></div>
-                <div class="top-col"><div class="top-col-header">Top Importers</div><div class="top-item"><span class="top-item-crop">Wheat</span><span class="top-item-value">Egypt · 100</span></div><div class="top-item"><span class="top-item-crop">Corn</span><span class="top-item-value">China · 500</span></div><div class="top-item"><span class="top-item-crop">Soybeans</span><span class="top-item-value">China</span></div><div class="top-item"><span class="top-item-crop">Sugar</span><span class="top-item-value">Europe</span></div><div class="top-item"><span class="top-item-crop">Rice</span><span class="top-item-value">Egypt</span></div></div>
-              </div>
-            </div>
-          </div>
-          <div id="sub-country-data" class="sub-panel">
-            <div class="card">
-              <div class="card-header"><span class="card-title">Country Trade Data</span><div class="card-meta"><span>Production · Consumption · Imports · Exports</span></div></div>
-              <div class="country-filter-row">
-                <div class="filter-chip active" onclick="filterCountry('all',this)">All</div>
-                <!-- <div class="filter-chip" onclick="filterCountry('high-prod',this)">High Production</div> -->
-                <div class="filter-chip" onclick="filterCountry('importer',this)">Net Importers</div>
-                <div class="filter-chip" onclick="filterCountry('exporter',this)">Net Exporters</div>
-                <div class="search-mini"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search country…" oninput="searchCountry(this.value)"></div>
-              </div>
-              <div class="table-wrap"><table id="country-table"><thead><tr><th onclick="sortCountry(0)">Country <span class="sort-icon">↕</span></th><th class="num" onclick="sortCountry(1)">Production <span class="sort-icon">↕</span></th><th class="num" onclick="sortCountry(2)">Consumption <span class="sort-icon">↕</span></th><th class="num" onclick="sortCountry(3)">Imports <span class="sort-icon">↕</span></th><th class="num" onclick="sortCountry(4)">Exports <span class="sort-icon">↕</span></th></tr></thead><tbody id="country-tbody"></tbody></table></div>
-              <div class="pagination-row"><div class="page-info" id="page-info"></div><div class="page-btns" id="page-btns"></div></div>
-            </div>
-          </div>
-        </div>
+    .sidebar-item:hover {
+      background: var(--bg);
+      color: var(--text-primary);
+    }
 
-        <!-- TAB 3: PRODUCTION INPUTS / PROCESS -->
-        <div id="tab-production" class="tab-panel">
-          <div class="prod-layout">
-            <div class="tree-panel">
-              <div class="tree-section-label">Production Routes — Granular Urea</div>
-              <div class="route-groups" id="routeGroups"></div>
-            </div>
-            <div class="detail-panel" id="detailPanel">
-              <div class="detail-empty" id="detailEmpty">
-                <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
-                <p>Select a production route to view inputs and process details</p>
-              </div>
-              <div class="detail-content" id="detailContent"></div>
-            </div>
-          </div>
-        </div>
-      </div><!-- /content -->
+    .sidebar-item.active {
+      color: var(--accent);
+      background: var(--accent-light);
+      font-weight: 500;
+    }
 
-      <!-- RIGHT PANEL -->
-      <aside class="right-panel">
-        <div>
-          <div class="commodity-name">Granular Urea</div>
-          <p class="commodity-desc">Solid nitrogenous fertilizer produced through the granulation of liquid urea. Primary nitrogen source for large-scale agriculture due to high nutrient density and favorable handling characteristics.</p>
-          <div class="urea-visual"><div class="urea-granules" id="granules"></div></div>
-        </div>
+    .sidebar-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 2px;
+      bottom: 2px;
+      width: 3px;
+      background: var(--accent);
+      border-radius: 0 2px 2px 0;
+    }
 
-        <!-- PRICE CHART SECTION -->
-        <div>
-          <div class="chart-header">
-            <div>
-              <div class="chart-title">Urea Price (USD/T)</div>
-              <div class="chart-subtitle">1 Year · Daily</div>
-            </div>
-            <span class="chart-badge neg">▼ -0.36%</span>
-          </div>
-          <div class="price-info-row">
-            <span class="price-big">692.25</span>
-            <span class="price-change-small">-2.50</span>
-          </div>
-          <div class="line-chart-wrap" id="lineChartWrap">
-            <canvas id="priceChart" height="130" style="display:block;width:100%;cursor:crosshair;"></canvas>
-            <div class="chart-tooltip" id="chartTooltip" style="opacity:0;position:absolute;top:8px;left:50%"></div>
-          </div>
-          <div class="chart-x-labels" id="chartXLabels"></div>
-          <div class="chart-time-range">
-            <button class="time-range-btn active">1Y</button>
-            <button class="time-range-btn">5Y</button>
-            <button class="time-range-btn">All</button>
-          </div>
-        </div>
+    .sidebar-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.5;
+    }
 
-        <div class="stat-cards">
-          <div class="stat-card"><div class="stat-card-label">Input Cost Index</div><div class="stat-card-value">114.2</div><div class="stat-change pos">▲ 2.1</div></div>
-          <div class="stat-card"><div class="stat-card-label">Energy Delta</div><div class="stat-card-value">−2.4<span class="unit">%</span></div><div class="stat-change neg">▼ 2.4%</div></div>
-        </div>
+    .sidebar-divider {
+      height: 1px;
+      background: var(--border-light);
+      margin: 8px 16px;
+    }
 
-        <div>
-          <div class="panel-section-title">Market Bulletin</div>
-          <div class="bulletin-item"><div class="bulletin-headline">Black Sea export restrictions causing price volatility in Mediterranean markets.</div><div class="bulletin-meta"><span>2 hours ago</span><span style="opacity:.4">•</span><span class="bulletin-source">Reuters</span></div></div>
-          <div class="bulletin-item"><div class="bulletin-headline">CF Industries reports record Q3 production efficiency in Louisiana plant.</div><div class="bulletin-meta"><span>5 hours ago</span><span style="opacity:.4">•</span><span class="bulletin-source">Bloomberg</span></div></div>
-        </div>
-      </aside>
-    </div>
-  </div>
-</div>
+    /* MAIN */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
 
-<script>
-// ═══════════════════════════════════════════════════
-// UREA PRICE CHART — mimics the TradingView-style line chart from image
-// Data: 1Y, Jun 2025 → Apr 2026, shape matching the screenshot
-// ═══════════════════════════════════════════════════
-const PRICE_DATA = [
-  // Jun: ~480, dip to ~365, recover to ~475
-  480,472,468,461,455,448,440,432,425,418,410,400,392,383,375,368,365,367,370,375,380,388,393,400,408,415,420,428,435,442,
-  // Jul-Aug: ~440-480 volatile
-  448,455,462,468,472,478,480,475,470,465,460,456,452,448,445,442,440,438,436,433,430,428,425,422,418,415,412,410,408,406,
-  // Sep-Oct: bottom ~380-410 flat
-  404,402,400,398,396,394,392,390,388,386,384,382,380,379,378,377,376,375,376,377,378,380,382,385,388,390,392,395,398,400,
-  // Nov: ~380-410
-  402,404,406,408,410,408,405,402,398,395,392,388,385,382,380,378,376,375,374,373,372,371,370,370,369,368,368,367,366,365,
-  // Dec: ~355-370 bottom
-  364,362,360,358,357,356,355,354,354,353,352,351,350,350,351,352,353,355,357,360,363,367,370,374,378,383,388,394,400,408,
-  // Jan 2026: recovery 450-480
-  416,424,432,440,445,448,450,452,454,456,458,460,462,455,450,445,442,440,445,452,460,468,475,480,478,475,472,470,468,465,
-  // Feb-Mar: surge 490→600
-  468,472,478,485,492,500,508,516,525,535,545,555,562,568,574,580,585,590,594,598,600,598,595,598,602,605,608,
-  // Apr: 610→720 spike then 692
-  615,625,635,648,660,672,682,690,700,710,718,725,720,715,710,705,700,698,695,692
-];
+    .main-inner {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
 
-function drawPriceChart() {
-  const canvas = document.getElementById('priceChart');
-  const wrap = document.getElementById('lineChartWrap');
-  const W = wrap.clientWidth || 280;
-  const H = 130;
-  canvas.width = W * window.devicePixelRatio;
-  canvas.height = H * window.devicePixelRatio;
-  canvas.style.width = W + 'px';
-  canvas.style.height = H + 'px';
-  const ctx = canvas.getContext('2d');
-  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
 
-  const pad = { top: 10, right: 8, bottom: 8, left: 8 };
-  const cw = W - pad.left - pad.right;
-  const ch = H - pad.top - pad.bottom;
-  const data = PRICE_DATA;
-  const minV = Math.min(...data) - 20;
-  const maxV = Math.max(...data) + 20;
+    .content::-webkit-scrollbar {
+      width: 5px;
+    }
 
-  function xOf(i) { return pad.left + (i / (data.length - 1)) * cw; }
-  function yOf(v) { return pad.top + ch - ((v - minV) / (maxV - minV)) * ch; }
+    .content::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
 
-  // Horizontal grid lines
-  ctx.strokeStyle = 'rgba(8,48,107,0.07)';
-  ctx.lineWidth = 1;
-  for (let i = 0; i <= 4; i++) {
-    const y = pad.top + (ch / 4) * i;
-    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + cw, y); ctx.stroke();
-  }
+    /* PAGE HEADER */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
 
-  // Y axis labels
-  ctx.fillStyle = 'rgba(122,155,184,0.9)';
-  ctx.font = '9px DM Mono, monospace';
-  ctx.textAlign = 'right';
-  const yLabels = [750, 700, 650, 600, 550, 500, 450, 400, 350];
-  for (const v of yLabels) {
-    if (v >= minV && v <= maxV) {
-      const y = yOf(v);
-      if (y > pad.top + 5 && y < H - pad.bottom - 3) {
-        ctx.fillText(v, W - 4, y + 3);
+    .page-header {
+      margin-bottom: 16px;
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .page-subtitle {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* MAIN TABS */
+    .main-tabs {
+      display: flex;
+      gap: 2px;
+      padding: 4px;
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      width: fit-content;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .main-tab {
+      padding: 6px 16px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .main-tab:hover {
+      color: var(--text-secondary);
+    }
+
+    .main-tab.active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(8, 48, 107, 0.3);
+    }
+
+    /* TAB PANELS */
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+      animation: fadeUp 0.18s ease;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
-  }
 
-  // Gradient fill
-  const grad = ctx.createLinearGradient(0, pad.top, 0, H);
-  grad.addColorStop(0, 'rgba(8,48,107,0.18)');
-  grad.addColorStop(1, 'rgba(8,48,107,0.0)');
-
-  ctx.beginPath();
-  ctx.moveTo(xOf(0), yOf(data[0]));
-  for (let i = 1; i < data.length; i++) ctx.lineTo(xOf(i), yOf(data[i]));
-  ctx.lineTo(xOf(data.length - 1), H - pad.bottom);
-  ctx.lineTo(xOf(0), H - pad.bottom);
-  ctx.closePath();
-  ctx.fillStyle = grad;
-  ctx.fill();
-
-  // Main line
-  ctx.beginPath();
-  ctx.moveTo(xOf(0), yOf(data[0]));
-  for (let i = 1; i < data.length; i++) ctx.lineTo(xOf(i), yOf(data[i]));
-  ctx.strokeStyle = '#08306B';
-  ctx.lineWidth = 1.8;
-  ctx.lineJoin = 'round';
-  ctx.stroke();
-
-  // Current price dot
-  const lastX = xOf(data.length - 1);
-  const lastY = yOf(data[data.length - 1]);
-  ctx.beginPath();
-  ctx.arc(lastX, lastY, 3.5, 0, Math.PI * 2);
-  ctx.fillStyle = '#08306B';
-  ctx.fill();
-  ctx.beginPath();
-  ctx.arc(lastX, lastY, 6, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(8,48,107,0.15)';
-  ctx.fill();
-
-  // X labels
-  const labels = ['Jun','Aug','Oct','Dec','2026','Apr'];
-  document.getElementById('chartXLabels').innerHTML = labels.map(l => `<span>${l}</span>`).join('');
-
-  // Mouse interaction
-  const tooltip = document.getElementById('chartTooltip');
-  canvas.onmousemove = function(e) {
-    const rect = canvas.getBoundingClientRect();
-    const mx = e.clientX - rect.left;
-    const idx = Math.round(((mx - pad.left) / cw) * (data.length - 1));
-    if (idx < 0 || idx >= data.length) return;
-    const val = data[idx];
-    const x = xOf(idx);
-    const y = yOf(val);
-
-    // Crosshair
-    ctx.clearRect(0, 0, W, H);
-    drawPriceChartStatic(ctx, W, H, data, pad, cw, ch, minV, maxV, xOf, yOf, grad);
-
-    ctx.save();
-    ctx.strokeStyle = 'rgba(8,48,107,0.35)';
-    ctx.lineWidth = 1;
-    ctx.setLineDash([3, 3]);
-    ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, H - pad.bottom); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + cw, y); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.restore();
-
-    ctx.beginPath();
-    ctx.arc(x, y, 4, 0, Math.PI * 2);
-    ctx.fillStyle = '#08306B';
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(x, y, 7, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(8,48,107,0.2)';
-    ctx.fill();
-
-    tooltip.style.opacity = '1';
-    tooltip.style.left = Math.min(Math.max(x, 36), W - 36) + 'px';
-    tooltip.style.top = Math.max(y - 36, 4) + 'px';
-    tooltip.textContent = '$' + val.toFixed(2);
-  };
-  canvas.onmouseleave = function() {
-    tooltip.style.opacity = '0';
-    ctx.clearRect(0, 0, W, H);
-    drawPriceChartStatic(ctx, W, H, data, pad, cw, ch, minV, maxV, xOf, yOf, grad);
-  };
-}
-
-function drawPriceChartStatic(ctx, W, H, data, pad, cw, ch, minV, maxV, xOf, yOf, grad) {
-  // Grid
-  ctx.strokeStyle = 'rgba(8,48,107,0.07)';
-  ctx.lineWidth = 1;
-  for (let i = 0; i <= 4; i++) {
-    const y = pad.top + (ch / 4) * i;
-    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + cw, y); ctx.stroke();
-  }
-
-  // Y labels
-  ctx.fillStyle = 'rgba(122,155,184,0.9)';
-  ctx.font = '9px DM Mono, monospace';
-  ctx.textAlign = 'right';
-  const yLabels = [750, 700, 650, 600, 550, 500, 450, 400, 350];
-  for (const v of yLabels) {
-    if (v >= minV && v <= maxV) {
-      const y = yOf(v);
-      if (y > pad.top + 5 && y < H - pad.bottom - 3) ctx.fillText(v, W - 4, y + 3);
+    /* SHARED TABLE */
+    .table-outer {
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
     }
-  }
 
-  // Fill
-  ctx.beginPath();
-  ctx.moveTo(xOf(0), yOf(data[0]));
-  for (let i = 1; i < data.length; i++) ctx.lineTo(xOf(i), yOf(data[i]));
-  ctx.lineTo(xOf(data.length - 1), H - pad.bottom);
-  ctx.lineTo(xOf(0), H - pad.bottom);
-  ctx.closePath();
-  ctx.fillStyle = grad;
-  ctx.fill();
+    .table-wrap {
+      overflow-x: auto;
+    }
 
-  // Line
-  ctx.beginPath();
-  ctx.moveTo(xOf(0), yOf(data[0]));
-  for (let i = 1; i < data.length; i++) ctx.lineTo(xOf(i), yOf(data[i]));
-  ctx.strokeStyle = '#08306B';
-  ctx.lineWidth = 1.8;
-  ctx.lineJoin = 'round';
-  ctx.stroke();
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
 
-  // Last dot
-  const lastX = xOf(data.length - 1);
-  const lastY = yOf(data[data.length - 1]);
-  ctx.beginPath(); ctx.arc(lastX, lastY, 3.5, 0, Math.PI * 2); ctx.fillStyle = '#08306B'; ctx.fill();
-  ctx.beginPath(); ctx.arc(lastX, lastY, 6, 0, Math.PI * 2); ctx.fillStyle = 'rgba(8,48,107,0.15)'; ctx.fill();
-}
+    thead tr {
+      background: var(--accent);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-// ═══════════════════════════════════════════════════
-// ROUTE TREE DATA
-// ═══════════════════════════════════════════════════
-const ROUTE_GROUPS = [
-  {
-    id: 'natural-gas',
-    name: 'Natural Gas Routes',
-    desc: '3 sub-routes · Steam reforming & pyrolysis pathways',
-    color: '#08306B', bgColor: '#e8f0fb',
-    icon: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.7 7.7a7 7 0 1 1-9.9 9.9C5.2 15 5 11.5 7 9.5l1-1"/><path d="M14 4.1C14 2.9 13.1 2 12 2s-2 .9-2 2.1c0 1.4 2 5.9 2 5.9s2-4.5 2-5.9z"/></svg>`,
-    subGroups: [
-      { label:'Traditional Natural Gas Routes', nodes:[{id:'SMR',label:'SMR',full:'Steam Methane Reforming'},{id:'ATR',label:'ATR',full:'Autothermal Reforming'}] },
-      { label:'Green Route', nodes:[{id:'MethPyrolysis',label:'Methane Pyrolysis',full:'Methane Pyrolysis (Turquoise H₂)'}] },
-      { label:'Carbon Capture Routes', nodes:[{id:'ATR_CCS',label:'ATR with CCS',full:'Autothermal Reforming + Carbon Capture',tag:'CCS'},{id:'SMR_CCS',label:'SMR with CCS',full:'Steam Methane Reforming + Carbon Capture',tag:'CCS'}] }
-    ]
-  },
-  {
-    id: 'coal',
-    name: 'Coal Routes',
-    desc: '2 sub-routes · Gasification & capture pathways',
-    color: '#374151', bgColor: '#f3f4f6',
-    icon: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>`,
-    subGroups: [
-      { label:'Traditional Coal Route', nodes:[{id:'CoalGasification',label:'Coal Gasification',full:'Coal Gasification (Syngas Route)'}] },
-      { label:'Carbon Capture Route', nodes:[{id:'Coal_CCS',label:'Coal with CCS',full:'Coal Gasification + Carbon Capture',tag:'CCS'}] }
-    ]
-  },
-  {
-    id: 'green',
-    name: 'Green Routes',
-    desc: '2 sub-routes · Electrolysis & biomass pathways',
-    color: '#0d7a5f', bgColor: '#d0f0e8',
-    icon: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22V12M12 12C12 7 17 4 17 4M12 12C12 7 7 4 7 4"/></svg>`,
-    subGroups: [
-      { label:'Green Routes', nodes:[{id:'Electrolysis',label:'Electrolysis',full:'Water Electrolysis (Green H₂)',tag:'Green'},{id:'BiomassGas',label:'Biomass Gasification',full:'Biomass Gasification (Bio H₂)',tag:'Bio'}] }
-    ]
-  }
-];
+    th {
+      padding: 9px 14px;
+      text-align: left;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.75);
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+    }
 
-const ROUTE_DETAILS = {
-  SMR:{title:'Steam Methane Reforming',subtitle:'Natural Gas Route · Traditional',color:'#08306B',inputs:{direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas, urea plant only (in mml)',value:'4.1'},{label:'Electricity (kwh/ton)',value:'170'}],ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'13.3'},{label:'Natural Gas (Fuel) in mmbtu',value:'10.5'},{label:'Electricity (kwh/ton)',value:'80'}],totals:[{label:'Total Natural Gas',value:'21.1',bold:true},{label:'Electricity',value:'215',bold:true}],activeIngredient:{name:'Nitrogen',pct:46}},overview:'Standard agricultural urea produced by reacting ammonia with CO₂ at high pressure, then granulated into 2–4 mm spherical particles for broadcast application.',soilUse:'All soil types but REQUIRES incorporation or >12mm rain within 2–3 days to prevent ammonia volatilization. Best for mechanized cereal/oilseed systems.',steps:[{title:'Ammonia',body:'Natural gas reacts with steam over nickel catalyst at 800–900°C producing syngas (H₂+CO). Water-gas shift converts CO to H₂+CO₂. CO₂ captured via MDEA amine absorption. Purified H₂ combined with N₂ in Haber-Bosch synthesis loop at 150–250 bar and 400–500°C forming ammonia.'},{title:'Urea',body:'NH3 and CO₂ react in high-pressure synthesis reactor at 140–200 bar and 160–200°C forming urea solution. Solution evaporated to 96–99.7% concentration. Molten urea fed to granulation drum, cooled in fluidised bed, anti-caking coating applied.'}]},
-  ATR:{title:'Autothermal Reforming',subtitle:'Natural Gas Route · Traditional',color:'#08306B',inputs:{direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas, urea plant only (in mmbtu)',value:'3.5'},{label:'Electricity (kwh/ton)',value:'140'}],ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'13.3'},{label:'Natural Gas (Fuel) in mmbtu',value:'10.5'},{label:'Electricity (kwh/ton)',value:'80'}],totals:[{label:'Total Natural Gas',value:'20.5',bold:true},{label:'Electricity',value:'185',bold:true}],activeIngredient:{name:'Nitrogen',pct:46}},overview:'ATR combines partial oxidation and steam reforming in a single reactor using oxygen from an air separation unit. More energy-efficient than SMR at large scales.',soilUse:'Same suitability as granular. More common in Asian and Middle Eastern markets. Dissolves faster — useful for fertigation or quick-response applications.',steps:[{title:'Ammonia',body:'Natural gas reacts with steam and O₂ over nickel catalyst at 800–1000°C. Single-pass conversion higher than SMR. CO₂ captured via amine absorption.'},{title:'Urea',body:'NH3 and CO₂ react at 140–200 bar. Standard granulation applied.'}]},
-  MethPyrolysis:{title:'Methane Pyrolysis',subtitle:'Natural Gas Route · Green (Turquoise H₂)',color:'#0891b2',inputs:{direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas (mmbtu)',value:'8.5'},{label:'Electricity (kwh/ton)',value:'220'}],ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'8.5'},{label:'Electricity (kwh/ton)',value:'120'}],totals:[{label:'Total Natural Gas',value:'8.5',bold:true},{label:'Electricity',value:'220',bold:true}],activeIngredient:{name:'Nitrogen',pct:46}},overview:'Methane is split into H₂ and solid carbon (no CO₂ emitted). Produces turquoise hydrogen with carbon black as saleable by-product.',soilUse:'Identical agronomic profile to conventional granular urea. Carbon footprint significantly lower than SMR without CCS.',steps:[{title:'Turquoise H₂',body:'Methane heated to 700–1200°C in molten metal or plasma reactor. CH₄ → C(solid) + 2H₂. No combustion, no CO₂.'},{title:'Ammonia & Urea',body:'H₂ combined with N₂ in Haber-Bosch loop at 150–250 bar. Standard granulation.'}]},
-  ATR_CCS:{title:'ATR with Carbon Capture',subtitle:'Natural Gas Route · CCS (Blue H₂)',color:'#5b2d8e',inputs:{direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas (mmbtu)',value:'4.0'},{label:'Electricity (kwh/ton)',value:'160'}],ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'14.0'},{label:'Natural Gas (Fuel) in mmbtu',value:'9.0'},{label:'Electricity (kwh/ton)',value:'95'}],totals:[{label:'Total Natural Gas',value:'21.5',bold:true},{label:'Electricity',value:'220',bold:true}],activeIngredient:{name:'Nitrogen',pct:46}},overview:'ATR with post-combustion or pre-combustion carbon capture achieving 90–95% CO₂ removal.',soilUse:'Agronomically identical to standard granular urea. Premium pricing possible in carbon-conscious markets.',steps:[{title:'ATR + CCS',body:'Standard ATR with additional amine absorption unit capturing >90% of CO₂. Captured CO₂ compressed and stored in geological formations.'},{title:'Urea Synthesis',body:'NH₃ + CO₂ → urea. Standard granulation.'}]},
-  SMR_CCS:{title:'SMR with Carbon Capture',subtitle:'Natural Gas Route · CCS (Blue H₂)',color:'#5b2d8e',inputs:{direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas (mmbtu)',value:'4.5'},{label:'Electricity (kwh/ton)',value:'175'}],ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'14.5'},{label:'Natural Gas (Fuel) in mmbtu',value:'11.0'},{label:'Electricity (kwh/ton)',value:'85'}],totals:[{label:'Total Natural Gas',value:'22.5',bold:true},{label:'Electricity',value:'235',bold:true}],activeIngredient:{name:'Nitrogen',pct:46}},overview:'SMR with integrated CCS unit achieving 85–95% capture rate.',soilUse:'Qualifies for low-carbon fertilizer certification in EU and North American markets.',steps:[{title:'SMR + CCS',body:'Standard SMR with capture unit on reformer flue gas. MDEA or Econamine solvent. CO₂ compressed to 100–150 bar for pipeline transport.'},{title:'Urea Synthesis',body:'Portion of captured CO₂ fed to urea synthesis. Standard granulation.'}]},
-  CoalGasification:{title:'Coal Gasification',subtitle:'Coal Route · Traditional',color:'#374151',inputs:{direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Coal (in ton)',value:'1.8'},{label:'Electricity (kwh/ton)',value:'350'}],ammonia:[{label:'Coal (Feed Stock) in ton',value:'5.2'},{label:'Electricity (kwh/ton)',value:'180'}],totals:[{label:'Total Coal',value:'7.0',bold:true},{label:'Electricity',value:'530',bold:true}],activeIngredient:{name:'Nitrogen',pct:46}},overview:'Coal is gasified with steam and oxygen to produce syngas. Dominant route in China, ~70% of Chinese urea production.',soilUse:'Agronomically identical to natural gas-based granular urea. Higher carbon footprint. 30–40% lower cost in coal-rich regions.',steps:[{title:'Syngas Production',body:'Coal fed to gasifier at 1200–1500°C with steam and O₂. Produces syngas cleaned and shifted to maximize H₂.'},{title:'Ammonia & Urea',body:'H₂ combined with N₂ in Haber-Bosch. Standard granulation.'}]},
-  Coal_CCS:{title:'Coal with CCS',subtitle:'Coal Route · Carbon Capture',color:'#6b7280',inputs:{direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Coal (in ton)',value:'1.8'},{label:'Electricity (kwh/ton)',value:'420'}],ammonia:[{label:'Coal (Feed Stock) in ton',value:'5.2'},{label:'Electricity (kwh/ton)',value:'220'}],totals:[{label:'Total Coal',value:'7.0',bold:true},{label:'Electricity',value:'640',bold:true}],activeIngredient:{name:'Nitrogen',pct:46}},overview:'Coal gasification with integrated pre- or post-combustion CCS achieving 85–90% CO₂ removal.',soilUse:'Qualifies for lower carbon intensity certification.',steps:[{title:'Gasification + CCS',body:'Rectisol or Selexol wash capturing CO₂ and sulfur. CO₂ injected into geological storage.'},{title:'Urea Synthesis',body:'Standard NH₃+CO₂ reaction and granulation.'}]},
-  Electrolysis:{title:'Water Electrolysis',subtitle:'Green Route · Renewable H₂',color:'#0d7a5f',inputs:{direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Water (m³)',value:'9.0'},{label:'Electricity (kwh/ton)',value:'1,200'}],ammonia:[{label:'Electricity (kwh/ton)',value:'9,500'},{label:'Water (m³)',value:'8.5'}],totals:[{label:'Total Electricity',value:'10,700',bold:true},{label:'Water (m³)',value:'17.5',bold:true}],activeIngredient:{name:'Nitrogen',pct:46}},overview:'Green hydrogen produced by electrolyzing water using renewable electricity. Zero direct CO₂ emissions.',soilUse:'Identical agronomic performance. Commands green premium in carbon credit-linked markets.',steps:[{title:'Green H₂',body:'PEM or alkaline electrolyzer splits water into H₂ and O₂. Efficiency 60–80% (LHV basis).'},{title:'Green Ammonia & Urea',body:'H₂ fed to Haber-Bosch with N₂. CO₂ sourced from biogenic or direct air capture. Standard granulation.'}]},
-  BiomassGas:{title:'Biomass Gasification',subtitle:'Green Route · Bio H₂',color:'#16a34a',inputs:{direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Biomass (dry ton)',value:'3.2'},{label:'Electricity (kwh/ton)',value:'280'}],ammonia:[{label:'Biomass (Feed Stock) dry ton',value:'8.5'},{label:'Electricity (kwh/ton)',value:'160'}],totals:[{label:'Total Biomass',value:'11.7',bold:true},{label:'Electricity',value:'440',bold:true}],activeIngredient:{name:'Nitrogen',pct:46}},overview:'Agricultural residues or energy crops gasified. Near carbon-neutral or carbon-negative when combined with CCS.',soilUse:'Certified bio-based urea may qualify for renewable content credits in EU.',steps:[{title:'Biomass Syngas',body:'Biomass dried and fed to fluidized bed gasifier at 700–900°C. Cleaned via tar reformer and filtration.'},{title:'Ammonia & Urea',body:'Biogenic CO₂ from gasifier used in urea synthesis, making product carbon-neutral. Standard granulation.'}]}
-};
+    th.num {
+      text-align: right;
+    }
 
-// ═══════════════════════════════════════════════════
-// Market Profile DATA
-// ═══════════════════════════════════════════════════
-const CROP_ICONS = { 'Wheat':'🌾','Corn':'🌽','Soybeans':'🫘','Sugar':'🎋','Rice':'🍚' };
-const CROP_BG    = { 'Wheat':'#fef3c7','Corn':'#fef9c3','Soybeans':'#d0f0e8','Sugar':'#ede9fe','Rice':'#e8f0fb' };
-const FLAG       = { 'Brazil':'🇧🇷','China':'🇨🇳','Russia':'🇷🇺','Saudi Arabia':'🇸🇦','Egypt':'🇪🇬','India':'🇮🇳','US':'🇺🇸','Ukraine':'🇺🇦','Europe':'🇪🇺' };
-const cropData = [
-  { crop:'Wheat',consumption:40,price:300,change:5,ureaRatio:50},
-  { crop:'Corn',consumption:60,price:500,change:2,ureaRatio:10},
-  { crop:'Soybeans',consumption:70,price:500,change:2,ureaRatio:70},
-  { crop:'Sugar',consumption:100,price:200,change:-2,ureaRatio:40},
-  { crop:'Rice',consumption:200,price:300,change:-4,ureaRatio:60},
-];
-const countryData = [
-  {country:'Brazil',production:5,consumption:2,imports:1,exports:3},
-  {country:'China',production:60,consumption:30,imports:2,exports:30},
-  {country:'Russia',production:80,consumption:40,imports:0,exports:40},
-  {country:'Saudi Arabia',production:200,consumption:160,imports:0,exports:40},
-  {country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},
-  {country:'China',production:60,consumption:30,imports:2,exports:30},
-  {country:'Russia',production:80,consumption:40,imports:0,exports:40},
-  {country:'Saudi Arabia',production:200,consumption:160,imports:0,exports:40},
-  {country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},
-  {country:'China',production:60,consumption:30,imports:2,exports:30},
-  {country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},
-  {country:'Russia',production:80,consumption:40,imports:0,exports:40},
-  {country:'Saudi Arabia',production:200,consumption:160,imports:0,exports:40},
-  {country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},
-  {country:'China',production:60,consumption:30,imports:2,exports:30},
-  {country:'Russia',production:80,consumption:40,imports:0,exports:40},
-  {country:'Russia',production:80,consumption:40,imports:0,exports:40},
-  {country:'Russia',production:80,consumption:40,imports:0,exports:40},
-  {country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},
-  {country:'China',production:60,consumption:30,imports:2,exports:30},
-  {country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},
-  {country:'Russia',production:80,consumption:40,imports:0,exports:40},
-  {country:'Saudi Arabia',production:200,consumption:160,imports:0,exports:40},
-  {country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},
-  {country:'China',production:60,consumption:30,imports:2,exports:30},
-  {country:'Saudi Arabia',production:200,consumption:160,imports:0,exports:40},
-  {country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},
-  {country:'China',production:60,consumption:30,imports:2,exports:30},
-  {country:'Saudi Arabia',production:200,consumption:160,imports:0,exports:40},
-  {country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},
-  {country:'China',production:60,consumption:30,imports:2,exports:30},
-  {country:'Brazil',production:5,consumption:2,imports:1,exports:3},
-];
-const ROWS_PER_PAGE = 10;
-let currentPage = 1;
-let filteredCountry = [...countryData];
-let cropSortState = {}, countrySortState = {};
+    th .sort-icon {
+      display: inline-block;
+      margin-left: 4px;
+      opacity: 0.45;
+      font-size: 9px;
+    }
 
-function renderCropTable() {
-  const tbody = document.getElementById('crop-tbody');
-  const maxCons = Math.max(...cropData.map(r => r.consumption));
-  tbody.innerHTML = cropData.map(row => {
-    const chg = row.change >= 0 ? `<span class="change-pos">▲ ${row.change}%</span>` : `<span class="change-neg">▼ ${Math.abs(row.change)}%</span>`;
-    const pct = Math.round((row.consumption / maxCons) * 100);
-    return `<tr><td><div class="crop-name"><div class="crop-icon" style="background:${CROP_BG[row.crop]}">${CROP_ICONS[row.crop]}</div>${row.crop}</div></td><td class="num"><div class="prod-bar-wrap">${row.consumption}<div class="prod-bar"><div class="prod-bar-fill prod" style="width:${pct}%"></div></div></div></td><td class="num"><span class="price-tag">$${row.price}</span></td><td class="num">${chg}</td><td class="num">${row.ureaRatio}</td></tr>`;
-  }).join('');
-}
+    tbody tr {
+      border-bottom: 1px solid var(--border-light);
+      transition: background 0.1s;
+      cursor: pointer;
+    }
 
-function renderCountryTable() {
-  const tbody = document.getElementById('country-tbody');
-  const maxProd = Math.max(...filteredCountry.map(r => r.production));
-  const start = (currentPage - 1) * ROWS_PER_PAGE;
-  const page = filteredCountry.slice(start, start + ROWS_PER_PAGE);
-  tbody.innerHTML = page.map(row => {
-    const flag = FLAG[row.country] || '🌐';
-    const pp = Math.round((row.production / maxProd) * 100);
-    const cp = Math.round((row.consumption / maxProd) * 100);
-    const ip = Math.round((row.imports / maxProd) * 100);
-    const ep = Math.round((row.exports / maxProd) * 100);
-    return `<tr><td><span class="country-chip"><span>${flag}</span>${row.country}</span></td><td class="num"><div class="prod-bar-wrap">${row.production}<div class="prod-bar"><div class="prod-bar-fill prod" style="width:${pp}%"></div></div></div></td><td class="num"><div class="prod-bar-wrap">${row.consumption}<div class="prod-bar"><div class="prod-bar-fill cons" style="width:${cp}%"></div></div></div></td><td class="num"><div class="prod-bar-wrap">${row.imports}<div class="prod-bar"><div class="prod-bar-fill imp" style="width:${ip}%"></div></div></div></td><td class="num"><div class="prod-bar-wrap">${row.exports}<div class="prod-bar"><div class="prod-bar-fill exp" style="width:${ep}%"></div></div></div></td></tr>`;
-  }).join('');
-  renderPagination();
-}
+    tbody tr:last-child {
+      border-bottom: none;
+    }
 
-function renderPagination() {
-  const total = filteredCountry.length;
-  const totalPages = Math.ceil(total / ROWS_PER_PAGE);
-  const start = (currentPage - 1) * ROWS_PER_PAGE + 1;
-  const end = Math.min(currentPage * ROWS_PER_PAGE, total);
-  document.getElementById('page-info').innerHTML = `Showing <strong>${start}–${end}</strong> of <strong>${total}</strong> countries`;
-  const wrap = document.getElementById('page-btns');
-  let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>`;
-  for (let p=1;p<=totalPages;p++){if(totalPages>6&&p>2&&p<totalPages-1&&Math.abs(p-currentPage)>1){if(p===3||p===totalPages-2)html+=`<span class="page-dots">…</span>`;continue;}html+=`<button class="page-btn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;}
-  html+=`<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>`;
-  wrap.innerHTML = html;
-}
+    tbody tr:hover {
+      background: var(--accent-light);
+    }
 
-function goPage(p){const total=Math.ceil(filteredCountry.length/ROWS_PER_PAGE);if(p<1||p>total)return;currentPage=p;renderCountryTable();}
-function filterCountry(type,el){document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');if(type==='all')filteredCountry=[...countryData];else if(type==='high-prod')filteredCountry=countryData.filter(r=>r.production>=80);else if(type==='importer')filteredCountry=countryData.filter(r=>r.imports>r.exports);else if(type==='exporter')filteredCountry=countryData.filter(r=>r.exports>r.imports);currentPage=1;renderCountryTable();}
-function searchCountry(q){filteredCountry=countryData.filter(r=>r.country.toLowerCase().includes(q.toLowerCase()));currentPage=1;renderCountryTable();}
-function sortCrop(col){cropSortState[col]=cropSortState[col]==='asc'?'desc':'asc';const asc=cropSortState[col]==='asc';const keys=['crop','consumption','price','change','ureaRatio'];cropData.sort((a,b)=>asc?(a[keys[col]]>b[keys[col]]?1:-1):(a[keys[col]]<b[keys[col]]?1:-1));renderCropTable();}
-function sortCountry(col){countrySortState[col]=countrySortState[col]==='asc'?'desc':'asc';const asc=countrySortState[col]==='asc';const keys=['country','production','consumption','imports','exports'];filteredCountry.sort((a,b)=>asc?(a[keys[col]]>b[keys[col]]?1:-1):(a[keys[col]]<b[keys[col]]?1:-1));renderCountryTable();}
+    tbody tr.selected {
+      background: var(--accent-light);
+      border-left: 3px solid var(--accent);
+    }
 
-// ═══════════════════════════════════════════════════
-// ROUTE TREE
-// ═══════════════════════════════════════════════════
-function buildRouteTree() {
-  const container = document.getElementById('routeGroups');
-  container.innerHTML = ROUTE_GROUPS.map(group => `
-    <div class="route-group-card">
-      <div class="route-group-header" onclick="toggleGroup(this)" data-group="${group.id}">
-        <div class="route-group-icon" style="background:${group.bgColor};color:${group.color}">${group.icon}</div>
-        <div>
-          <div class="route-group-name" style="color:${group.color}">${group.name}</div>
-          <div class="route-group-desc">${group.desc}</div>
-        </div>
-        <div class="route-group-toggle"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+    td {
+      padding: 10px 14px;
+      vertical-align: middle;
+    }
+
+    td.num {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    /* FERTILIZER TABLE */
+    .ticker-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 5px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      background: var(--accent);
+      color: #fff;
+      letter-spacing: 0.3px;
+    }
+
+    .change-pos {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: var(--green-light);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .change-neg {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--red);
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: var(--red-light);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .ranking-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .ranking-bar {
+      width: 48px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .ranking-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .exposure-badge {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* FILTERS */
+    .filters-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .filter-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .filter-select {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+      min-width: 100px;
+    }
+
+    .filter-select svg {
+      width: 12px;
+      height: 12px;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+
+    /* MARKET PROFILE */
+    .sub-tabs-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .sub-tabs {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sub-tab {
+      padding: 7px 18px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-right: 1px solid var(--border);
+      transition: all 0.15s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .sub-tab:last-child {
+      border-right: none;
+    }
+
+    .sub-tab:hover {
+      background: var(--bg);
+      color: var(--text-primary);
+    }
+
+    .sub-tab.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .sub-tab-icon {
+      width: 14px;
+      height: 14px;
+      opacity: 0.8;
+    }
+
+    .sub-tab.active .sub-tab-icon {
+      opacity: 1;
+    }
+
+    .sub-tab-badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .sub-tab:not(.active) .sub-tab-badge {
+      background: var(--accent-subtle);
+      color: var(--accent);
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.4;
+      }
+    }
+
+    .sub-panel {
+      display: none;
+    }
+
+    .sub-panel.active {
+      display: block;
+      animation: fadeUp 0.18s ease;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .card-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--accent);
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .card-meta {
+      font-size: 11.5px;
+      color: rgba(255, 255, 255, 0.65);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .crop-name {
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .crop-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .price-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .prod-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .prod-bar {
+      width: 48px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .prod-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+    }
+
+    .prod-bar-fill.prod {
+      background: var(--accent);
+    }
+
+    .prod-bar-fill.cons {
+      background: var(--amber);
+    }
+
+    .prod-bar-fill.imp {
+      background: var(--green);
+    }
+
+    .prod-bar-fill.exp {
+      background: var(--purple);
+    }
+
+    /* CROP DETAIL SECTION */
+    .crop-detail-section {
+      display: none;
+      padding: 16px;
+      background: var(--surface-2);
+      border-top: 1px solid var(--border);
+    }
+
+    .crop-detail-section.active {
+      display: block;
+      animation: fadeUp 0.2s ease;
+    }
+
+    .crop-detail-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .crop-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .detail-col {}
+
+    .detail-col-header {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--accent);
+      width: fit-content;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .detail-item:last-child {
+      border-bottom: none;
+    }
+
+    .detail-item-country {
+      font-size: 12px;
+      font-weight: 500;
+      min-width: 50px;
+    }
+
+    .detail-item-value {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--text-secondary);
+    }
+
+    .country-filter-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .filter-chip {
+      display: flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .filter-chip.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .search-mini {
+      margin-left: auto;
+      position: relative;
+    }
+
+    .search-mini input {
+      height: 30px;
+      padding: 0 10px 0 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: var(--text-primary);
+      background: var(--surface);
+      outline: none;
+      width: 160px;
+    }
+
+    .search-mini input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(8, 48, 107, 0.1);
+    }
+
+    .search-mini svg {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      color: var(--text-muted);
+    }
+
+    .country-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 500;
+    }
+
+    .pagination-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-top: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+
+    .page-info {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .page-info strong {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .page-btns {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .page-btn {
+      min-width: 30px;
+      height: 30px;
+      padding: 0 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      color: var(--text-secondary);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .page-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .page-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .page-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .page-dots {
+      color: var(--text-muted);
+      font-size: 12px;
+      padding: 0 4px;
+    }
+
+    /* RIGHT PANEL - LARGER */
+    .right-panel {
+      width: var(--right-panel);
+      flex-shrink: 0;
+      border-left: 1px solid var(--border);
+      background: var(--surface);
+      overflow-y: auto;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .right-panel::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .right-panel::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 2px;
+    }
+
+    .panel-section-title {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .commodity-name {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 8px;
+      color: var(--accent);
+    }
+
+    .commodity-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    /* UREA VISUAL */
+    .urea-visual {
+      width: 100%;
+      height: 140px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, #e8f0fb 0%, #c5d9f0 50%, #8ab3d8 100%);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .urea-granules {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      gap: 4px;
+      padding: 18px;
+    }
+
+    .granule {
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff 0%, #c8dbf0 50%, #7aadda 100%);
+      box-shadow: 0 1px 3px rgba(8, 48, 107, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.7);
+      opacity: 0;
+      animation: pop 0.4s ease forwards;
+    }
+
+    @keyframes pop {
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* PRICE BADGE */
+    .chart-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .chart-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .chart-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .chart-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 11px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    .chart-badge.pos {
+      background: var(--green-light);
+      color: var(--green);
+      border: 1px solid #a7f3d0;
+    }
+
+    .chart-badge.neg {
+      background: var(--red-light);
+      color: var(--red);
+      border: 1px solid #fecaca;
+    }
+
+    /* PRICE INFO ROW */
+    .price-info-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .price-big {
+      font-family: var(--font-mono);
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: -1px;
+    }
+
+    .price-change-small {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--red);
+    }
+
+    .price-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* SVG LINE CHART */
+    .line-chart-wrap {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .chart-svg {
+      display: block;
+      width: 100%;
+    }
+
+    .chart-x-labels {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 10px 3px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .chart-time-range {
+      display: flex;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .time-range-btn {
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: var(--font-mono);
+    }
+
+    .time-range-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .time-range-btn:hover:not(.active) {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* STAT CARDS */
+    .stat-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .stat-card-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .stat-card-value {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+      line-height: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .stat-card-value .unit {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .stat-change {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 11.5px;
+      font-weight: 600;
+      margin-top: 5px;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .stat-change.pos {
+      color: var(--green);
+      background: var(--green-light);
+    }
+
+    .stat-change.neg {
+      color: var(--red);
+      background: var(--red-light);
+    }
+
+    /* BULLETIN */
+    .bulletin-item {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .bulletin-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .bulletin-headline {
+      font-size: 13px;
+      line-height: 1.5;
+      font-weight: 500;
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
+
+    .bulletin-headline:hover {
+      color: var(--accent);
+    }
+
+    .bulletin-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .bulletin-source {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ═══════════════════════════════════════════════
+   PRODUCTION INPUTS / PROCESS TAB - SPLIT LAYOUT
+═══════════════════════════════════════════════ */
+    .prod-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .prod-left,
+    .prod-right {}
+
+    .prod-section-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .prod-section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .route-filter-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .route-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .route-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .route-chip.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .route-chip-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .route-cards {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .route-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .route-card:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .route-card.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* OUTPUT PANEL */
+    .output-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .output-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      min-height: 300px;
+    }
+
+    .output-empty svg {
+      opacity: 0.2;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+
+    .output-empty p {
+      font-size: 12.5px;
+      line-height: 1.5;
+      max-width: 200px;
+    }
+
+    .output-content {
+      display: none;
+    }
+
+    .output-content.visible {
+      display: block;
+      animation: fadeUp 0.2s ease;
+    }
+
+    .output-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--accent);
+    }
+
+    .output-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .output-subtitle {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.65);
+      margin-top: 2px;
+    }
+
+    .new-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 16px;
+      background: var(--surface);
+    }
+
+    .output-left,
+    .output-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* METRICS */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 12px;
+    }
+
+    .metric-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card.highlight {
+      background: var(--accent-light);
+      border-color: var(--accent-subtle);
+    }
+
+    .metric-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .metric-card.highlight .metric-label {
+      color: var(--accent);
+    }
+
+    .metric-value {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1.1;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .metric-bar {
+      height: 4px;
+      background: rgba(8, 48, 107, 0.1);
+      border-radius: 2px;
+      margin-top: 4px;
+      overflow: hidden;
+    }
+
+    .metric-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    /* INPUTS LIST */
+    .inputs-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .input-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .input-block-title {
+      background: var(--surface-2);
+      padding: 8px 12px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .input-unit {
+      color: var(--text-muted);
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .data-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 11.5px;
+    }
+
+    .data-row:last-child {
+      border-bottom: none;
+    }
+
+    .data-label {
+      color: var(--text-secondary);
+    }
+
+    .data-value {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* INFO BOXES */
+    .info-boxes {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .info-box {
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      background: var(--surface-2);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-light);
+    }
+
+    .info-box-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--accent-light);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .info-box-icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .info-box-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .info-box-text {
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* TIMELINE */
+    .timeline-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+
+    .timeline-title {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      left: 11px;
+      width: 2px;
+      background: var(--border-light);
+    }
+
+    .timeline-step {
+      display: flex;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-marker {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .timeline-content {
+      padding-top: 2px;
+    }
+
+    .timeline-step-title {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+
+    .timeline-step-desc {
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* TOOLTIP */
+    .chart-tooltip {
+      position: absolute;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 6px;
+      padding: 7px 11px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      pointer-events: none;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(8, 48, 107, 0.4);
+      transform: translateX(-50%);
+      transition: opacity 0.1s;
+      z-index: 10;
+    }
+
+    .chart-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--accent);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5z" />
+          <path d="M2 17l10 5 10-5" />
+          <path d="M2 12l10 5 10-5" />
+        </svg>
       </div>
-      <div class="route-group-body">
-        ${group.subGroups.map(sg => `
-          <div class="sub-group">
-            <div class="sub-group-label">${sg.label}</div>
-            <div class="route-nodes">
-              ${sg.nodes.map(n => `
-                <div class="route-node" onclick="selectRoute('${n.id}',this)" title="${n.full}">
-                  <span class="route-node-dot"></span>${n.label}
-                  ${n.tag?`<span class="route-node-tag">${n.tag}</span>`:''}
-                </div>
-              `).join('')}
+      <span class="logo-text">Market <span>Neurons</span></span>
+    </div>
+    <div class="search-wrap">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.35-4.35" />
+      </svg>
+      <input class="search-input" type="text" placeholder="Search markets, tickers, or reports…">
+      <span class="search-hint">⌘K</span>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+        </svg><span class="notif-dot"></span></button>
+      <button class="icon-btn"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="3" />
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" />
+        </svg></button>
+      <button class="icon-btn"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 8v4M12 16h.01" />
+        </svg></button>
+      <button class="export-btn">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        Export Data
+      </button>
+      <div class="profile-pill">
+        <div class="avatar">IT</div>
+        <div>
+          <div class="profile-name">Institutional Trader</div>
+          <div class="profile-role">Terminal v4.2</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="app-body">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-section-header">Sector</div>
+      <div style="padding:2px 16px 10px;font-size:11px;color:var(--text-muted)">Fertilizers</div>
+      <div class="sidebar-group">
+        <div class="sidebar-parent open">
+          <div class="sidebar-parent-label"><svg width="14" height="14" fill="none" stroke="currentColor"
+              stroke-width="2" viewBox="0 0 24 24">
+              <path d="M12 2v20M2 12h20" />
+            </svg>Nitrogen</div>
+          <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </div>
+        <div class="sidebar-children">
+          <div class="sidebar-parent"
+            style="font-size:12.5px;font-weight:500;padding-left:28px;color:var(--text-secondary)">
+            <div class="sidebar-parent-label">Urea</div>
+            <svg class="sidebar-chevron" style="width:12px;height:12px" fill="none" stroke="currentColor"
+              stroke-width="2" viewBox="0 0 24 24">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+          <div class="sidebar-item active">Granular</div>
+          <div class="sidebar-item">Prilled</div>
+          <div class="sidebar-item">UAN Solutions</div>
+          <div class="sidebar-item">Sulfur-coated urea</div>
+          <div class="sidebar-item">Urease inhibitor urea</div>
+          <div class="sidebar-item">Liquid Urea</div>
+        </div>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-group">
+        <div class="sidebar-parent">
+          <div class="sidebar-parent-label"><svg width="14" height="14" fill="none" stroke="currentColor"
+              stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M8 12h8M12 8v8" />
+            </svg>Ammonia</div>
+          <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </div>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-group">
+        <div class="sidebar-parent">
+          <div class="sidebar-parent-label"><svg width="14" height="14" fill="none" stroke="currentColor"
+              stroke-width="2" viewBox="0 0 24 24">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>Phosphates</div>
+          <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-parent">
+          <div class="sidebar-parent-label"><svg width="14" height="14" fill="none" stroke="currentColor"
+              stroke-width="2" viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            </svg>Potash</div>
+          <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <div class="main-inner">
+        <div class="content">
+          <!-- PAGE HEADER -->
+          <div class="page-header">
+            <div class="breadcrumb">
+              <span>Commodities</span><span>›</span><span>Nitrogen</span><span>›</span><span>Urea</span><span>›</span><span
+                style="color:var(--accent);font-weight:500">Granular</span>
+            </div>
+            <h1 class="page-title">Granular Urea</h1>
+            <p class="page-subtitle">Global nitrogen benchmarks and institutional stock performance</p>
+          </div>
+
+          <!-- MAIN TABS -->
+          <div class="main-tabs">
+            <div class="main-tab active" onclick="switchMain('fertilizers',this)">Fertilizers Stocks</div>
+            <div class="main-tab" onclick="switchMain('market-profile',this)">Market Profile</div>
+            <div class="main-tab" onclick="switchMain('production',this)">Production Inputs / Process</div>
+          </div>
+
+          <!-- TAB 1: FERTILIZERS STOCKS -->
+          <div id="tab-fertilizers" class="tab-panel active">
+            <div class="filters-row">
+              <div class="filter-group"><span class="filter-label">Home Country</span>
+                <div class="filter-select">Egypt<svg fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg></div>
+              </div>
+              <div class="filter-group"><span class="filter-label">Export Market</span>
+                <div class="filter-select">Europe<svg fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg></div>
+              </div>
+              <div class="filter-group"><span class="filter-label">Exchange</span>
+                <div class="filter-select">NASDAQ<svg fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg></div>
+              </div>
+              <div class="search-mini" style="margin-left:auto">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.35-4.35" />
+                </svg>
+                <input type="text" placeholder="Search stocks…" oninput="searchStocks(this.value)">
+              </div>
+            </div>
+            <div class="table-outer">
+              <div class="table-wrap">
+                <table id="stocks-table">
+                  <thead>
+                    <tr>
+                      <th onclick="sortStocks(0)">Symbol <span class="sort-icon">↕</span></th>
+                      <th class="num" onclick="sortStocks(1)">Price <span class="sort-icon">↕</span></th>
+                      <th class="num" onclick="sortStocks(2)">Change % <span class="sort-icon">↕</span></th>
+                      <th class="num" onclick="sortStocks(3)">Mkt Cap BN <span class="sort-icon">↕</span></th>
+                      <th class="num" onclick="sortStocks(4)">Ranking / 100 <span class="sort-icon">↕</span></th>
+                      <th class="num" onclick="sortStocks(5)">Exposure <span class="sort-icon">↕</span></th>
+                    </tr>
+                  </thead>
+                  <tbody id="stocks-tbody"></tbody>
+                </table>
+              </div>
             </div>
           </div>
-        `).join('')}
+
+
+          <!-- TAB 2: MARKET PROFILE -->
+          <div id="tab-market-profile" class="tab-panel">
+            <div class="sub-tabs-wrap">
+              <div class="sub-tabs">
+                <div class="sub-tab active" onclick="switchSub('crop-market',this)">
+                  <svg class="sub-tab-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M12 22V12M12 12C12 7 17 4 17 4M12 12C12 7 7 4 7 4" />
+                  </svg>
+                  Crop Market<span class="sub-tab-badge">5</span>
+                </div>
+                <div class="sub-tab" onclick="switchSub('country-data',this)">
+                  <svg class="sub-tab-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" />
+                    <path
+                      d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                  </svg>
+                  Country Data<span class="sub-tab-badge">32</span>
+                </div>
+              </div>
+              <div class="country-filter-row">
+                <div class="search-mini">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
+                  </svg>
+                  <input type="text" placeholder="Search crop…" oninput="searchCrop(this.value)">
+                </div>
+              </div>
+            </div>
+            <div id="sub-crop-market" class="sub-panel active">
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Crop Market Overview</span>
+                  <div class="card-meta"><span class="live-dot"></span><span>Urea demand by crop</span></div>
+                </div>
+                <div class="table-wrap">
+                  <table id="crop-table">
+                    <thead>
+                      <tr>
+                        <th onclick="sortCrop(0)">Crop <span class="sort-icon">↕</span></th>
+                        <th class="num" onclick="sortCrop(1)">Urea Consumption <span class="sort-icon">↕</span></th>
+                        <th class="num" onclick="sortCrop(2)">Price / ton <span class="sort-icon">↕</span></th>
+                        <th class="num" onclick="sortCrop(3)">Change % <span class="sort-icon">↕</span></th>
+                        <th class="num" onclick="sortCrop(4)">Urea/Crop Price <span class="sort-icon">↕</span></th>
+                      </tr>
+                    </thead>
+                    <tbody id="crop-tbody"></tbody>
+                  </table>
+                </div>
+                <div id="crop-detail-section" class="crop-detail-section">
+                  <div class="crop-detail-title">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10" />
+                      <path
+                        d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                    </svg>
+                    <span id="selected-crop-name">Select a crop above</span>
+                  </div>
+                  <div class="crop-detail-grid" id="crop-detail-grid"></div>
+                </div>
+              </div>
+            </div>
+            <div id="sub-country-data" class="sub-panel">
+              <div class="card">
+                <div class="card-header"><span class="card-title">Country Trade Data</span>
+                  <div class="card-meta"><span>Production · Consumption · Imports · Exports</span></div>
+                </div>
+                <div class="country-filter-row">
+                  <div class="filter-chip active" onclick="filterCountry('all',this)">All</div>
+                  <div class="filter-chip" onclick="filterCountry('importer',this)">Net Importers</div>
+                  <div class="filter-chip" onclick="filterCountry('exporter',this)">Net Exporters</div>
+                  <div class="search-mini">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <circle cx="11" cy="11" r="8" />
+                      <path d="m21 21-4.35-4.35" />
+                    </svg>
+                    <input type="text" placeholder="Search country…" oninput="searchCountry(this.value)">
+                  </div>
+                </div>
+                <div class="table-wrap">
+                  <table id="country-table">
+                    <thead>
+                      <tr>
+                        <th onclick="sortCountry(0)">Country <span class="sort-icon">↕</span></th>
+                        <th class="num" onclick="sortCountry(1)">Production <span class="sort-icon">↕</span></th>
+                        <th class="num" onclick="sortCountry(2)">Consumption <span class="sort-icon">↕</span></th>
+                        <th class="num" onclick="sortCountry(3)">Imports <span class="sort-icon">↕</span></th>
+                        <th class="num" onclick="sortCountry(4)">Exports <span class="sort-icon">↕</span></th>
+                      </tr>
+                    </thead>
+                    <tbody id="country-tbody"></tbody>
+                  </table>
+                </div>
+                <div class="pagination-row">
+                  <div class="page-info" id="page-info"></div>
+                  <div class="page-btns" id="page-btns"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: PRODUCTION INPUTS / PROCESS -->
+          <div id="tab-production" class="tab-panel">
+            <div class="prod-layout">
+              <div class="prod-left">
+                <div class="prod-section-title">Production Routes</div>
+                <div class="route-filter-row">
+                  <div class="route-chip active" onclick="filterRoute('all',this)"><span
+                      class="route-chip-dot"></span>All Routes</div>
+                  <div class="route-chip" onclick="filterRoute('natural-gas',this)"><span class="route-chip-dot"
+                      style="background:#08306B"></span>Natural Gas</div>
+                  <div class="route-chip" onclick="filterRoute('coal',this)"><span class="route-chip-dot"
+                      style="background:#374151"></span>Coal</div>
+                  <div class="route-chip" onclick="filterRoute('green',this)"><span class="route-chip-dot"
+                      style="background:#0d7a5f"></span>Green</div>
+                </div>
+                <div class="route-cards" id="routeCards"></div>
+              </div>
+              <div class="prod-right">
+                <div class="prod-section-title">Process Details</div>
+                <div class="output-panel">
+                  <div class="output-empty" id="outputEmpty">
+                    <svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.3"
+                      viewBox="0 0 24 24">
+                      <path
+                        d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18" />
+                    </svg>
+                    <p>Select a production route to view inputs and process details</p>
+                  </div>
+                  <div class="output-content" id="outputContent"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /content -->
+
+        <!-- RIGHT PANEL -->
+        <aside class="right-panel">
+          <div>
+            <div class="commodity-name">Granular Urea</div>
+            <p class="commodity-desc">Solid nitrogenous fertilizer produced through the granulation of liquid urea.
+              Primary nitrogen source for large-scale agriculture due to high nutrient density and favorable handling
+              characteristics.</p>
+            <div class="urea-visual">
+              <div class="urea-granules" id="granules"></div>
+            </div>
+          </div>
+
+          <!-- PRICE CHART SECTION -->
+          <div>
+            <div class="chart-header">
+              <div>
+                <div class="chart-title">Urea Price (USD/T)</div>
+                <div class="chart-subtitle">1 Year · Daily</div>
+              </div>
+              <span class="chart-badge neg">▼ -0.36%</span>
+            </div>
+            <div class="price-info-row">
+              <span class="price-big">692.25</span>
+              <span class="price-change-small">-2.50</span>
+            </div>
+            <div class="line-chart-wrap" id="lineChartWrap">
+              <canvas id="priceChart" height="160" style="display:block;width:100%;cursor:crosshair;"></canvas>
+              <div class="chart-tooltip" id="chartTooltip" style="opacity:0;position:absolute;top:8px;left:50%"></div>
+            </div>
+            <div class="chart-x-labels" id="chartXLabels"></div>
+            <div class="chart-time-range">
+              <button class="time-range-btn active">1Y</button>
+              <button class="time-range-btn">5Y</button>
+              <button class="time-range-btn">All</button>
+            </div>
+          </div>
+
+          <div class="stat-cards">
+            <div class="stat-card">
+              <div class="stat-card-label">Input Cost Index</div>
+              <div class="stat-card-value">114.2</div>
+              <div class="stat-change pos">▲ 2.1</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-label">Energy Delta</div>
+              <div class="stat-card-value">−2.4<span class="unit">%</span></div>
+              <div class="stat-change neg">▼ 2.4%</div>
+            </div>
+          </div>
+
+          <div>
+            <div class="panel-section-title">Market Bulletin</div>
+            <div class="bulletin-item">
+              <div class="bulletin-headline">Black Sea export restrictions causing price volatility in Mediterranean
+                markets.</div>
+              <div class="bulletin-meta"><span>2 hours ago</span><span style="opacity:.4">•</span><span
+                  class="bulletin-source">Reuters</span></div>
+            </div>
+            <div class="bulletin-item">
+              <div class="bulletin-headline">CF Industries reports record Q3 production efficiency in Louisiana plant.
+              </div>
+              <div class="bulletin-meta"><span>5 hours ago</span><span style="opacity:.4">•</span><span
+                  class="bulletin-source">Bloomberg</span></div>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
-  `).join('');
-}
+  </div>
 
-function toggleGroup(header){const body=header.nextElementSibling;const isOpen=header.classList.contains('open');header.classList.toggle('open',!isOpen);body.classList.toggle('open',!isOpen);}
+  <script>
+    // ═══════════════════════════════════════════════════
+    // STOCKS DATA
+    // ═══════════════════════════════════════════════════
+    let stocksData = [
+      { symbol: 'ABUK', price: 100, change: 5, mktCap: 100, ranking: 90, exposure: 60 },
+      { symbol: 'MPCO', price: 70, change: 1, mktCap: 150, ranking: 100, exposure: 50 },
+      { symbol: 'YAR', price: 20, change: 2, mktCap: 20, ranking: 70, exposure: 70 },
+      { symbol: '2020', price: 30, change: -1, mktCap: 30, ranking: 60, exposure: 50 },
+      { symbol: 'CF', price: 28, change: -5, mktCap: 60, ranking: 20, exposure: 30 },
+      { symbol: 'ABUK', price: 100, change: 5, mktCap: 100, ranking: 90, exposure: 60 },
+      { symbol: 'MPCO', price: 70, change: 1, mktCap: 150, ranking: 100, exposure: 50 },
+      { symbol: 'YAR', price: 20, change: 2, mktCap: 20, ranking: 70, exposure: 70 },
+    ];
+    let filteredStocks = [...stocksData];
+    let stocksSortState = {};
 
-function selectRoute(id,el){
-  document.querySelectorAll('.route-node').forEach(n=>n.classList.remove('active'));
-  el.classList.add('active');
-  const d=ROUTE_DETAILS[id];
-  if(!d)return;
-  document.getElementById('detailEmpty').style.display='none';
-  const content=document.getElementById('detailContent');
-  content.classList.add('visible');
-  const inp=d.inputs;
-  content.innerHTML=`
-    <div class="detail-header">
-      <div class="detail-header-icon" style="background:${d.color}">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
-      </div>
-      <div><div class="detail-title">${d.title}</div><div class="detail-subtitle">${d.subtitle}</div></div>
+    function renderStocksTable() {
+      const tbody = document.getElementById('stocks-tbody');
+      tbody.innerHTML = filteredStocks.map(row => {
+        const chg = row.change >= 0 ? `<span class="change-pos">▲ ${row.change}</span>` : `<span class="change-neg">▼ ${Math.abs(row.change)}</span>`;
+        return `<tr><td><span class="ticker-badge">${row.symbol}</span></td><td class="num">${row.price}</td><td class="num">${chg}</td><td class="num">${row.mktCap}</td><td class="num"><div class="ranking-bar-wrap">${row.ranking}<div class="ranking-bar"><div class="ranking-bar-fill" style="width:${row.ranking}%"></div></div></div></td><td class="num"><span class="exposure-badge">${row.exposure}%</span></td></tr>`;
+      }).join('');
+    }
+
+    function searchStocks(q) {
+      filteredStocks = stocksData.filter(r => r.symbol.toLowerCase().includes(q.toLowerCase()));
+      renderStocksTable();
+    }
+
+    function sortStocks(col) {
+      stocksSortState[col] = stocksSortState[col] === 'asc' ? 'desc' : 'asc';
+      const asc = stocksSortState[col] === 'asc';
+      const keys = ['symbol', 'price', 'change', 'mktCap', 'ranking', 'exposure'];
+      filteredStocks.sort((a, b) => asc ? (a[keys[col]] > b[keys[col]] ? 1 : -1) : (a[keys[col]] < b[keys[col]] ? 1 : -1));
+      renderStocksTable();
+    }
+
+    // ═══════════════════════════════════════════════════
+    // UREA PRICE CHART
+    // ═══════════════════════════════════════════════════
+    const PRICE_DATA = [
+      480, 472, 468, 461, 455, 448, 440, 432, 425, 418, 410, 400, 392, 383, 375, 368, 365, 367, 370, 375, 380, 388, 393, 400, 408, 415, 420, 428, 435, 442,
+      448, 455, 462, 468, 472, 478, 480, 475, 470, 465, 460, 456, 452, 448, 445, 442, 440, 438, 436, 433, 430, 428, 425, 422, 418, 415, 412, 410, 408, 406,
+      404, 402, 400, 398, 396, 394, 392, 390, 388, 386, 384, 382, 380, 379, 378, 377, 376, 375, 376, 377, 378, 380, 382, 385, 388, 390, 392, 395, 398, 400,
+      402, 404, 406, 408, 410, 408, 405, 402, 398, 395, 392, 388, 385, 382, 380, 378, 376, 375, 374, 373, 372, 371, 370, 370, 369, 368, 368, 367, 366, 365,
+      364, 362, 360, 358, 357, 356, 355, 354, 354, 353, 352, 351, 350, 350, 351, 352, 353, 355, 357, 360, 363, 367, 370, 374, 378, 383, 388, 394, 400, 408,
+      416, 424, 432, 440, 445, 448, 450, 452, 454, 456, 458, 460, 462, 455, 450, 445, 442, 440, 445, 452, 460, 468, 475, 480, 478, 475, 472, 470, 468, 465,
+      468, 472, 478, 485, 492, 500, 508, 516, 525, 535, 545, 555, 562, 568, 574, 580, 585, 590, 594, 598, 600, 598, 595, 598, 602, 605, 608,
+      615, 625, 635, 648, 660, 672, 682, 690, 700, 710, 718, 725, 720, 715, 710, 705, 700, 698, 695, 692
+    ];
+
+    function drawPriceChart() {
+      const canvas = document.getElementById('priceChart');
+      const wrap = document.getElementById('lineChartWrap');
+      const W = wrap.clientWidth || 380;
+      const H = 160;
+      canvas.width = W * window.devicePixelRatio;
+      canvas.height = H * window.devicePixelRatio;
+      canvas.style.width = W + 'px';
+      canvas.style.height = H + 'px';
+      const ctx = canvas.getContext('2d');
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+      const pad = { top: 12, right: 10, bottom: 10, left: 10 };
+      const cw = W - pad.left - pad.right;
+      const ch = H - pad.top - pad.bottom;
+      const data = PRICE_DATA;
+      const minV = Math.min(...data) - 20;
+      const maxV = Math.max(...data) + 20;
+
+      function xOf(i) { return pad.left + (i / (data.length - 1)) * cw; }
+      function yOf(v) { return pad.top + ch - ((v - minV) / (maxV - minV)) * ch; }
+
+      ctx.strokeStyle = 'rgba(8,48,107,0.07)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 4; i++) {
+        const y = pad.top + (ch / 4) * i;
+        ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + cw, y); ctx.stroke();
+      }
+
+      ctx.fillStyle = 'rgba(122,155,184,0.9)';
+      ctx.font = '10px DM Mono, monospace';
+      ctx.textAlign = 'right';
+      const yLabels = [750, 700, 650, 600, 550, 500, 450, 400, 350];
+      for (const v of yLabels) {
+        if (v >= minV && v <= maxV) {
+          const y = yOf(v);
+          if (y > pad.top + 6 && y < H - pad.bottom - 4) {
+            ctx.fillText(v, W - 5, y + 4);
+          }
+        }
+      }
+
+      const grad = ctx.createLinearGradient(0, pad.top, 0, H);
+      grad.addColorStop(0, 'rgba(8,48,107,0.18)');
+      grad.addColorStop(1, 'rgba(8,48,107,0.0)');
+
+      ctx.beginPath();
+      ctx.moveTo(xOf(0), yOf(data[0]));
+      for (let i = 1; i < data.length; i++) ctx.lineTo(xOf(i), yOf(data[i]));
+      ctx.lineTo(xOf(data.length - 1), H - pad.bottom);
+      ctx.lineTo(xOf(0), H - pad.bottom);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(xOf(0), yOf(data[0]));
+      for (let i = 1; i < data.length; i++) ctx.lineTo(xOf(i), yOf(data[i]));
+      ctx.strokeStyle = '#08306B';
+      ctx.lineWidth = 2;
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+
+      const lastX = xOf(data.length - 1);
+      const lastY = yOf(data[data.length - 1]);
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#08306B';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, 7, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(8,48,107,0.15)';
+      ctx.fill();
+
+      const labels = ['Jun', 'Aug', 'Oct', 'Dec', '2026', 'Apr'];
+      document.getElementById('chartXLabels').innerHTML = labels.map(l => `<span>${l}</span>`).join('');
+
+      const tooltip = document.getElementById('chartTooltip');
+      canvas.onmousemove = function (e) {
+        const rect = canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const idx = Math.round(((mx - pad.left) / cw) * (data.length - 1));
+        if (idx < 0 || idx >= data.length) return;
+        const val = data[idx];
+        const x = xOf(idx);
+        const y = yOf(val);
+
+        ctx.clearRect(0, 0, W, H);
+        drawPriceChartStatic(ctx, W, H, data, pad, cw, ch, minV, maxV, xOf, yOf, grad);
+
+        ctx.save();
+        ctx.strokeStyle = 'rgba(8,48,107,0.35)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, H - pad.bottom); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + cw, y); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.restore();
+
+        ctx.beginPath();
+        ctx.arc(x, y, 4.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#08306B';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x, y, 8, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(8,48,107,0.2)';
+        ctx.fill();
+
+        tooltip.style.opacity = '1';
+        tooltip.style.left = Math.min(Math.max(x, 40), W - 40) + 'px';
+        tooltip.style.top = Math.max(y - 40, 5) + 'px';
+        tooltip.textContent = '$' + val.toFixed(2);
+      };
+      canvas.onmouseleave = function () {
+        tooltip.style.opacity = '0';
+        ctx.clearRect(0, 0, W, H);
+        drawPriceChartStatic(ctx, W, H, data, pad, cw, ch, minV, maxV, xOf, yOf, grad);
+      };
+    }
+
+    function drawPriceChartStatic(ctx, W, H, data, pad, cw, ch, minV, maxV, xOf, yOf, grad) {
+      ctx.strokeStyle = 'rgba(8,48,107,0.07)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 4; i++) {
+        const y = pad.top + (ch / 4) * i;
+        ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + cw, y); ctx.stroke();
+      }
+
+      ctx.fillStyle = 'rgba(122,155,184,0.9)';
+      ctx.font = '10px DM Mono, monospace';
+      ctx.textAlign = 'right';
+      const yLabels = [750, 700, 650, 600, 550, 500, 450, 400, 350];
+      for (const v of yLabels) {
+        if (v >= minV && v <= maxV) {
+          const y = yOf(v);
+          if (y > pad.top + 6 && y < H - pad.bottom - 4) ctx.fillText(v, W - 5, y + 4);
+        }
+      }
+
+      ctx.beginPath();
+      ctx.moveTo(xOf(0), yOf(data[0]));
+      for (let i = 1; i < data.length; i++) ctx.lineTo(xOf(i), yOf(data[i]));
+      ctx.lineTo(xOf(data.length - 1), H - pad.bottom);
+      ctx.lineTo(xOf(0), H - pad.bottom);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(xOf(0), yOf(data[0]));
+      for (let i = 1; i < data.length; i++) ctx.lineTo(xOf(i), yOf(data[i]));
+      ctx.strokeStyle = '#08306B';
+      ctx.lineWidth = 2;
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+
+      const lastX = xOf(data.length - 1);
+      const lastY = yOf(data[data.length - 1]);
+      ctx.beginPath(); ctx.arc(lastX, lastY, 4, 0, Math.PI * 2); ctx.fillStyle = '#08306B'; ctx.fill();
+      ctx.beginPath(); ctx.arc(lastX, lastY, 7, 0, Math.PI * 2); ctx.fillStyle = 'rgba(8,48,107,0.15)'; ctx.fill();
+    }
+
+    // ═══════════════════════════════════════════════════
+    // CROP DATA WITH DETAILS
+    // ═══════════════════════════════════════════════════
+    const CROP_ICONS = { 'Wheat': '🌾', 'Corn': '🌽', 'Soybeans': '🫘', 'Sugar': '🎋', 'Rice': '🍚' };
+    const CROP_BG = { 'Wheat': '#fef3c7', 'Corn': '#fef9c3', 'Soybeans': '#d0f0e8', 'Sugar': '#ede9fe', 'Rice': '#e8f0fb' };
+    const FLAG = { 'Brazil': '🇧🇷', 'China': '🇨🇳', 'Russia': '🇷🇺', 'Saudi Arabia': '🇸🇦', 'Egypt': '🇪🇬', 'India': '🇮🇳', 'US': '🇺🇸', 'Ukraine': '🇺🇦', 'Europe': '🇪🇺' };
+
+    let cropData = [
+      {
+        crop: 'Wheat', consumption: 40, price: 300, change: 5, ureaRatio: 50,
+        topConsumers: [{ c: 'Egypt', v: '20' }, { c: 'China', v: '18' }, { c: 'India', v: '15' }, { c: 'Russia', v: '12' }, { c: 'US', v: '10' }],
+        topProducers: [{ c: 'Russia', v: '300' }, { c: 'China', v: '280' }, { c: 'India', v: '250' }, { c: 'US', v: '50' }, { c: 'Europe', v: '45' }],
+        topExporters: [{ c: 'US', v: '400' }, { c: 'Russia', v: '350' }, { c: 'Europe', v: '200' }, { c: 'Ukraine', v: '10' }, { c: 'Brazil', v: '8' }],
+        topImporters: [{ c: 'Egypt', v: '100' }, { c: 'China', v: '80' }, { c: 'Brazil', v: '50' }, { c: 'Saudi Arabia', v: '40' }, { c: 'India', v: '30' }]
+      },
+      {
+        crop: 'Corn', consumption: 60, price: 500, change: 2, ureaRatio: 10,
+        topConsumers: [{ c: 'China', v: '200' }, { c: 'US', v: '180' }, { c: 'Brazil', v: '120' }, { c: 'Europe', v: '100' }, { c: 'India', v: '80' }],
+        topProducers: [{ c: 'US', v: '50' }, { c: 'China', v: '45' }, { c: 'Brazil', v: '40' }, { c: 'Europe', v: '30' }, { c: 'India', v: '25' }],
+        topExporters: [{ c: 'Ukraine', v: '10' }, { c: 'US', v: '9' }, { c: 'Brazil', v: '8' }, { c: 'Russia', v: '5' }, { c: 'Europe', v: '3' }],
+        topImporters: [{ c: 'China', v: '500' }, { c: 'Europe', v: '300' }, { c: 'Egypt', v: '200' }, { c: 'Saudi Arabia', v: '150' }, { c: 'India', v: '100' }]
+      },
+      {
+        crop: 'Soybeans', consumption: 70, price: 500, change: 2, ureaRatio: 70,
+        topConsumers: [{ c: 'China', v: '250' }, { c: 'US', v: '200' }, { c: 'Brazil', v: '150' }, { c: 'Europe', v: '120' }, { c: 'India', v: '100' }],
+        topProducers: [{ c: 'US', v: '60' }, { c: 'Brazil', v: '55' }, { c: 'China', v: '40' }, { c: 'India', v: '30' }, { c: 'Europe', v: '20' }],
+        topExporters: [{ c: 'US', v: '400' }, { c: 'Brazil', v: '350' }, { c: 'Europe', v: '200' }, { c: 'China', v: '150' }, { c: 'India', v: '100' }],
+        topImporters: [{ c: 'China', v: '600' }, { c: 'Europe', v: '400' }, { c: 'Egypt', v: '250' }, { c: 'Saudi Arabia', v: '180' }, { c: 'India', v: '120' }]
+      },
+      {
+        crop: 'Sugar', consumption: 100, price: 200, change: -2, ureaRatio: 40,
+        topConsumers: [{ c: 'Brazil', v: '180' }, { c: 'India', v: '160' }, { c: 'China', v: '140' }, { c: 'US', v: '120' }, { c: 'Europe', v: '100' }],
+        topProducers: [{ c: 'Brazil', v: '80' }, { c: 'India', v: '70' }, { c: 'China', v: '60' }, { c: 'US', v: '40' }, { c: 'Europe', v: '30' }],
+        topExporters: [{ c: 'Brazil', v: '500' }, { c: 'India', v: '400' }, { c: 'US', v: '300' }, { c: 'China', v: '200' }, { c: 'Europe', v: '150' }],
+        topImporters: [{ c: 'Europe', v: '350' }, { c: 'China', v: '300' }, { c: 'Egypt', v: '200' }, { c: 'Saudi Arabia', v: '150' }, { c: 'US', v: '100' }]
+      },
+      {
+        crop: 'Rice', consumption: 200, price: 300, change: -4, ureaRatio: 60,
+        topConsumers: [{ c: 'China', v: '300' }, { c: 'India', v: '280' }, { c: 'Brazil', v: '150' }, { c: 'US', v: '120' }, { c: 'Europe', v: '100' }],
+        topProducers: [{ c: 'China', v: '90' }, { c: 'India', v: '85' }, { c: 'Brazil', v: '60' }, { c: 'US', v: '40' }, { c: 'Europe', v: '30' }],
+        topExporters: [{ c: 'India', v: '450' }, { c: 'China', v: '400' }, { c: 'Brazil', v: '300' }, { c: 'US', v: '200' }, { c: 'Europe', v: '150' }],
+        topImporters: [{ c: 'Egypt', v: '400' }, { c: 'Saudi Arabia', v: '350' }, { c: 'Europe', v: '280' }, { c: 'US', v: '200' }, { c: 'Brazil', v: '150' }]
+      },
+    ];
+
+    let filteredCrop = [...cropData];
+    let cropSortState = {};
+    let selectedCrop = null;
+
+    function renderCropTable() {
+      const tbody = document.getElementById('crop-tbody');
+      const maxCons = Math.max(...filteredCrop.map(r => r.consumption));
+      tbody.innerHTML = filteredCrop.map((row, idx) => {
+        const chg = row.change >= 0 ? `<span class="change-pos">▲ ${row.change}%</span>` : `<span class="change-neg">▼ ${Math.abs(row.change)}%</span>`;
+        const pct = Math.round((row.consumption / maxCons) * 100);
+        const isSelected = selectedCrop && selectedCrop.crop === row.crop;
+        return `<tr class="${isSelected ? 'selected' : ''}" onclick="selectCropRow(${idx})"><td><div class="crop-name"><div class="crop-icon" style="background:${CROP_BG[row.crop]}">${CROP_ICONS[row.crop]}</div>${row.crop}</div></td><td class="num"><div class="prod-bar-wrap">${row.consumption}<div class="prod-bar"><div class="prod-bar-fill prod" style="width:${pct}%"></div></div></div></td><td class="num"><span class="price-tag">$${row.price}</span></td><td class="num">${chg}</td><td class="num">${row.ureaRatio}</td></tr>`;
+      }).join('');
+    }
+
+    function selectCropRow(idx) {
+      selectedCrop = filteredCrop[idx];
+      renderCropTable();
+      showCropDetail();
+    }
+
+    function showCropDetail() {
+      const section = document.getElementById('crop-detail-section');
+      const nameEl = document.getElementById('selected-crop-name');
+      const gridEl = document.getElementById('crop-detail-grid');
+
+      if (!selectedCrop) {
+        section.classList.remove('active');
+        return;
+      }
+
+      section.classList.add('active');
+      nameEl.textContent = `${CROP_ICONS[selectedCrop.crop]} ${selectedCrop.crop} — Global Trade Data`;
+
+      gridEl.innerHTML = `
+    <div class="detail-col">
+      <div class="detail-col-header">Top Consumers</div>
+      ${selectedCrop.topConsumers.map(d => `<div class="detail-item"><span class="detail-item-country">${FLAG[d.c] || '🌐'} ${d.c}</span><span class="detail-item-value">${d.v}</span></div>`).join('')}
     </div>
-    <div class="detail-body">
-      <div class="detail-section"><div class="detail-section-header">Direct Inputs (per ton urea)</div><table class="input-table">${inp.direct.map(r=>`<tr><td>${r.label}</td><td>${r.value}</td></tr>`).join('')}</table></div>
-      <div class="detail-section"><div class="detail-section-header">Filter — Ammonia Production Inputs</div><table class="input-table">${inp.ammonia.map(r=>`<tr><td>${r.label}</td><td>${r.value}</td></tr>`).join('')}</table></div>
-      <div class="detail-section"><div class="detail-section-header">Total Key Materials Used</div><table class="input-table">${inp.totals.map(r=>`<tr class="${r.bold?'total-row':''}"><td>${r.label}</td><td>${r.value}</td></tr>`).join('')}</table></div>
-      <div class="detail-section"><div class="detail-section-header">Active Ingredient</div><div class="active-ing-row"><span class="active-ing-label">${inp.activeIngredient.name}</span><div class="active-ing-value"><span class="active-ing-pct">${inp.activeIngredient.pct}%</span><div class="active-ing-bar"><div class="active-ing-bar-fill" style="width:${inp.activeIngredient.pct}%"></div></div></div></div></div>
-      <div class="detail-section"><div class="detail-text-section"><div class="detail-text-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>Product Overview</div><div class="detail-text-body">${d.overview}</div></div></div>
-      <div class="detail-section"><div class="detail-text-section"><div class="detail-text-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12C12 7 17 4 17 4M12 12C12 7 7 4 7 4"/></svg>Soil Use Context</div><div class="detail-text-body">${d.soilUse}</div></div></div>
-      <div class="detail-section"><div class="detail-section-header">Manufacturing Process</div><div class="process-steps">${d.steps.map((s,i)=>`<div class="process-step"><div class="step-num">${i+1}</div><div class="step-content"><div class="step-title">Step ${i+1}: ${s.title}</div><div class="step-body">${s.body}</div></div></div>`).join('')}</div></div>
+    <div class="detail-col">
+      <div class="detail-col-header">Top Producers</div>
+      ${selectedCrop.topProducers.map(d => `<div class="detail-item"><span class="detail-item-country">${FLAG[d.c] || '🌐'} ${d.c}</span><span class="detail-item-value">${d.v}</span></div>`).join('')}
+    </div>
+    <div class="detail-col">
+      <div class="detail-col-header">Top Exporters</div>
+      ${selectedCrop.topExporters.map(d => `<div class="detail-item"><span class="detail-item-country">${FLAG[d.c] || '🌐'} ${d.c}</span><span class="detail-item-value">${d.v}</span></div>`).join('')}
+    </div>
+    <div class="detail-col">
+      <div class="detail-col-header">Top Importers</div>
+      ${selectedCrop.topImporters.map(d => `<div class="detail-item"><span class="detail-item-country">${FLAG[d.c] || '🌐'} ${d.c}</span><span class="detail-item-value">${d.v}</span></div>`).join('')}
     </div>
   `;
-}
+    }
 
-// TABS
-function switchMain(id,el){document.querySelectorAll('.main-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');}
-function switchSub(id,el){document.querySelectorAll('.sub-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.querySelectorAll('.sub-panel').forEach(p=>p.classList.remove('active'));document.getElementById('sub-'+id).classList.add('active');}
+    function searchCrop(q) {
+      filteredCrop = cropData.filter(r => r.crop.toLowerCase().includes(q.toLowerCase()));
+      selectedCrop = null;
+      renderCropTable();
+      showCropDetail();
+    }
 
-// GRANULES
-const gc=document.getElementById('granules');
-for(let i=0;i<45;i++){const g=document.createElement('div');g.className='granule';const s=70+Math.random()*30;g.style.width=s+'%';g.style.paddingBottom=s+'%';g.style.animationDelay=(Math.random()*0.6)+'s';gc.appendChild(g);}
+    function sortCrop(col) {
+      cropSortState[col] = cropSortState[col] === 'asc' ? 'desc' : 'asc';
+      const asc = cropSortState[col] === 'asc';
+      const keys = ['crop', 'consumption', 'price', 'change', 'ureaRatio'];
+      filteredCrop.sort((a, b) => asc ? (a[keys[col]] > b[keys[col]] ? 1 : -1) : (a[keys[col]] < b[keys[col]] ? 1 : -1));
+      renderCropTable();
+    }
 
-// TIME RANGE BUTTONS
-document.querySelectorAll('.time-range-btn').forEach(btn => {
-  btn.onclick = function() {
-    document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-  };
-});
+    // ═══════════════════════════════════════════════════
+    // COUNTRY DATA
+    // ═══════════════════════════════════════════════════
+    const countryData = [
+      { country: 'Brazil', production: 5, consumption: 2, imports: 1, exports: 3 },
+      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
+      { country: 'Russia', production: 80, consumption: 40, imports: 0, exports: 40 },
+      { country: 'Saudi Arabia', production: 200, consumption: 160, imports: 0, exports: 40 },
+      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
+      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
+      { country: 'Russia', production: 80, consumption: 40, imports: 0, exports: 40 },
+      { country: 'Saudi Arabia', production: 200, consumption: 160, imports: 0, exports: 40 },
+      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
+      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
+      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
+      { country: 'Russia', production: 80, consumption: 40, imports: 0, exports: 40 },
+      { country: 'Saudi Arabia', production: 200, consumption: 160, imports: 0, exports: 40 },
+      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
+      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
+      { country: 'Russia', production: 80, consumption: 40, imports: 0, exports: 40 },
+      { country: 'Russia', production: 80, consumption: 40, imports: 0, exports: 40 },
+      { country: 'Russia', production: 80, consumption: 40, imports: 0, exports: 40 },
+      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
+      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
+      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
+      { country: 'Russia', production: 80, consumption: 40, imports: 0, exports: 40 },
+      { country: 'Saudi Arabia', production: 200, consumption: 160, imports: 0, exports: 40 },
+      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
+      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
+      { country: 'Saudi Arabia', production: 200, consumption: 160, imports: 0, exports: 40 },
+      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
+      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
+      { country: 'Saudi Arabia', production: 200, consumption: 160, imports: 0, exports: 40 },
+      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
+      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
+      { country: 'Brazil', production: 5, consumption: 2, imports: 1, exports: 3 },
+    ];
+    const ROWS_PER_PAGE = 10;
+    let currentPage = 1;
+    let filteredCountry = [...countryData];
+    let countrySortState = {};
 
-// INIT
-buildRouteTree();
-renderCropTable();
-renderCountryTable();
-setTimeout(()=>{const fh=document.querySelector('.route-group-header');if(fh)toggleGroup(fh);},100);
-setTimeout(drawPriceChart, 150);
-window.addEventListener('resize', drawPriceChart);
-</script>
+    function renderCountryTable() {
+      const tbody = document.getElementById('country-tbody');
+      const maxProd = Math.max(...filteredCountry.map(r => r.production));
+      const start = (currentPage - 1) * ROWS_PER_PAGE;
+      const page = filteredCountry.slice(start, start + ROWS_PER_PAGE);
+      tbody.innerHTML = page.map(row => {
+        const flag = FLAG[row.country] || '🌐';
+        const pp = Math.round((row.production / maxProd) * 100);
+        const cp = Math.round((row.consumption / maxProd) * 100);
+        const ip = Math.round((row.imports / maxProd) * 100);
+        const ep = Math.round((row.exports / maxProd) * 100);
+        return `<tr><td><span class="country-chip"><span>${flag}</span>${row.country}</span></td><td class="num"><div class="prod-bar-wrap">${row.production}<div class="prod-bar"><div class="prod-bar-fill prod" style="width:${pp}%"></div></div></div></td><td class="num"><div class="prod-bar-wrap">${row.consumption}<div class="prod-bar"><div class="prod-bar-fill cons" style="width:${cp}%"></div></div></div></td><td class="num"><div class="prod-bar-wrap">${row.imports}<div class="prod-bar"><div class="prod-bar-fill imp" style="width:${ip}%"></div></div></div></td><td class="num"><div class="prod-bar-wrap">${row.exports}<div class="prod-bar"><div class="prod-bar-fill exp" style="width:${ep}%"></div></div></div></td></tr>`;
+      }).join('');
+      renderPagination();
+    }
+
+    function renderPagination() {
+      const total = filteredCountry.length;
+      const totalPages = Math.ceil(total / ROWS_PER_PAGE);
+      const start = (currentPage - 1) * ROWS_PER_PAGE + 1;
+      const end = Math.min(currentPage * ROWS_PER_PAGE, total);
+      document.getElementById('page-info').innerHTML = `Showing <strong>${start}–${end}</strong> of <strong>${total}</strong> countries`;
+      const wrap = document.getElementById('page-btns');
+      let html = `<button class="page-btn" onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>`;
+      for (let p = 1; p <= totalPages; p++) { if (totalPages > 6 && p > 2 && p < totalPages - 1 && Math.abs(p - currentPage) > 1) { if (p === 3 || p === totalPages - 2) html += `<span class="page-dots">…</span>`; continue; } html += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="goPage(${p})">${p}</button>`; }
+      html += `<button class="page-btn" onclick="goPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>`;
+      wrap.innerHTML = html;
+    }
+
+    function goPage(p) { const total = Math.ceil(filteredCountry.length / ROWS_PER_PAGE); if (p < 1 || p > total) return; currentPage = p; renderCountryTable(); }
+    function filterCountry(type, el) { document.querySelectorAll('.country-filter-row .filter-chip').forEach(c => c.classList.remove('active')); el.classList.add('active'); if (type === 'all') filteredCountry = [...countryData]; else if (type === 'importer') filteredCountry = countryData.filter(r => r.imports > r.exports); else if (type === 'exporter') filteredCountry = countryData.filter(r => r.exports > r.imports); currentPage = 1; renderCountryTable(); }
+    function searchCountry(q) { filteredCountry = countryData.filter(r => r.country.toLowerCase().includes(q.toLowerCase())); currentPage = 1; renderCountryTable(); }
+    function sortCountry(col) { countrySortState[col] = countrySortState[col] === 'asc' ? 'desc' : 'asc'; const asc = countrySortState[col] === 'asc'; const keys = ['country', 'production', 'consumption', 'imports', 'exports']; filteredCountry.sort((a, b) => asc ? (a[keys[col]] > b[keys[col]] ? 1 : -1) : (a[keys[col]] < b[keys[col]] ? 1 : -1)); renderCountryTable(); }
+
+    // ═══════════════════════════════════════════════════
+    // PRODUCTION ROUTES DATA
+    // ═══════════════════════════════════════════════════
+    const ROUTES = [
+      { id: 'SMR', name: 'Steam Methane Reforming', shortName: 'SMR', desc: 'Natural Gas · Traditional', category: 'natural-gas', color: '#08306B' },
+      { id: 'ATR', name: 'Autothermal Reforming', shortName: 'ATR', desc: 'Natural Gas · Traditional', category: 'natural-gas', color: '#08306B' },
+      { id: 'MethPyrolysis', name: 'Methane Pyrolysis', shortName: 'Methane Pyrolysis', desc: 'Natural Gas · Green (Turquoise H₂)', category: 'natural-gas', tag: 'Green', color: '#0891b2' },
+      { id: 'ATR_CCS', name: 'ATR with CCS', shortName: 'ATR + CCS', desc: 'Natural Gas · Blue H₂', category: 'natural-gas', tag: 'CCS', color: '#5b2d8e' },
+      { id: 'SMR_CCS', name: 'SMR with CCS', shortName: 'SMR + CCS', desc: 'Natural Gas · Blue H₂', category: 'natural-gas', tag: 'CCS', color: '#5b2d8e' },
+      { id: 'CoalGasification', name: 'Coal Gasification', shortName: 'Coal Gas.', desc: 'Coal · Traditional', category: 'coal', color: '#374151' },
+      { id: 'Coal_CCS', name: 'Coal with CCS', shortName: 'Coal + CCS', desc: 'Coal · Carbon Capture', category: 'coal', tag: 'CCS', color: '#6b7280' },
+      { id: 'Electrolysis', name: 'Water Electrolysis', shortName: 'Electrolysis', desc: 'Green · Renewable H₂', category: 'green', tag: 'Green', color: '#0d7a5f' },
+      { id: 'BiomassGas', name: 'Biomass Gasification', shortName: 'Biomass Gas.', desc: 'Green · Bio H₂', category: 'green', tag: 'Bio', color: '#16a34a' },
+    ];
+
+    const ROUTE_DETAILS = {
+      SMR: { title: 'Steam Methane Reforming', subtitle: 'Natural Gas Route · Traditional', color: '#08306B', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Natural Gas, urea plant only (in mml)', value: '4.1' }, { label: 'Electricity (kwh/ton)', value: '170' }], ammonia: [{ label: 'Natural Gas (Feed Stock) in mmbtu', value: '13.3' }, { label: 'Natural Gas (Fuel) in mmbtu', value: '10.5' }, { label: 'Electricity (kwh/ton)', value: '80' }], totals: [{ label: 'Total Natural Gas', value: '21.1', bold: true }, { label: 'Electricity', value: '215', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'Standard agricultural urea produced by reacting ammonia with CO₂ at high pressure, then granulated into 2–4 mm spherical particles for broadcast application.', soilUse: 'All soil types but REQUIRES incorporation or >12mm rain within 2–3 days to prevent ammonia volatilization. Best for mechanized cereal/oilseed systems.', steps: [{ title: 'Ammonia', body: 'Natural gas reacts with steam over nickel catalyst at 800–900°C producing syngas (H₂+CO). Water-gas shift converts CO to H₂+CO₂. CO₂ captured via MDEA amine absorption. Purified H₂ combined with N₂ in Haber-Bosch synthesis loop at 150–250 bar and 400–500°C forming ammonia.' }, { title: 'Urea', body: 'NH3 and CO₂ react in high-pressure synthesis reactor at 140–200 bar and 160–200°C forming urea solution. Solution evaporated to 96–99.7% concentration. Molten urea fed to granulation drum, cooled in fluidised bed, anti-caking coating applied.' }] },
+      ATR: { title: 'Autothermal Reforming', subtitle: 'Natural Gas Route · Traditional', color: '#08306B', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Natural Gas, urea plant only (in mmbtu)', value: '3.5' }, { label: 'Electricity (kwh/ton)', value: '140' }], ammonia: [{ label: 'Natural Gas (Feed Stock) in mmbtu', value: '13.3' }, { label: 'Natural Gas (Fuel) in mmbtu', value: '10.5' }, { label: 'Electricity (kwh/ton)', value: '80' }], totals: [{ label: 'Total Natural Gas', value: '20.5', bold: true }, { label: 'Electricity', value: '185', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'ATR combines partial oxidation and steam reforming in a single reactor using oxygen from an air separation unit. More energy-efficient than SMR at large scales.', soilUse: 'Same suitability as granular. More common in Asian and Middle Eastern markets. Dissolves faster — useful for fertigation or quick-response applications.', steps: [{ title: 'Ammonia', body: 'Natural gas reacts with steam and O₂ over nickel catalyst at 800–1000°C. Single-pass conversion higher than SMR. CO₂ captured via amine absorption.' }, { title: 'Urea', body: 'NH3 and CO₂ react at 140–200 bar. Standard granulation applied.' }] },
+      MethPyrolysis: { title: 'Methane Pyrolysis', subtitle: 'Natural Gas Route · Green (Turquoise H₂)', color: '#0891b2', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Natural Gas (mmbtu)', value: '8.5' }, { label: 'Electricity (kwh/ton)', value: '220' }], ammonia: [{ label: 'Natural Gas (Feed Stock) in mmbtu', value: '8.5' }, { label: 'Electricity (kwh/ton)', value: '120' }], totals: [{ label: 'Total Natural Gas', value: '8.5', bold: true }, { label: 'Electricity', value: '220', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'Methane is split into H₂ and solid carbon (no CO₂ emitted). Produces turquoise hydrogen with carbon black as saleable by-product.', soilUse: 'Identical agronomic profile to conventional granular urea. Carbon footprint significantly lower than SMR without CCS.', steps: [{ title: 'Turquoise H₂', body: 'Methane heated to 700–1200°C in molten metal or plasma reactor. CH₄ → C(solid) + 2H₂. No combustion, no CO₂.' }, { title: 'Ammonia & Urea', body: 'H₂ combined with N₂ in Haber-Bosch loop at 150–250 bar. Standard granulation.' }] },
+      ATR_CCS: { title: 'ATR with Carbon Capture', subtitle: 'Natural Gas Route · CCS (Blue H₂)', color: '#5b2d8e', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Natural Gas (mmbtu)', value: '4.0' }, { label: 'Electricity (kwh/ton)', value: '160' }], ammonia: [{ label: 'Natural Gas (Feed Stock) in mmbtu', value: '14.0' }, { label: 'Natural Gas (Fuel) in mmbtu', value: '9.0' }, { label: 'Electricity (kwh/ton)', value: '95' }], totals: [{ label: 'Total Natural Gas', value: '21.5', bold: true }, { label: 'Electricity', value: '220', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'ATR with post-combustion or pre-combustion carbon capture achieving 90–95% CO₂ removal.', soilUse: 'Agronomically identical to standard granular urea. Premium pricing possible in carbon-conscious markets.', steps: [{ title: 'ATR + CCS', body: 'Standard ATR with additional amine absorption unit capturing >90% of CO₂. Captured CO₂ compressed and stored in geological formations.' }, { title: 'Urea Synthesis', body: 'NH₃ + CO₂ → urea. Standard granulation.' }] },
+      SMR_CCS: { title: 'SMR with Carbon Capture', subtitle: 'Natural Gas Route · CCS (Blue H₂)', color: '#5b2d8e', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Natural Gas (mmbtu)', value: '4.5' }, { label: 'Electricity (kwh/ton)', value: '175' }], ammonia: [{ label: 'Natural Gas (Feed Stock) in mmbtu', value: '14.5' }, { label: 'Natural Gas (Fuel) in mmbtu', value: '11.0' }, { label: 'Electricity (kwh/ton)', value: '85' }], totals: [{ label: 'Total Natural Gas', value: '22.5', bold: true }, { label: 'Electricity', value: '235', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'SMR with integrated CCS unit achieving 85–95% capture rate.', soilUse: 'Qualifies for low-carbon fertilizer certification in EU and North American markets.', steps: [{ title: 'SMR + CCS', body: 'Standard SMR with capture unit on reformer flue gas. MDEA or Econamine solvent. CO₂ compressed to 100–150 bar for pipeline transport.' }, { title: 'Urea Synthesis', body: 'Portion of captured CO₂ fed to urea synthesis. Standard granulation.' }] },
+      CoalGasification: { title: 'Coal Gasification', subtitle: 'Coal Route · Traditional', color: '#374151', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Coal (in ton)', value: '1.8' }, { label: 'Electricity (kwh/ton)', value: '350' }], ammonia: [{ label: 'Coal (Feed Stock) in ton', value: '5.2' }, { label: 'Electricity (kwh/ton)', value: '180' }], totals: [{ label: 'Total Coal', value: '7.0', bold: true }, { label: 'Electricity', value: '530', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'Coal is gasified with steam and oxygen to produce syngas. Dominant route in China, ~70% of Chinese urea production.', soilUse: 'Agronomically identical to natural gas-based granular urea. Higher carbon footprint. 30–40% lower cost in coal-rich regions.', steps: [{ title: 'Syngas Production', body: 'Coal fed to gasifier at 1200–1500°C with steam and O₂. Produces syngas cleaned and shifted to maximize H₂.' }, { title: 'Ammonia & Urea', body: 'H₂ combined with N₂ in Haber-Bosch. Standard granulation.' }] },
+      Coal_CCS: { title: 'Coal with CCS', subtitle: 'Coal Route · Carbon Capture', color: '#6b7280', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Coal (in ton)', value: '1.8' }, { label: 'Electricity (kwh/ton)', value: '420' }], ammonia: [{ label: 'Coal (Feed Stock) in ton', value: '5.2' }, { label: 'Electricity (kwh/ton)', value: '220' }], totals: [{ label: 'Total Coal', value: '7.0', bold: true }, { label: 'Electricity', value: '640', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'Coal gasification with integrated pre- or post-combustion CCS achieving 85–90% CO₂ removal.', soilUse: 'Qualifies for lower carbon intensity certification.', steps: [{ title: 'Gasification + CCS', body: 'Rectisol or Selexol wash capturing CO₂ and sulfur. CO₂ injected into geological storage.' }, { title: 'Urea Synthesis', body: 'Standard NH₃+CO₂ reaction and granulation.' }] },
+      Electrolysis: { title: 'Water Electrolysis', subtitle: 'Green Route · Renewable H₂', color: '#0d7a5f', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Water (m³)', value: '9.0' }, { label: 'Electricity (kwh/ton)', value: '1,200' }], ammonia: [{ label: 'Electricity (kwh/ton)', value: '9,500' }, { label: 'Water (m³)', value: '8.5' }], totals: [{ label: 'Total Electricity', value: '10,700', bold: true }, { label: 'Water (m³)', value: '17.5', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'Green hydrogen produced by electrolyzing water using renewable electricity. Zero direct CO₂ emissions.', soilUse: 'Identical agronomic performance. Commands green premium in carbon credit-linked markets.', steps: [{ title: 'Green H₂', body: 'PEM or alkaline electrolyzer splits water into H₂ and O₂. Efficiency 60–80% (LHV basis).' }, { title: 'Green Ammonia & Urea', body: 'H₂ fed to Haber-Bosch with N₂. CO₂ sourced from biogenic or direct air capture. Standard granulation.' }] },
+      BiomassGas: { title: 'Biomass Gasification', subtitle: 'Green Route · Bio H₂', color: '#16a34a', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Biomass (dry ton)', value: '3.2' }, { label: 'Electricity (kwh/ton)', value: '280' }], ammonia: [{ label: 'Biomass (Feed Stock) dry ton', value: '8.5' }, { label: 'Electricity (kwh/ton)', value: '160' }], totals: [{ label: 'Total Biomass', value: '11.7', bold: true }, { label: 'Electricity', value: '440', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'Agricultural residues or energy crops gasified. Near carbon-neutral or carbon-negative when combined with CCS.', soilUse: 'Certified bio-based urea may qualify for renewable content credits in EU.', steps: [{ title: 'Biomass Syngas', body: 'Biomass dried and fed to fluidized bed gasifier at 700–900°C. Cleaned via tar reformer and filtration.' }, { title: 'Ammonia & Urea', body: 'Biogenic CO₂ from gasifier used in urea synthesis, making product carbon-neutral. Standard granulation.' }] }
+    };
+
+    let filteredRoutes = [...ROUTES];
+    let selectedRoute = null;
+
+    function buildRouteCards() {
+      const container = document.getElementById('routeCards');
+      container.innerHTML = filteredRoutes.map(r => `
+    <div class="route-card ${selectedRoute && selectedRoute.id === r.id ? 'active' : ''}" onclick="selectRouteCard('${r.id}')">
+      ${r.shortName || r.name}
+    </div>
+  `).join('');
+    }
+
+    function selectRouteCard(id) {
+      selectedRoute = ROUTES.find(r => r.id === id);
+      buildRouteCards();
+      showOutput();
+    }
+
+    function filterRoute(cat, el) {
+      document.querySelectorAll('.route-filter-row .route-chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      if (cat === 'all') filteredRoutes = [...ROUTES];
+      else filteredRoutes = ROUTES.filter(r => r.category === cat);
+      selectedRoute = null;
+      buildRouteCards();
+      showOutput();
+    }
+
+    function showOutput() {
+      const empty = document.getElementById('outputEmpty');
+      const content = document.getElementById('outputContent');
+
+      if (!selectedRoute) {
+        empty.style.display = 'flex';
+        content.classList.remove('visible');
+        return;
+      }
+
+      const d = ROUTE_DETAILS[selectedRoute.id];
+      if (!d) return;
+
+      empty.style.display = 'none';
+      content.classList.add('visible');
+
+      const inp = d.inputs;
+      content.innerHTML = `
+    <div class="output-header" style="background:${d.color}">
+      <div>
+        <div class="output-title">${d.title}</div>
+        <div class="output-subtitle">${d.subtitle}</div>
+      </div>
+    </div>
+    <div class="output-body new-grid">
+      <div class="output-left">
+        <div class="metrics-grid">
+          ${inp.totals.map(r => `<div class="metric-card"><div class="metric-label">${r.label}</div><div class="metric-value">${r.value}</div></div>`).join('')}
+          <div class="metric-card highlight"><div class="metric-label">${inp.activeIngredient.name}</div><div class="metric-value">${inp.activeIngredient.pct}%</div><div class="metric-bar"><div class="metric-bar-fill" style="width:${inp.activeIngredient.pct}%"></div></div></div>
+        </div>
+        <div class="inputs-container">
+          <div class="input-block"><div class="input-block-title">Direct Inputs <span class="input-unit">(per ton urea)</span></div><div class="data-list">${inp.direct.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}</div></div>
+          <div class="input-block"><div class="input-block-title">Ammonia Production Inputs</div><div class="data-list">${inp.ammonia.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}</div></div>
+        </div>
+      </div>
+      <div class="output-right">
+        <div class="info-boxes">
+          <div class="info-box"><div class="info-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div><div class="info-box-title">Product Overview</div><div class="info-box-text">${d.overview}</div></div></div>
+          <div class="info-box"><div class="info-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12C12 7 17 4 17 4M12 12C12 7 7 4 7 4"/></svg></div><div><div class="info-box-title">Soil Use Context</div><div class="info-box-text">${d.soilUse}</div></div></div>
+        </div>
+        <div class="timeline-container"><div class="timeline-title">Manufacturing Process</div><div class="timeline">${d.steps.map((s, i) => `<div class="timeline-step"><div class="timeline-marker">${i + 1}</div><div class="timeline-content"><div class="timeline-step-title">${s.title}</div><div class="timeline-step-desc">${s.body}</div></div></div>`).join('')}</div></div>
+      </div>
+    </div>
+  `;
+    }
+
+    // TABS
+    function switchMain(id, el) { document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active')); document.getElementById('tab-' + id).classList.add('active'); }
+    function switchSub(id, el) { document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active')); document.getElementById('sub-' + id).classList.add('active'); }
+
+    // GRANULES
+    const gc = document.getElementById('granules');
+    for (let i = 0; i < 45; i++) { const g = document.createElement('div'); g.className = 'granule'; const s = 70 + Math.random() * 30; g.style.width = s + '%'; g.style.paddingBottom = s + '%'; g.style.animationDelay = (Math.random() * 0.6) + 's'; gc.appendChild(g); }
+
+    // TIME RANGE BUTTONS
+    document.querySelectorAll('.time-range-btn').forEach(btn => {
+      btn.onclick = function () {
+        document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      };
+    });
+
+    // INIT
+    renderStocksTable();
+    renderCropTable();
+    renderCountryTable();
+    buildRouteCards();
+    setTimeout(drawPriceChart, 150);
+    window.addEventListener('resize', drawPriceChart);
+  </script>
 </body>
+
 </html>
