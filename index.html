@@ -997,14 +997,15 @@
       gap: 10px;
       letter-spacing: -0.2px;
     }
-    
+
     .crop-detail-title svg {
       stroke: var(--accent);
     }
 
-        .crop-detail-grid {
+    .crop-detail-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);  /* forcing 4 columns side by side */
+      grid-template-columns: repeat(4, 1fr);
+      /* forcing 4 columns side by side */
       gap: 20px;
     }
 
@@ -1053,7 +1054,7 @@
       align-items: center;
       gap: 8px;
     }
-    
+
     .detail-item-country span:first-child {
       font-size: 16px;
     }
@@ -1067,6 +1068,7 @@
       border-radius: 20px;
       font-size: 12px;
     }
+
     .country-filter-row {
       display: flex;
       align-items: center;
@@ -2118,7 +2120,7 @@
           <!-- TAB 1: FERTILIZERS STOCKS -->
           <div id="tab-fertilizers" class="tab-panel active">
             <div class="filters-row">
-              <div class="filter-group"><span class="filter-label">  Home Country</span>
+              <div class="filter-group"><span class="filter-label"> Home Country</span>
                 <div class="filter-select">Egypt<svg fill="none" stroke="currentColor" stroke-width="2"
                     viewBox="0 0 24 24">
                     <polyline points="6 9 12 15 18 9" />
@@ -2271,8 +2273,8 @@
               <div class="prod-left">
                 <div class="prod-section-title">Production Routes</div>
                 <div class="route-filter-row">
-                  <div class="route-chip active" onclick="filterRoute('all',this)"><span
-                      class="route-chip-dot"></span>All Routes</div>
+                  <!-- <div class="route-chip active" onclick="filterRoute('all',this)"><span
+                      class="route-chip-dot"></span>All Routes</div> -->
                   <div class="route-chip" onclick="filterRoute('natural-gas',this)"><span class="route-chip-dot"
                       style="background:#08306B"></span>Natural Gas</div>
                   <div class="route-chip" onclick="filterRoute('coal',this)"><span class="route-chip-dot"
@@ -2307,8 +2309,24 @@
             <p class="commodity-desc">Solid nitrogenous fertilizer produced through the granulation of liquid urea.
               Primary nitrogen source for large-scale agriculture due to high nutrient density and favorable handling
               characteristics.</p>
-            <div class="urea-visual">
+            <!-- <div class="urea-visual">
               <div class="urea-granules" id="granules"></div>
+            </div> -->
+          </div>
+          <div id="rightPanelSoilContext" class="info-box"
+            style="background: var(--surface-2); border-radius: var(--radius); padding: 14px; margin-bottom: 12px;">
+            <div class="info-box-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                <path d="M12 22V12M12 12C12 7 17 4 17 4M12 12C12 7 7 4 7 4" />
+              </svg>
+            </div>
+            <div style="flex:1">
+              <div class="info-box-title" style="font-size: 12px; font-weight: 700; margin-bottom: 4px;">Soil Use
+                Context</div>
+              <div id="rightPanelSoilUseText" class="info-box-text"
+                style="font-size: 12px; line-height: 1.5; color: var(--text-secondary);">
+                Select a production route to see soil recommendations.
+              </div>
             </div>
           </div>
 
@@ -2650,7 +2668,7 @@
       showCropDetail();
     }
 
-       function showCropDetail() {
+    function showCropDetail() {
       const section = document.getElementById('crop-detail-section');
       const nameEl = document.getElementById('selected-crop-name');
       const gridEl = document.getElementById('crop-detail-grid');
@@ -2837,18 +2855,21 @@
       showOutput();
     }
 
-    function showOutput() {
+       function showOutput() {
       const empty = document.getElementById('outputEmpty');
       const content = document.getElementById('outputContent');
 
       if (!selectedRoute) {
         empty.style.display = 'flex';
         content.classList.remove('visible');
+        updateRightPanelSoilContext(null);
         return;
       }
 
       const d = ROUTE_DETAILS[selectedRoute.id];
       if (!d) return;
+
+      updateRightPanelSoilContext(d.soilUse);
 
       empty.style.display = 'none';
       content.classList.add('visible');
@@ -2861,35 +2882,68 @@
         <div class="output-subtitle">${d.subtitle}</div>
       </div>
     </div>
-    <div class="output-body new-grid">
-      <div class="output-left">
-        <div class="metrics-grid">
-          ${inp.totals.map(r => `<div class="metric-card"><div class="metric-label">${r.label}</div><div class="metric-value">${r.value}</div></div>`).join('')}
-          <div class="metric-card highlight"><div class="metric-label">${inp.activeIngredient.name}</div><div class="metric-value">${inp.activeIngredient.pct}%</div><div class="metric-bar"><div class="metric-bar-fill" style="width:${inp.activeIngredient.pct}%"></div></div></div>
+    <div class="output-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; background: var(--surface);">
+      
+      <!-- القسم الأيسر -->
+      <div class="output-left" style="display: flex; flex-direction: column; gap: 20px;">
+        <!-- Key Metrics -->
+        <div class="input-block">
+          <div class="input-block-title" style="background: ${d.color}; color: white; border-bottom: none;">
+            Key Metrics <span class="input-unit" style="color: rgba(255,255,255,0.7);">(per ton urea)</span>
+          </div>
+          <div class="data-list">
+            ${inp.totals.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}
+            <div class="data-row"><span class="data-label">${inp.activeIngredient.name}</span><span class="data-value">${inp.activeIngredient.pct}%</span></div>
+          </div>
         </div>
-        <div class="inputs-container">
-          <div class="input-block"><div class="input-block-title">Direct Inputs <span class="input-unit">(per ton urea)</span></div><div class="data-list">${inp.direct.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}</div></div>
-          <div class="input-block"><div class="input-block-title">Ammonia Production Inputs</div><div class="data-list">${inp.ammonia.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}</div></div>
+        
+        <!-- Direct Inputs -->
+        <div class="input-block">
+          <div class="input-block-title">Direct Inputs <span class="input-unit">(per ton urea)</span></div>
+          <div class="data-list">
+            ${inp.direct.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}
+          </div>
         </div>
       </div>
-      <div class="output-right">
-        <div class="info-boxes">
-          <div class="info-box"><div class="info-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div><div class="info-box-title">Product Overview</div><div class="info-box-text">${d.overview}</div></div></div>
-          <div class="info-box"><div class="info-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12C12 7 17 4 17 4M12 12C12 7 7 4 7 4"/></svg></div><div><div class="info-box-title">Soil Use Context</div><div class="info-box-text">${d.soilUse}</div></div></div>
+      
+      <!-- القسم الأيمن -->
+      <div class="output-right" style="display: flex; flex-direction: column; gap: 20px;">
+        <!-- Ammonia Production Inputs -->
+        <div class="input-block">
+          <div class="input-block-title">Ammonia Production Inputs</div>
+          <div class="data-list">
+            ${inp.ammonia.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}
+          </div>
         </div>
-        <div class="timeline-container"><div class="timeline-title">Manufacturing Process</div><div class="timeline">${d.steps.map((s, i) => `<div class="timeline-step"><div class="timeline-marker">${i + 1}</div><div class="timeline-content"><div class="timeline-step-title">${s.title}</div><div class="timeline-step-desc">${s.body}</div></div></div>`).join('')}</div></div>
+        
+        <!-- Manufacturing Process Timeline -->
+        <div class="timeline-container" style="margin: 0;">
+          <div class="timeline-title" style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+            <svg width="14" height="14" fill="none" stroke="${d.color}" stroke-width="2" viewBox="0 0 24 24">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="M8 12h8M12 8v8"/>
+            </svg>
+            Manufacturing Process
+          </div>
+          <div class="timeline" style="display: flex; flex-direction: column; gap: 16px;">
+            ${d.steps.map((s, i) => `
+              <div class="timeline-step" style="display: flex; gap: 12px;">
+                <div class="timeline-marker" style="width: 26px; height: 26px; border-radius: 50%; background: ${d.color}; color: white; border: none; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;">${i + 1}</div>
+                <div class="timeline-content" style="flex: 1;">
+                  <div class="timeline-step-title" style="font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">${s.title}</div>
+                  <div class="timeline-step-desc" style="font-size: 11.5px; color: var(--text-secondary); line-height: 1.5;">${s.body}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
       </div>
+      
     </div>
   `;
-    }
-
-    // TABS
+    }  // TABS
     function switchMain(id, el) { document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active')); document.getElementById('tab-' + id).classList.add('active'); }
     function switchSub(id, el) { document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active')); document.getElementById('sub-' + id).classList.add('active'); }
-
-    // GRANULES
-    const gc = document.getElementById('granules');
-    for (let i = 0; i < 45; i++) { const g = document.createElement('div'); g.className = 'granule'; const s = 70 + Math.random() * 30; g.style.width = s + '%'; g.style.paddingBottom = s + '%'; g.style.animationDelay = (Math.random() * 0.6) + 's'; gc.appendChild(g); }
 
     // TIME RANGE BUTTONS
     document.querySelectorAll('.time-range-btn').forEach(btn => {
@@ -2900,10 +2954,39 @@
     });
 
     // INIT
+    // INIT
     renderStocksTable();
     renderCropTable();
     renderCountryTable();
-    buildRouteCards();
+
+    // ✅ بدلاً من buildRouteCards() فقط، قم بتعيين الفلتر الافتراضي أولاً
+    // تأكد من أن الفلتر "Natural Gas" نشط في البداية
+    const defaultFilterChip = document.querySelector('.route-filter-row .route-chip');
+    if (defaultFilterChip && defaultFilterChip.textContent.includes('Natural Gas')) {
+      // هذا يحاكي النقر على فلتر Natural Gas في البداية
+      filterRoute('natural-gas', defaultFilterChip);
+    } else {
+      // في حالة لم يتم العثور على الفلتر، اعرض فقط Natural Gas routes
+      filteredRoutes = ROUTES.filter(r => r.category === 'natural-gas');
+      buildRouteCards();
+      showOutput();
+    }
+
+    // تحديث اللوحة اليمنى
+    function updateRightPanelSoilContext(soilUseText) {
+      const textElement = document.getElementById('rightPanelSoilUseText');
+      if (textElement) {
+        if (soilUseText) {
+          textElement.textContent = soilUseText;
+        } else {
+          textElement.textContent = 'Select a production route from "Production Inputs / Process" tab to see soil recommendations.';
+        }
+      }
+    }
+
+    // استدعاء لتحديث اللوحة اليمنى في البداية
+    updateRightPanelSoilContext(null);
+
     setTimeout(drawPriceChart, 150);
     window.addEventListener('resize', drawPriceChart);
   </script>
