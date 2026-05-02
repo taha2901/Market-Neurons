@@ -1971,10 +1971,219 @@
       border: 5px solid transparent;
       border-top-color: var(--accent);
     }
+
+    /* ═══════════════════════════════════════════════════════
+       RESPONSIVE — MOBILE  (≤ 768px)
+    ═══════════════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+
+      body {
+        height: auto;
+        overflow: auto;
+        min-height: 100vh;
+        padding-bottom: 68px;
+      }
+
+      /* ── NAVBAR ── */
+      .navbar { padding: 0 14px; gap: 10px; }
+      .logo { width: auto; }
+      .search-wrap { display: none; }
+      .search-hint { display: none; }
+      .export-btn { display: none; }
+      .profile-pill { display: none; }
+      .icon-btn { display: none; }
+      .nav-actions { gap: 6px; }
+
+      /* Hamburger stays visible */
+      .hamburger-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: var(--radius-sm);
+        border: 1px solid rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.08);
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: rgba(255,255,255,0.9);
+        flex-shrink: 0;
+      }
+
+      /* ── DRAWER OVERLAY ── */
+      .drawer-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(8,48,107,0.4);
+        z-index: 250;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.28s ease;
+      }
+      .drawer-overlay.visible { opacity: 1; pointer-events: auto; }
+
+      /* ── SIDEBAR DRAWER ── */
+      .sidebar {
+        position: fixed;
+        top: 0; left: 0;
+        width: 260px;
+        height: 100vh;
+        z-index: 300;
+        transform: translateX(-100%);
+        transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+        padding-top: calc(var(--navbar-height) + 12px);
+        box-shadow: var(--shadow-lg);
+      }
+      .sidebar.open { transform: translateX(0); }
+
+      /* ── LAYOUT ── */
+      .app-body { flex-direction: column; overflow: visible; height: auto; }
+      .main { overflow: visible; }
+      .main-inner { flex-direction: column; overflow: visible; }
+      .content { overflow: visible; padding: 14px 12px; }
+
+      /* ── MAIN TABS ── scrollable */
+      .main-tabs {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+        scrollbar-width: none;
+      }
+      .main-tabs::-webkit-scrollbar { display: none; }
+      .main-tab { flex-shrink: 0; font-size: 12px; padding: 6px 12px; }
+
+      /* ── PAGE HEADER ── */
+      .page-title { font-size: 20px; }
+
+      /* ── FILTERS ROW ── */
+      .filters-row { flex-direction: column; align-items: stretch; gap: 8px; }
+      .filter-group { width: 100%; }
+      .filter-select { width: 100%; }
+      .filters-row .search-mini { margin-left: 0; width: 100%; }
+      .filters-row .search-mini input { width: 100%; }
+
+      /* ── TABLES ── */
+      .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      table { min-width: 520px; font-size: 11.5px; }
+      th, td { padding: 8px 10px; }
+
+      /* ── SUB TABS ── */
+      .sub-tabs-wrap { flex-direction: column; gap: 8px; }
+      .sub-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
+      .sub-tab { flex-shrink: 0; font-size: 12px; padding: 7px 14px; }
+      .country-filter-row { padding: 8px 12px; flex-wrap: wrap; }
+
+      /* ── CROP DETAIL GRID ── */
+      .crop-detail-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+
+      /* ── STAT CARDS ── */
+      .stat-cards { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stat-card-value { font-size: 18px; }
+
+      /* ── PRICE ── */
+      .price-big { font-size: 26px; }
+
+      /* ── CARD ── */
+      .card { border-radius: var(--radius); }
+
+      /* ── PAGINATION ── */
+      .pagination-row { flex-direction: column; gap: 10px; align-items: center; }
+
+      /* ── ROUTE CHIPS & CARDS ── */
+      .route-filter-row { gap: 6px; }
+      .route-chip { font-size: 11px; padding: 5px 10px; }
+      .route-cards { gap: 6px; }
+      .route-card { font-size: 11px; padding: 5px 10px; }
+
+      /* ── PRODUCTION TAB ── stack */
+      .prod-layout { gap: 16px; }
+
+      /* ── OUTPUT BODY GRID ── single column */
+      .output-body, .new-grid { grid-template-columns: 1fr !important; }
+
+      /* ── RIGHT PANEL ── accordion */
+      .right-panel {
+        width: 100%;
+        border-left: none;
+        border-top: 2px solid var(--accent);
+        padding: 0;
+        gap: 0;
+        overflow: visible;
+      }
+
+      .right-panel-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 13px 14px;
+        background: var(--accent);
+        color: #fff;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        user-select: none;
+        letter-spacing: 0.1px;
+      }
+      .right-panel-toggle svg { transition: transform 0.25s; }
+      .right-panel-toggle.open svg { transform: rotate(180deg); }
+
+      .right-panel-inner {
+        display: none;
+        padding: 16px 14px;
+        gap: 20px;
+        flex-direction: column;
+      }
+      .right-panel-inner.open { display: flex; }
+
+      /* ── MOBILE BOTTOM NAV ── */
+      .mobile-bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        z-index: 150;
+        background: var(--surface);
+        border-top: 1px solid var(--border);
+        box-shadow: 0 -4px 16px rgba(8,48,107,0.12);
+        height: 58px;
+      }
+      .mobile-nav-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        cursor: pointer;
+        color: var(--text-muted);
+        font-size: 9.5px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        padding: 6px 4px;
+        border-top: 2px solid transparent;
+        transition: all 0.15s;
+      }
+      .mobile-nav-item.active { color: var(--accent); border-top-color: var(--accent); }
+      .mobile-nav-item svg { width: 18px; height: 18px; }
+
+    }
+
+    /* ── DESKTOP: hide mobile-only elements ── */
+    @media (min-width: 769px) {
+      .hamburger-btn { display: none; }
+      .drawer-overlay { display: none; }
+      .mobile-bottom-nav { display: none; }
+      .right-panel-toggle { display: none; }
+      .right-panel-inner { display: flex !important; padding: 0; gap: 24px; flex-direction: column; }
+    }
+
   </style>
 </head>
 
 <body>
+
+  <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
 
   <!-- NAVBAR -->
   <nav class="navbar">
@@ -1997,6 +2206,13 @@
       <span class="search-hint">⌘K</span>
     </div>
     <div class="nav-actions">
+      <button class="hamburger-btn" onclick="toggleDrawer()" aria-label="Menu">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
       <button class="icon-btn"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
           <path d="M13.73 21a2 2 0 0 1-3.46 0" />
@@ -2304,6 +2520,13 @@
 
         <!-- RIGHT PANEL -->
         <aside class="right-panel">
+          <div class="right-panel-toggle" id="rightPanelToggle" onclick="toggleRightPanel()">
+            <span>📊 Market Info &amp; Price Chart</span>
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+          <div class="right-panel-inner" id="rightPanelInner">
           <div>
             <div class="commodity-name">Granular Urea</div>
             <p class="commodity-desc">Solid nitrogenous fertilizer produced through the granulation of liquid urea.
@@ -2383,6 +2606,7 @@
                   class="bulletin-source">Bloomberg</span></div>
             </div>
           </div>
+          </div><!-- /right-panel-inner -->
         </aside>
       </div>
     </div>
@@ -2987,9 +3211,69 @@
     // استدعاء لتحديث اللوحة اليمنى في البداية
     updateRightPanelSoilContext(null);
 
+
+    // ══════════════ MOBILE / RESPONSIVE JS ══════════════
+    function toggleDrawer() {
+      document.querySelector('.sidebar').classList.toggle('open');
+      document.getElementById('drawerOverlay').classList.toggle('visible');
+    }
+    function closeDrawer() {
+      document.querySelector('.sidebar').classList.remove('open');
+      document.getElementById('drawerOverlay').classList.remove('visible');
+    }
+    function toggleRightPanel() {
+      document.getElementById('rightPanelInner').classList.toggle('open');
+      document.getElementById('rightPanelToggle').classList.toggle('open');
+    }
+    function openInfo(el) {
+      const inner = document.getElementById('rightPanelInner');
+      const toggle = document.getElementById('rightPanelToggle');
+      if (!inner.classList.contains('open')) {
+        inner.classList.add('open');
+        toggle.classList.add('open');
+      }
+      setTimeout(() => document.querySelector('.right-panel').scrollIntoView({behavior:'smooth'}), 50);
+      document.querySelectorAll('.mobile-nav-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+    }
+    function mobileTab(id, el) {
+      const labelMap = { 'fertilizers': 'Fertilizers', 'market-profile': 'Market Profile', 'production': 'Production' };
+      document.querySelectorAll('.main-tab').forEach(t => {
+        if (t.textContent.includes(labelMap[id])) t.classList.add('active');
+        else t.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      const panel = document.getElementById('tab-' + id);
+      if (panel) { panel.classList.add('active'); }
+      document.querySelectorAll('.mobile-nav-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    // ═════════════════════════════════════════════════════
     setTimeout(drawPriceChart, 150);
     window.addEventListener('resize', drawPriceChart);
   </script>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="mobile-bottom-nav">
+    <div class="mobile-nav-item active" id="mbn-fertilizers" onclick="mobileTab('fertilizers',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      Stocks
+    </div>
+    <div class="mobile-nav-item" id="mbn-market-profile" onclick="mobileTab('market-profile',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      Market
+    </div>
+    <div class="mobile-nav-item" id="mbn-production" onclick="mobileTab('production',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+      Process
+    </div>
+    <div class="mobile-nav-item" id="mbn-info" onclick="openInfo(this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Info
+    </div>
+  </nav>
+
 </body>
 
 </html>
