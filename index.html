@@ -60,7 +60,6 @@
       --transition-slow: 0.35s cubic-bezier(0.4,0,0.2,1);
     }
 
-    /* ─── SCROLLBAR ─── */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
@@ -79,9 +78,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ═══════════════════════════════════
-       NAVBAR — Enhanced
-    ═══════════════════════════════════ */
     .navbar {
       height: var(--navbar-height);
       background: var(--accent);
@@ -253,14 +249,8 @@
     .profile-name { font-size: 12.5px; font-weight: 600; color: #fff; line-height: 1.3; }
     .profile-role { font-size: 10.5px; color: rgba(255,255,255,0.48); line-height: 1.2; }
 
-    /* ═══════════════════════════════════
-       LAYOUT
-    ═══════════════════════════════════ */
     .app-body { display: flex; flex: 1; overflow: hidden; }
 
-    /* ═══════════════════════════════════
-       SIDEBAR — Enhanced
-    ═══════════════════════════════════ */
     .sidebar {
       width: var(--sidebar-width);
       background: var(--surface);
@@ -295,6 +285,14 @@
     }
 
     .sidebar-group { margin-bottom: 2px; }
+    .sidebar-children {
+      display: none;
+      margin: 0 6px 8px;
+      padding-left: 10px;
+    }
+    .sidebar-parent.open + .sidebar-children {
+      display: block;
+    }
 
     .sidebar-parent {
       display: flex; align-items: center; justify-content: space-between;
@@ -332,6 +330,10 @@
       background: var(--accent-light);
       font-weight: 600;
     }
+    .sidebar-item.hidden,
+    .sidebar-children.hidden {
+      display: none !important;
+    }
     .sidebar-item.active::before {
       content: '';
       position: absolute; left: 0; top: 50%;
@@ -344,16 +346,10 @@
     .sidebar-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.45; flex-shrink: 0; }
     .sidebar-divider { height: 1px; background: var(--border-light); margin: 8px 14px; }
 
-    /* ═══════════════════════════════════
-       MAIN CONTENT
-    ═══════════════════════════════════ */
     .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
     .main-inner { flex: 1; display: flex; overflow: hidden; }
     .content { flex: 1; overflow-y: auto; padding: 22px 20px; min-width: 0; }
 
-    /* ═══════════════════════════════════
-       PAGE HEADER — Enhanced
-    ═══════════════════════════════════ */
     .breadcrumb {
       display: flex; align-items: center; gap: 5px;
       font-size: 11.5px; color: var(--text-muted);
@@ -395,9 +391,6 @@
 
     .page-subtitle { font-size: 12.5px; color: var(--text-muted); }
 
-    /* ═══════════════════════════════════
-       MAIN TABS — Enhanced
-    ═══════════════════════════════════ */
     .main-tabs {
       display: flex;
       gap: 0;
@@ -429,16 +422,10 @@
       box-shadow: 0 2px 10px rgba(8,48,107,0.3);
     }
 
-    /* ═══════════════════════════════════
-       TAB PANELS
-    ═══════════════════════════════════ */
     .tab-panel { display: none; }
     .tab-panel.active { display: block; animation: fadeUp 0.2s ease; }
     @keyframes fadeUp { from { opacity:0; transform:translateY(8px) } to { opacity:1; transform:translateY(0) } }
 
-    /* ═══════════════════════════════════
-       TABLES — Enhanced
-    ═══════════════════════════════════ */
     .table-outer {
       border-radius: var(--radius);
       border: 1px solid var(--border);
@@ -447,7 +434,7 @@
     }
     .table-wrap { overflow-x: auto; }
 
-    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; background: var(--surface); }
 
     thead tr { background: var(--accent); }
     th {
@@ -481,9 +468,6 @@
     td { padding: 10px 14px; vertical-align: middle; }
     td.num { text-align: right; font-family: var(--font-mono); font-size: 12px; }
 
-    /* ═══════════════════════════════════
-       BADGES & CHIPS
-    ═══════════════════════════════════ */
     .ticker-badge {
       display: inline-flex; align-items: center;
       padding: 3px 10px;
@@ -528,9 +512,6 @@
       border-radius: 20px;
     }
 
-    /* ═══════════════════════════════════
-       FILTERS
-    ═══════════════════════════════════ */
     .filters-row {
       display: flex; align-items: flex-end; gap: 10px;
       margin-bottom: 14px; flex-wrap: wrap;
@@ -575,9 +556,6 @@
     .search-mini input::placeholder { color: var(--text-muted); }
     .search-mini svg { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; color: var(--text-muted); pointer-events: none; }
 
-    /* ═══════════════════════════════════
-       MARKET PROFILE / SUB TABS
-    ═══════════════════════════════════ */
     .sub-tabs-wrap {
       display: flex; align-items: center; justify-content: space-between;
       margin-bottom: 14px; flex-wrap: wrap; gap: 10px;
@@ -616,9 +594,6 @@
     .sub-panel { display: none; }
     .sub-panel.active { display: block; animation: fadeUp 0.2s ease; }
 
-    /* ═══════════════════════════════════
-       CARDS
-    ═══════════════════════════════════ */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -662,9 +637,6 @@
     .prod-bar-fill.imp { background: linear-gradient(90deg, #0a9070, var(--green)); }
     .prod-bar-fill.exp { background: linear-gradient(90deg, #7236b0, var(--purple)); }
 
-    /* ═══════════════════════════════════
-       CROP DETAIL SECTION
-    ═══════════════════════════════════ */
     .crop-detail-section {
       display: none;
       padding: 20px;
@@ -687,7 +659,7 @@
       gap: 16px;
     }
     .detail-col {
-      background: var(--surface-2);
+      background: var(--surface);
       border-radius: var(--radius);
       border: 1px solid var(--border);
       overflow: hidden;
@@ -718,15 +690,14 @@
     .detail-item-country span:first-child { font-size: 15px; }
     .detail-item-value {
       font-family: var(--font-mono); font-weight: 600;
-      color: var(--accent-mid);
-      background: rgba(8,48,107,0.07);
-      padding: 2px 9px; border-radius: 20px; font-size: 11.5px;
-      border: 1px solid rgba(8,48,107,0.08);
+      color: var(--text-primary);
+      background: var(--surface-2);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      border: 1px solid var(--border);
     }
 
-    /* ═══════════════════════════════════
-       COUNTRY FILTER
-    ═══════════════════════════════════ */
     .country-filter-row {
       display: flex; align-items: center; gap: 8px;
       padding: 10px 14px;
@@ -751,9 +722,6 @@
 
     .country-chip { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; }
 
-    /* ═══════════════════════════════════
-       PAGINATION
-    ═══════════════════════════════════ */
     .pagination-row {
       display: flex; align-items: center; justify-content: space-between;
       padding: 11px 16px;
@@ -781,9 +749,6 @@
     .page-btn:disabled { opacity: 0.35; cursor: not-allowed; box-shadow: none; }
     .page-dots { color: var(--text-muted); font-size: 12px; padding: 0 4px; }
 
-    /* ═══════════════════════════════════
-       RIGHT PANEL — Enhanced
-    ═══════════════════════════════════ */
     .right-panel {
       width: var(--right-panel);
       flex-shrink: 0;
@@ -814,7 +779,6 @@
       line-height: 1.65; margin-top: 6px;
     }
 
-    /* SOIL CONTEXT INFO BOX */
     .soil-info-box {
       background: linear-gradient(135deg, var(--surface-2) 0%, var(--accent-light) 100%);
       border: 1px solid var(--accent-subtle);
@@ -836,7 +800,6 @@
     .soil-info-title { font-size: 11.5px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
     .soil-info-text { font-size: 11.5px; color: var(--text-secondary); line-height: 1.55; }
 
-    /* PRICE SECTION */
     .price-section {}
     .chart-header {
       display: flex; align-items: flex-start; justify-content: space-between;
@@ -893,7 +856,6 @@
     .time-range-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 2px 8px rgba(8,48,107,0.25); }
     .time-range-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
 
-    /* STAT CARDS */
     .stat-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .stat-card {
       background: var(--surface);
@@ -932,7 +894,6 @@
     .stat-change.pos { color: var(--green); background: var(--green-light); }
     .stat-change.neg { color: var(--red); background: var(--red-light); }
 
-    /* BULLETIN */
     .bulletin-list { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-xs); }
     .bulletin-item {
       padding: 12px 14px;
@@ -993,7 +954,6 @@
     .route-card:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); transform: translateY(-1px); }
     .route-card.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 2px 10px rgba(8,48,107,0.3); }
 
-    /* OUTPUT PANEL */
     .output-panel {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -1027,6 +987,7 @@
     .output-title { font-size: 14px; font-weight: 700; color: #fff; letter-spacing: -0.2px; }
     .output-subtitle { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; }
 
+    /* ─── NEW GRID: 3 cols left + 1 col right ─── */
     .new-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1034,9 +995,9 @@
       padding: 18px;
       background: var(--surface);
     }
-    .output-left, .output-right { display: flex; flex-direction: column; gap: 14px; }
+    .output-left { display: flex; flex-direction: column; gap: 14px; }
+    .output-right { display: flex; flex-direction: column; gap: 14px; }
 
-    /* METRIC & DATA BLOCKS */
     .input-block {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -1066,7 +1027,6 @@
     .data-label { color: var(--text-secondary); }
     .data-value { font-family: var(--font-mono); font-weight: 600; color: var(--text-primary); }
 
-    /* TIMELINE */
     .timeline-container {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -1100,7 +1060,6 @@
     .timeline-step-title { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
     .timeline-step-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.55; }
 
-    /* TOOLTIP */
     .chart-tooltip {
       position: absolute;
       background: var(--accent);
@@ -1124,9 +1083,6 @@
       border-top-color: var(--accent);
     }
 
-    /* ═══════════════════════════════════
-       MOBILE RESPONSIVE
-    ═══════════════════════════════════ */
     @media (max-width: 768px) {
       body { height: auto; overflow: auto; min-height: 100vh; padding-bottom: 64px; }
 
@@ -1212,7 +1168,7 @@
       .route-cards { gap: 6px; }
       .route-card { font-size: 11px; padding: 5px 10px; }
       .prod-layout { gap: 14px; }
-      .output-body, .new-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+      .new-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
 
       .right-panel {
         width: 100%; border-left: none;
@@ -1232,7 +1188,6 @@
       .right-panel-inner { display: none; padding: 16px 14px; gap: 18px; flex-direction: column; }
       .right-panel-inner.open { display: flex; }
 
-      /* MOBILE BOTTOM NAV */
       .mobile-bottom-nav {
         display: flex;
         position: fixed; bottom: 0; left: 0; right: 0;
@@ -1266,9 +1221,6 @@
       .right-panel-inner { display: flex !important; padding: 0; gap: 20px; flex-direction: column; }
     }
 
-    /* ═══════════════════════════════════
-       SKELETON LOADING (new)
-    ═══════════════════════════════════ */
     @keyframes shimmer {
       0% { background-position: -200% 0; }
       100% { background-position: 200% 0; }
@@ -1280,15 +1232,9 @@
       border-radius: var(--radius-sm);
     }
 
-    /* ═══════════════════════════════════
-       FOCUS VISIBLE (accessibility)
-    ═══════════════════════════════════ */
     :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     button:focus-visible, [tabindex="0"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-    /* ═══════════════════════════════════
-       PRINT STYLES
-    ═══════════════════════════════════ */
     @media print {
       .sidebar, .navbar, .right-panel, .mobile-bottom-nav { display: none; }
       .main-inner { flex-direction: column; }
@@ -1375,29 +1321,36 @@
           </div>
           <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
-        <div class="sidebar-children">
-          <div class="sidebar-parent" style="font-size:12.5px;font-weight:500;padding-left:28px;color:var(--text-secondary)">
+        <div class="sidebar-children open">
+          <div class="sidebar-parent open" style="font-size:12.5px;font-weight:500;padding-left:28px;color:var(--text-secondary)">
             <div class="sidebar-parent-label">Urea</div>
             <svg class="sidebar-chevron" style="width:12px;height:12px" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
           </div>
-          <div class="sidebar-item active">Granular</div>
-          <div class="sidebar-item">Prilled</div>
-          <div class="sidebar-item">UAN Solutions</div>
-          <div class="sidebar-item">Sulfur-coated urea</div>
-          <div class="sidebar-item">Urease inhibitor urea</div>
-          <div class="sidebar-item">Liquid Urea</div>
-        </div>
-      </div>
-
-      <div class="sidebar-divider"></div>
-
-      <div class="sidebar-group">
-        <div class="sidebar-parent">
-          <div class="sidebar-parent-label">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
-            Ammonia
+          <div class="sidebar-children open">
+            <div class="sidebar-item active">Granular urea</div>
+            <div class="sidebar-item">Prilled urea</div>
+            <div class="sidebar-item">Sulfur-coated urea</div>
+            <div class="sidebar-item">Polymer-coated urea</div>
+            <div class="sidebar-item">Urease inhibitor urea</div>
+            <div class="sidebar-item">Liquid Urea</div>
+            <div class="sidebar-item">Industrial Urea</div>
           </div>
-          <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+
+          <div class="sidebar-parent" style="font-size:12.5px;font-weight:500;padding-left:28px;color:var(--text-secondary)">
+            <div class="sidebar-parent-label">Ammonia</div>
+            <svg class="sidebar-chevron" style="width:12px;height:12px" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+          <div class="sidebar-children">
+            <div class="sidebar-item">Ammonium Nitrate</div>
+            <div class="sidebar-item">Ammonia</div>
+            <div class="sidebar-item">Ammonium Sulphate</div>
+            <div class="sidebar-item">Calcium Ammonium Nitrate</div>
+          </div>
+
+          <div class="sidebar-parent" style="font-size:12.5px;font-weight:500;padding-left:28px;color:var(--text-secondary)">
+            <div class="sidebar-parent-label">UAN</div>
+            <svg class="sidebar-chevron" style="width:12px;height:12px" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
         </div>
       </div>
 
@@ -1411,6 +1364,13 @@
           </div>
           <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
+        <div class="sidebar-children">
+          <div class="sidebar-item">Phosphate Rocks</div>
+          <div class="sidebar-item">Diammonium Phosphate</div>
+          <div class="sidebar-item">Monoammonium Phosphate</div>
+          <div class="sidebar-item">Single Superphosphate</div>
+          <div class="sidebar-item">Triple Superphosphate</div>
+        </div>
       </div>
 
       <div class="sidebar-group">
@@ -1420,6 +1380,11 @@
             Potash
           </div>
           <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="sidebar-children">
+          <div class="sidebar-item">Muriate of Potash</div>
+          <div class="sidebar-item">Sulfate of Potash</div>
+          <div class="sidebar-item">Potassium Nitrate</div>
         </div>
       </div>
     </aside>
@@ -1618,20 +1583,6 @@
               <p class="commodity-desc">Solid nitrogenous fertilizer produced through granulation of liquid urea. Primary nitrogen source for large-scale agriculture due to high nutrient density and favorable handling characteristics.</p>
             </div>
 
-            <!-- SOIL CONTEXT -->
-            <div class="soil-info-box" id="rightPanelSoilContext">
-              <div class="soil-info-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12C12 7 17 4 17 4M12 12C12 7 7 4 7 4"/></svg>
-              </div>
-              <div style="flex:1">
-                <div class="soil-info-title">Soil Use Context</div>
-                <div id="rightPanelSoilUseText" class="soil-info-text">
-                  Select a production route to see soil recommendations.
-                </div>
-              </div>
-            </div>
-
-            <!-- PRICE CHART -->
             <div class="price-section">
               <div class="chart-header">
                 <div>
@@ -1657,7 +1608,18 @@
               </div>
             </div>
 
-            <!-- STAT CARDS -->
+            <div class="soil-info-box" id="rightPanelSoilContext">
+              <div class="soil-info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12C12 7 17 4 17 4M12 12C12 7 7 4 7 4"/></svg>
+              </div>
+              <div style="flex:1">
+                <div class="soil-info-title">Soil Use Context</div>
+                <div id="rightPanelSoilUseText" class="soil-info-text">
+                  Select a production route to see soil recommendations.
+                </div>
+              </div>
+            </div>
+
             <div class="stat-cards">
               <div class="stat-card">
                 <div class="stat-card-label">Input Cost Index</div>
@@ -1671,7 +1633,6 @@
               </div>
             </div>
 
-            <!-- BULLETIN -->
             <div>
               <div class="panel-section-title">Market Bulletin</div>
               <div class="bulletin-list">
@@ -1938,30 +1899,30 @@
     function sortCountry(col) { countrySortState[col] = countrySortState[col]==='asc'?'desc':'asc'; const asc=countrySortState[col]==='asc'; const keys=['country','production','consumption','imports','exports']; filteredCountry.sort((a,b)=>asc?(a[keys[col]]>b[keys[col]]?1:-1):(a[keys[col]]<b[keys[col]]?1:-1)); renderCountryTable(); }
 
     // ═══════════════════════════════════════════════════
-    // PRODUCTION ROUTES DATA (UNCHANGED)
+    // PRODUCTION ROUTES DATA
     // ═══════════════════════════════════════════════════
     const ROUTES = [
       { id:'SMR', name:'Steam Methane Reforming', shortName:'SMR', desc:'Natural Gas · Traditional', category:'natural-gas', color:'#08306B' },
       { id:'ATR', name:'Autothermal Reforming', shortName:'ATR', desc:'Natural Gas · Traditional', category:'natural-gas', color:'#08306B' },
-      { id:'MethPyrolysis', name:'Methane Pyrolysis', shortName:'Methane Pyrolysis', desc:'Natural Gas · Green (Turquoise H₂)', category:'natural-gas', tag:'Green', color:'#0891b2' },
-      { id:'ATR_CCS', name:'ATR with CCS', shortName:'ATR + CCS', desc:'Natural Gas · Blue H₂', category:'natural-gas', tag:'CCS', color:'#5b2d8e' },
-      { id:'SMR_CCS', name:'SMR with CCS', shortName:'SMR + CCS', desc:'Natural Gas · Blue H₂', category:'natural-gas', tag:'CCS', color:'#5b2d8e' },
+      { id:'MethPyrolysis', name:'Methane Pyrolysis', shortName:'Methane Pyrolysis', desc:'Natural Gas · Green (Turquoise H₂)', category:'natural-gas', tag:'Green', color:'#08306B' },
+      { id:'ATR_CCS', name:'ATR with CCS', shortName:'ATR + CCS', desc:'Natural Gas · Blue H₂', category:'natural-gas', tag:'CCS', color:'#08306B' },
+      { id:'SMR_CCS', name:'SMR with CCS', shortName:'SMR + CCS', desc:'Natural Gas · Blue H₂', category:'natural-gas', tag:'CCS', color:'#08306B' },
       { id:'CoalGasification', name:'Coal Gasification', shortName:'Coal Gas.', desc:'Coal · Traditional', category:'coal', color:'#374151' },
-      { id:'Coal_CCS', name:'Coal with CCS', shortName:'Coal + CCS', desc:'Coal · Carbon Capture', category:'coal', tag:'CCS', color:'#6b7280' },
+      { id:'Coal_CCS', name:'Coal with CCS', shortName:'Coal + CCS', desc:'Coal · Carbon Capture', category:'coal', tag:'CCS', color:'#374151' },
       { id:'Electrolysis', name:'Water Electrolysis', shortName:'Electrolysis', desc:'Green · Renewable H₂', category:'green', tag:'Green', color:'#0d7a5f' },
-      { id:'BiomassGas', name:'Biomass Gasification', shortName:'Biomass Gas.', desc:'Green · Bio H₂', category:'green', tag:'Bio', color:'#16a34a' },
+      { id:'BiomassGas', name:'Biomass Gasification', shortName:'Biomass Gas.', desc:'Green · Bio H₂', category:'green', tag:'Bio', color:'#0d7a5f' },
     ];
 
     const ROUTE_DETAILS = {
       SMR: { title:'Steam Methane Reforming', subtitle:'Natural Gas Route · Traditional', color:'#08306B', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas, urea plant only (in mml)',value:'4.1'},{label:'Electricity (kwh/ton)',value:'170'}], ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'13.3'},{label:'Natural Gas (Fuel) in mmbtu',value:'10.5'},{label:'Electricity (kwh/ton)',value:'80'}], totals:[{label:'Total Natural Gas',value:'21.1',bold:true},{label:'Electricity',value:'215',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'Standard agricultural urea produced by reacting ammonia with CO₂ at high pressure, then granulated into 2–4 mm spherical particles for broadcast application.', soilUse:'All soil types but REQUIRES incorporation or >12mm rain within 2–3 days to prevent ammonia volatilization. Best for mechanized cereal/oilseed systems.', steps:[{title:'Ammonia',body:'Natural gas reacts with steam over nickel catalyst at 800–900°C producing syngas (H₂+CO). Water-gas shift converts CO to H₂+CO₂. CO₂ captured via MDEA amine absorption. Purified H₂ combined with N₂ in Haber-Bosch synthesis loop at 150–250 bar and 400–500°C forming ammonia.'},{title:'Urea',body:'NH3 and CO₂ react in high-pressure synthesis reactor at 140–200 bar and 160–200°C forming urea solution. Solution evaporated to 96–99.7% concentration. Molten urea fed to granulation drum, cooled in fluidised bed, anti-caking coating applied.'}] },
       ATR: { title:'Autothermal Reforming', subtitle:'Natural Gas Route · Traditional', color:'#08306B', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas, urea plant only (in mmbtu)',value:'3.5'},{label:'Electricity (kwh/ton)',value:'140'}], ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'13.3'},{label:'Natural Gas (Fuel) in mmbtu',value:'10.5'},{label:'Electricity (kwh/ton)',value:'80'}], totals:[{label:'Total Natural Gas',value:'20.5',bold:true},{label:'Electricity',value:'185',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'ATR combines partial oxidation and steam reforming in a single reactor using oxygen from an air separation unit.', soilUse:'Same suitability as granular. More common in Asian and Middle Eastern markets. Dissolves faster — useful for fertigation or quick-response applications.', steps:[{title:'Ammonia',body:'Natural gas reacts with steam and O₂ over nickel catalyst at 800–1000°C. Single-pass conversion higher than SMR. CO₂ captured via amine absorption.'},{title:'Urea',body:'NH3 and CO₂ react at 140–200 bar. Standard granulation applied.'}] },
-      MethPyrolysis: { title:'Methane Pyrolysis', subtitle:'Natural Gas Route · Green (Turquoise H₂)', color:'#0891b2', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas (mmbtu)',value:'8.5'},{label:'Electricity (kwh/ton)',value:'220'}], ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'8.5'},{label:'Electricity (kwh/ton)',value:'120'}], totals:[{label:'Total Natural Gas',value:'8.5',bold:true},{label:'Electricity',value:'220',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'Methane is split into H₂ and solid carbon (no CO₂ emitted). Produces turquoise hydrogen with carbon black as saleable by-product.', soilUse:'Identical agronomic profile to conventional granular urea. Carbon footprint significantly lower than SMR without CCS.', steps:[{title:'Turquoise H₂',body:'Methane heated to 700–1200°C in molten metal or plasma reactor. CH₄ → C(solid) + 2H₂. No combustion, no CO₂.'},{title:'Ammonia & Urea',body:'H₂ combined with N₂ in Haber-Bosch loop at 150–250 bar. Standard granulation.'}] },
-      ATR_CCS: { title:'ATR with Carbon Capture', subtitle:'Natural Gas Route · CCS (Blue H₂)', color:'#5b2d8e', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas (mmbtu)',value:'4.0'},{label:'Electricity (kwh/ton)',value:'160'}], ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'14.0'},{label:'Natural Gas (Fuel) in mmbtu',value:'9.0'},{label:'Electricity (kwh/ton)',value:'95'}], totals:[{label:'Total Natural Gas',value:'21.5',bold:true},{label:'Electricity',value:'220',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'ATR with post-combustion or pre-combustion carbon capture achieving 90–95% CO₂ removal.', soilUse:'Agronomically identical to standard granular urea. Premium pricing possible in carbon-conscious markets.', steps:[{title:'ATR + CCS',body:'Standard ATR with additional amine absorption unit capturing >90% of CO₂. Captured CO₂ compressed and stored in geological formations.'},{title:'Urea Synthesis',body:'NH₃ + CO₂ → urea. Standard granulation.'}] },
-      SMR_CCS: { title:'SMR with Carbon Capture', subtitle:'Natural Gas Route · CCS (Blue H₂)', color:'#5b2d8e', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas (mmbtu)',value:'4.5'},{label:'Electricity (kwh/ton)',value:'175'}], ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'14.5'},{label:'Natural Gas (Fuel) in mmbtu',value:'11.0'},{label:'Electricity (kwh/ton)',value:'85'}], totals:[{label:'Total Natural Gas',value:'22.5',bold:true},{label:'Electricity',value:'235',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'SMR with integrated CCS unit achieving 85–95% capture rate.', soilUse:'Qualifies for low-carbon fertilizer certification in EU and North American markets.', steps:[{title:'SMR + CCS',body:'Standard SMR with capture unit on reformer flue gas. MDEA or Econamine solvent. CO₂ compressed to 100–150 bar for pipeline transport.'},{title:'Urea Synthesis',body:'Portion of captured CO₂ fed to urea synthesis. Standard granulation.'}] },
+      MethPyrolysis: { title:'Methane Pyrolysis', subtitle:'Natural Gas Route · Green (Turquoise H₂)', color:'#08306B', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas (mmbtu)',value:'8.5'},{label:'Electricity (kwh/ton)',value:'220'}], ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'8.5'},{label:'Electricity (kwh/ton)',value:'120'}], totals:[{label:'Total Natural Gas',value:'8.5',bold:true},{label:'Electricity',value:'220',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'Methane is split into H₂ and solid carbon (no CO₂ emitted). Produces turquoise hydrogen with carbon black as saleable by-product.', soilUse:'Identical agronomic profile to conventional granular urea. Carbon footprint significantly lower than SMR without CCS.', steps:[{title:'Turquoise H₂',body:'Methane heated to 700–1200°C in molten metal or plasma reactor. CH₄ → C(solid) + 2H₂. No combustion, no CO₂.'},{title:'Ammonia & Urea',body:'H₂ combined with N₂ in Haber-Bosch loop at 150–250 bar. Standard granulation.'}] },
+      ATR_CCS: { title:'ATR with Carbon Capture', subtitle:'Natural Gas Route · CCS (Blue H₂)', color:'#08306B', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas (mmbtu)',value:'4.0'},{label:'Electricity (kwh/ton)',value:'160'}], ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'14.0'},{label:'Natural Gas (Fuel) in mmbtu',value:'9.0'},{label:'Electricity (kwh/ton)',value:'95'}], totals:[{label:'Total Natural Gas',value:'21.5',bold:true},{label:'Electricity',value:'220',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'ATR with post-combustion or pre-combustion carbon capture achieving 90–95% CO₂ removal.', soilUse:'Agronomically identical to standard granular urea. Premium pricing possible in carbon-conscious markets.', steps:[{title:'ATR + CCS',body:'Standard ATR with additional amine absorption unit capturing >90% of CO₂. Captured CO₂ compressed and stored in geological formations.'},{title:'Urea Synthesis',body:'NH₃ + CO₂ → urea. Standard granulation.'}] },
+      SMR_CCS: { title:'SMR with Carbon Capture', subtitle:'Natural Gas Route · CCS (Blue H₂)', color:'#08306B', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas (mmbtu)',value:'4.5'},{label:'Electricity (kwh/ton)',value:'175'}], ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'14.5'},{label:'Natural Gas (Fuel) in mmbtu',value:'11.0'},{label:'Electricity (kwh/ton)',value:'85'}], totals:[{label:'Total Natural Gas',value:'22.5',bold:true},{label:'Electricity',value:'235',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'SMR with integrated CCS unit achieving 85–95% capture rate.', soilUse:'Qualifies for low-carbon fertilizer certification in EU and North American markets.', steps:[{title:'SMR + CCS',body:'Standard SMR with capture unit on reformer flue gas. MDEA or Econamine solvent. CO₂ compressed to 100–150 bar for pipeline transport.'},{title:'Urea Synthesis',body:'Portion of captured CO₂ fed to urea synthesis. Standard granulation.'}] },
       CoalGasification: { title:'Coal Gasification', subtitle:'Coal Route · Traditional', color:'#374151', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Coal (in ton)',value:'1.8'},{label:'Electricity (kwh/ton)',value:'350'}], ammonia:[{label:'Coal (Feed Stock) in ton',value:'5.2'},{label:'Electricity (kwh/ton)',value:'180'}], totals:[{label:'Total Coal',value:'7.0',bold:true},{label:'Electricity',value:'530',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'Coal is gasified with steam and oxygen to produce syngas. Dominant route in China, ~70% of Chinese urea production.', soilUse:'Agronomically identical to natural gas-based granular urea. Higher carbon footprint. 30–40% lower cost in coal-rich regions.', steps:[{title:'Syngas Production',body:'Coal fed to gasifier at 1200–1500°C with steam and O₂. Produces syngas cleaned and shifted to maximize H₂.'},{title:'Ammonia & Urea',body:'H₂ combined with N₂ in Haber-Bosch. Standard granulation.'}] },
-      Coal_CCS: { title:'Coal with CCS', subtitle:'Coal Route · Carbon Capture', color:'#6b7280', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Coal (in ton)',value:'1.8'},{label:'Electricity (kwh/ton)',value:'420'}], ammonia:[{label:'Coal (Feed Stock) in ton',value:'5.2'},{label:'Electricity (kwh/ton)',value:'220'}], totals:[{label:'Total Coal',value:'7.0',bold:true},{label:'Electricity',value:'640',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'Coal gasification with integrated pre- or post-combustion CCS achieving 85–90% CO₂ removal.', soilUse:'Qualifies for lower carbon intensity certification.', steps:[{title:'Gasification + CCS',body:'Rectisol or Selexol wash capturing CO₂ and sulfur. CO₂ injected into geological storage.'},{title:'Urea Synthesis',body:'Standard NH₃+CO₂ reaction and granulation.'}] },
+      Coal_CCS: { title:'Coal with CCS', subtitle:'Coal Route · Carbon Capture', color:'#374151', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Coal (in ton)',value:'1.8'},{label:'Electricity (kwh/ton)',value:'420'}], ammonia:[{label:'Coal (Feed Stock) in ton',value:'5.2'},{label:'Electricity (kwh/ton)',value:'220'}], totals:[{label:'Total Coal',value:'7.0',bold:true},{label:'Electricity',value:'640',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'Coal gasification with integrated pre- or post-combustion CCS achieving 85–90% CO₂ removal.', soilUse:'Qualifies for lower carbon intensity certification.', steps:[{title:'Gasification + CCS',body:'Rectisol or Selexol wash capturing CO₂ and sulfur. CO₂ injected into geological storage.'},{title:'Urea Synthesis',body:'Standard NH₃+CO₂ reaction and granulation.'}] },
       Electrolysis: { title:'Water Electrolysis', subtitle:'Green Route · Renewable H₂', color:'#0d7a5f', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Water (m³)',value:'9.0'},{label:'Electricity (kwh/ton)',value:'1,200'}], ammonia:[{label:'Electricity (kwh/ton)',value:'9,500'},{label:'Water (m³)',value:'8.5'}], totals:[{label:'Total Electricity',value:'10,700',bold:true},{label:'Water (m³)',value:'17.5',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'Green hydrogen produced by electrolyzing water using renewable electricity. Zero direct CO₂ emissions.', soilUse:'Identical agronomic performance. Commands green premium in carbon credit-linked markets.', steps:[{title:'Green H₂',body:'PEM or alkaline electrolyzer splits water into H₂ and O₂. Efficiency 60–80% (LHV basis).'},{title:'Green Ammonia & Urea',body:'H₂ fed to Haber-Bosch with N₂. CO₂ sourced from biogenic or direct air capture. Standard granulation.'}] },
-      BiomassGas: { title:'Biomass Gasification', subtitle:'Green Route · Bio H₂', color:'#16a34a', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Biomass (dry ton)',value:'3.2'},{label:'Electricity (kwh/ton)',value:'280'}], ammonia:[{label:'Biomass (Feed Stock) dry ton',value:'8.5'},{label:'Electricity (kwh/ton)',value:'160'}], totals:[{label:'Total Biomass',value:'11.7',bold:true},{label:'Electricity',value:'440',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'Agricultural residues or energy crops gasified. Near carbon-neutral or carbon-negative when combined with CCS.', soilUse:'Certified bio-based urea may qualify for renewable content credits in EU.', steps:[{title:'Biomass Syngas',body:'Biomass dried and fed to fluidized bed gasifier at 700–900°C. Cleaned via tar reformer and filtration.'},{title:'Ammonia & Urea',body:'Biogenic CO₂ from gasifier used in urea synthesis, making product carbon-neutral. Standard granulation.'}] }
+      BiomassGas: { title:'Biomass Gasification', subtitle:'Green Route · Bio H₂', color:'#0d7a5f', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Biomass (dry ton)',value:'3.2'},{label:'Electricity (kwh/ton)',value:'280'}], ammonia:[{label:'Biomass (Feed Stock) dry ton',value:'8.5'},{label:'Electricity (kwh/ton)',value:'160'}], totals:[{label:'Total Biomass',value:'11.7',bold:true},{label:'Electricity',value:'440',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'Agricultural residues or energy crops gasified. Near carbon-neutral or carbon-negative when combined with CCS.', soilUse:'Certified bio-based urea may qualify for renewable content credits in EU.', steps:[{title:'Biomass Syngas',body:'Biomass dried and fed to fluidized bed gasifier at 700–900°C. Cleaned via tar reformer and filtration.'},{title:'Ammonia & Urea',body:'Biogenic CO₂ from gasifier used in urea synthesis, making product carbon-neutral. Standard granulation.'}] }
     };
 
     let filteredRoutes = [...ROUTES];
@@ -1995,6 +1956,10 @@
       empty.style.display = 'none';
       content.classList.add('visible');
       const inp = d.inputs;
+
+      // ─── NEW ORDER:
+      //   LEFT  col: Direct Inputs → Ammonia Production Inputs → Key Metrics
+      //   RIGHT col: Manufacturing Process (timeline)
       content.innerHTML = `
         <div class="output-header" style="background:linear-gradient(135deg,${d.color} 0%,${d.color}dd 100%)">
           <div class="output-title">${d.title}</div>
@@ -2002,27 +1967,36 @@
         </div>
         <div class="new-grid">
           <div class="output-left">
+
+            <!-- 1. Direct Inputs -->
             <div class="input-block">
-              <div class="input-block-title" style="background:${d.color};color:#fff;border-bottom:none">Key Metrics <span class="input-unit" style="color:rgba(255,255,255,0.65);font-size:10px">(per ton urea)</span></div>
+              <div class="input-block-title" style="background:${d.color};color:#fff;border-bottom:1px solid rgba(255,255,255,0.12)">Direct Inputs <span class="input-unit" style="color:rgba(255,255,255,0.75)">(per ton urea)</span></div>
+              <div class="data-list">
+                ${inp.direct.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}
+              </div>
+            </div>
+
+            <!-- 2. Ammonia Production Inputs -->
+            <div class="input-block">
+              <div class="input-block-title" style="background:${d.color};color:#fff;border-bottom:1px solid rgba(255,255,255,0.12)">Ammonia Production Inputs</div>
+              <div class="data-list">
+                ${inp.ammonia.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}
+              </div>
+            </div>
+
+            <!-- 3. Key Metrics -->
+            <div class="input-block">
+              <div class="input-block-title" style="background:${d.color};color:#fff;border-bottom:1px solid rgba(255,255,255,0.12)">Key Metrics <span class="input-unit" style="color:rgba(255,255,255,0.75);font-size:10px">(per ton urea)</span></div>
               <div class="data-list">
                 ${inp.totals.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value" style="color:${d.color}">${r.value}</span></div>`).join('')}
                 <div class="data-row"><span class="data-label">${inp.activeIngredient.name}</span><span class="data-value" style="color:${d.color}">${inp.activeIngredient.pct}%</span></div>
               </div>
             </div>
-            <div class="input-block">
-              <div class="input-block-title">Direct Inputs <span class="input-unit">(per ton urea)</span></div>
-              <div class="data-list">
-                ${inp.direct.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}
-              </div>
-            </div>
+
           </div>
           <div class="output-right">
-            <div class="input-block">
-              <div class="input-block-title">Ammonia Production Inputs</div>
-              <div class="data-list">
-                ${inp.ammonia.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}
-              </div>
-            </div>
+
+            <!-- Manufacturing Process (right column) -->
             <div class="timeline-container">
               <div class="timeline-title" style="color:${d.color}">
                 <svg width="14" height="14" fill="none" stroke="${d.color}" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M8 12h8M12 8v8"/></svg>
@@ -2039,6 +2013,7 @@
                   </div>`).join('')}
               </div>
             </div>
+
           </div>
         </div>`;
     }
@@ -2055,6 +2030,27 @@
       const el = document.getElementById('rightPanelSoilUseText');
       if (el) el.textContent = text || 'Select a production route from "Production Inputs / Process" tab to see soil recommendations.';
     }
+
+    // SIDEBAR COLLAPSE
+    function toggleSidebarGroup(parent) {
+      const next = parent.nextElementSibling;
+      parent.classList.toggle('open');
+      if (!next) return;
+      if (next.classList.contains('sidebar-children')) {
+        next.classList.toggle('open');
+        return;
+      }
+      let sibling = next;
+      while (sibling && !sibling.classList.contains('sidebar-parent') && !sibling.classList.contains('sidebar-divider')) {
+        if (sibling.classList.contains('sidebar-item') || sibling.classList.contains('sidebar-children')) {
+          sibling.classList.toggle('hidden');
+        }
+        sibling = sibling.nextElementSibling;
+      }
+    }
+    document.querySelectorAll('.sidebar-parent').forEach(parent => {
+      parent.addEventListener('click', () => toggleSidebarGroup(parent));
+    });
 
     // MOBILE
     function toggleDrawer() { document.querySelector('.sidebar').classList.toggle('open'); document.getElementById('drawerOverlay').classList.toggle('visible'); }
