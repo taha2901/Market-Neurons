@@ -6,35 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Market Neurons — Granular Urea</title>
   <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap"
     rel="stylesheet">
   <style>
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #f0f4f8;
+      --bg: #eef2f7;
       --surface: #ffffff;
-      --surface-2: #f5f8fc;
+      --surface-2: #f4f7fb;
+      --surface-3: #f9fbfd;
       --border: #dce5ef;
       --border-light: #e8f0f7;
       --text-primary: #0a1628;
       --text-secondary: #2d4a6e;
       --text-muted: #7a9bb8;
 
-      /* PRIMARY BRAND — Navy #08306B */
       --accent: #08306B;
       --accent-hover: #062554;
       --accent-light: #e8f0fb;
       --accent-subtle: #d0e3f5;
       --accent-mid: #1a5499;
 
-      /* Supporting palette derived from navy */
       --green: #0d7a5f;
       --green-light: #d0f0e8;
       --red: #c0392b;
@@ -43,21 +36,35 @@
       --amber-light: #fef3c7;
       --purple: #5b2d8e;
       --purple-light: #ede9fe;
-
       --gold: #c8a84b;
       --gold-light: #fdf3d9;
 
-      --sidebar-width: 224px;
-      --navbar-height: 56px;
-      --right-panel: 420px;
-      --radius-sm: 6px;
-      --radius: 10px;
-      --radius-lg: 14px;
-      --shadow-sm: 0 1px 3px rgba(8, 48, 107, 0.08), 0 1px 2px rgba(8, 48, 107, 0.05);
-      --shadow: 0 4px 16px rgba(8, 48, 107, 0.12);
-      --shadow-lg: 0 8px 32px rgba(8, 48, 107, 0.16);
+      --sidebar-width: 228px;
+      --navbar-height: 58px;
+      --right-panel: 400px;
+      --radius-xs: 4px;
+      --radius-sm: 7px;
+      --radius: 11px;
+      --radius-lg: 15px;
+      --radius-xl: 20px;
+
+      --shadow-xs: 0 1px 2px rgba(8,48,107,0.06);
+      --shadow-sm: 0 1px 4px rgba(8,48,107,0.08), 0 2px 8px rgba(8,48,107,0.05);
+      --shadow: 0 4px 16px rgba(8,48,107,0.10), 0 1px 4px rgba(8,48,107,0.06);
+      --shadow-lg: 0 8px 32px rgba(8,48,107,0.14), 0 2px 8px rgba(8,48,107,0.08);
+      --shadow-xl: 0 20px 60px rgba(8,48,107,0.18), 0 4px 16px rgba(8,48,107,0.10);
+
       --font-mono: 'DM Mono', monospace;
+      --transition-fast: 0.12s cubic-bezier(0.4,0,0.2,1);
+      --transition: 0.2s cubic-bezier(0.4,0,0.2,1);
+      --transition-slow: 0.35s cubic-bezier(0.4,0,0.2,1);
     }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
     body {
       font-family: 'DM Sans', sans-serif;
@@ -69,658 +76,512 @@
       overflow: hidden;
       font-size: 14px;
       line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* NAVBAR */
+    /* ═══════════════════════════════════
+       NAVBAR — Enhanced
+    ═══════════════════════════════════ */
     .navbar {
       height: var(--navbar-height);
       background: var(--accent);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(135deg, #08306B 0%, #0d3d82 60%, #0a3272 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 0 24px;
+      gap: 14px;
+      padding: 0 20px;
       position: sticky;
       top: 0;
       z-index: 100;
       flex-shrink: 0;
-      box-shadow: 0 2px 12px rgba(8, 48, 107, 0.3);
+      box-shadow: 0 2px 16px rgba(8,48,107,0.35), 0 1px 0 rgba(255,255,255,0.06) inset;
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 9px;
       width: var(--sidebar-width);
       flex-shrink: 0;
+      text-decoration: none;
     }
 
     .logo-icon {
-      width: 30px;
-      height: 30px;
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 9px;
       display: flex;
       align-items: center;
       justify-content: center;
-      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15);
+      transition: var(--transition);
     }
-
-    .logo-icon svg {
-      color: #fff;
-    }
+    .logo:hover .logo-icon { background: rgba(255,255,255,0.18); transform: scale(1.04); }
+    .logo-icon svg { color: #fff; }
 
     .logo-text {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: -0.3px;
+      font-size: 15.5px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
       color: #fff;
+      line-height: 1;
     }
-
-    .logo-text span {
-      color: var(--gold);
-    }
+    .logo-text span { color: var(--gold); }
+    .logo-tagline { font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: 0.3px; margin-top: 1px; }
 
     .search-wrap {
       flex: 1;
-      max-width: 440px;
+      max-width: 420px;
       position: relative;
     }
-
     .search-wrap svg {
       position: absolute;
-      left: 12px;
-      top: 50%;
+      left: 12px; top: 50%;
       transform: translateY(-50%);
-      color: rgba(255, 255, 255, 0.5);
-      width: 15px;
-      height: 15px;
+      color: rgba(255,255,255,0.45);
+      width: 15px; height: 15px;
+      pointer-events: none;
     }
-
     .search-input {
       width: 100%;
-      height: 36px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      height: 37px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.16);
       border-radius: var(--radius-sm);
-      padding: 0 40px 0 36px;
+      padding: 0 38px 0 37px;
       font-family: 'DM Sans', sans-serif;
       font-size: 13.5px;
       color: #fff;
       outline: none;
-      transition: border-color 0.15s, box-shadow 0.15s;
+      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
     }
-
-    .search-input::placeholder {
-      color: rgba(255, 255, 255, 0.45);
-    }
-
+    .search-input::placeholder { color: rgba(255,255,255,0.38); }
     .search-input:focus {
-      border-color: rgba(255, 255, 255, 0.5);
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+      border-color: rgba(255,255,255,0.42);
+      background: rgba(255,255,255,0.14);
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
     }
-
     .search-hint {
-      position: absolute;
-      right: 10px;
-      top: 50%;
+      position: absolute; right: 10px; top: 50%;
       transform: translateY(-50%);
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.4);
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 4px;
-      padding: 2px 5px;
+      font-size: 10.5px; color: rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 4px; padding: 2px 6px;
+      font-family: var(--font-mono);
     }
 
-    .nav-actions {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .nav-actions { margin-left: auto; display: flex; align-items: center; gap: 6px; }
 
     .icon-btn {
-      width: 36px;
-      height: 36px;
+      width: 37px; height: 37px;
       border-radius: var(--radius-sm);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.07);
+      display: flex; align-items: center; justify-content: center;
       cursor: pointer;
-      color: rgba(255, 255, 255, 0.8);
-      transition: background 0.15s;
+      color: rgba(255,255,255,0.75);
+      transition: background var(--transition), border-color var(--transition), transform var(--transition-fast);
       position: relative;
     }
-
-    .icon-btn:hover {
-      background: rgba(255, 255, 255, 0.18);
-    }
-
-    .icon-btn svg {
-      width: 16px;
-      height: 16px;
-    }
+    .icon-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.25); transform: translateY(-1px); }
+    .icon-btn:active { transform: scale(0.96); }
+    .icon-btn svg { width: 16px; height: 16px; }
 
     .notif-dot {
-      width: 7px;
-      height: 7px;
+      width: 7px; height: 7px;
       background: var(--gold);
       border-radius: 50%;
-      position: absolute;
-      top: 6px;
-      right: 6px;
+      position: absolute; top: 7px; right: 7px;
       border: 1.5px solid var(--accent);
+      animation: notifPulse 3s ease-in-out infinite;
+    }
+    @keyframes notifPulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(200,168,75,0.6); }
+      50% { box-shadow: 0 0 0 4px rgba(200,168,75,0); }
     }
 
     .export-btn {
-      height: 36px;
-      background: var(--gold);
+      height: 37px;
+      background: linear-gradient(135deg, var(--gold) 0%, #d4a843 100%);
       color: #fff;
       border: none;
       border-radius: var(--radius-sm);
-      padding: 0 16px;
+      padding: 0 18px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      transition: all 0.15s;
-      box-shadow: 0 2px 8px rgba(200, 168, 75, 0.4);
+      display: flex; align-items: center; gap: 7px;
+      transition: all var(--transition);
+      box-shadow: 0 2px 10px rgba(200,168,75,0.45), inset 0 1px 0 rgba(255,255,255,0.2);
       letter-spacing: 0.1px;
+      white-space: nowrap;
     }
-
     .export-btn:hover {
-      background: #b8962e;
+      background: linear-gradient(135deg, #d4a843 0%, #b8962e 100%);
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(200, 168, 75, 0.5);
+      box-shadow: 0 4px 16px rgba(200,168,75,0.55), inset 0 1px 0 rgba(255,255,255,0.2);
     }
+    .export-btn:active { transform: scale(0.97) translateY(0); }
+    .export-btn svg { width: 14px; height: 14px; }
 
-    .export-btn svg {
-      width: 14px;
-      height: 14px;
-    }
+    .nav-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.12); margin: 0 2px; }
 
     .profile-pill {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0 10px 0 6px;
-      height: 36px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex; align-items: center; gap: 9px;
+      padding: 0 12px 0 7px; height: 37px;
+      border: 1px solid rgba(255,255,255,0.16);
       border-radius: var(--radius-sm);
       cursor: pointer;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255,255,255,0.08);
+      transition: background var(--transition);
     }
-
+    .profile-pill:hover { background: rgba(255,255,255,0.14); }
     .avatar {
-      width: 24px;
-      height: 24px;
+      width: 26px; height: 26px;
       border-radius: 50%;
-      background: var(--gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 700;
-      color: #fff;
+      background: linear-gradient(135deg, var(--gold) 0%, #e0b855 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10.5px; font-weight: 700; color: #fff;
       flex-shrink: 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
     }
+    .profile-name { font-size: 12.5px; font-weight: 600; color: #fff; line-height: 1.3; }
+    .profile-role { font-size: 10.5px; color: rgba(255,255,255,0.48); line-height: 1.2; }
 
-    .profile-name {
-      font-size: 12.5px;
-      font-weight: 500;
-      line-height: 1.3;
-      color: #fff;
-    }
+    /* ═══════════════════════════════════
+       LAYOUT
+    ═══════════════════════════════════ */
+    .app-body { display: flex; flex: 1; overflow: hidden; }
 
-    .profile-role {
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.5);
-      line-height: 1.2;
-    }
-
-    /* LAYOUT */
-    .app-body {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
-    }
-
-    /* SIDEBAR */
+    /* ═══════════════════════════════════
+       SIDEBAR — Enhanced
+    ═══════════════════════════════════ */
     .sidebar {
       width: var(--sidebar-width);
       background: var(--surface);
       border-right: 1px solid var(--border);
       flex-shrink: 0;
       overflow-y: auto;
-      padding: 16px 0;
-    }
-
-    .sidebar::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .sidebar::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 2px;
+      padding: 16px 0 20px;
+      display: flex;
+      flex-direction: column;
     }
 
     .sidebar-section-header {
-      padding: 8px 16px 4px;
-      font-size: 10.5px;
-      font-weight: 600;
-      letter-spacing: 0.7px;
+      padding: 10px 16px 5px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.9px;
       text-transform: uppercase;
       color: var(--text-muted);
     }
-
-    .sidebar-group {
-      margin-bottom: 4px;
+    .sidebar-category-badge {
+      margin: 2px 12px 10px;
+      padding: 6px 10px;
+      background: var(--accent-light);
+      border: 1px solid var(--accent-subtle);
+      border-radius: var(--radius-sm);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
+
+    .sidebar-group { margin-bottom: 2px; }
 
     .sidebar-parent {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 7px 16px;
-      font-size: 13px;
-      font-weight: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 14px;
+      font-size: 13px; font-weight: 600;
       color: var(--text-secondary);
       cursor: pointer;
+      border-radius: var(--radius-sm);
+      margin: 0 6px;
+      transition: background var(--transition-fast), color var(--transition-fast);
     }
-
-    .sidebar-parent:hover {
-      color: var(--text-primary);
-    }
-
-    .sidebar-parent-label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
+    .sidebar-parent:hover { background: var(--surface-2); color: var(--text-primary); }
+    .sidebar-parent-label { display: flex; align-items: center; gap: 8px; }
     .sidebar-chevron {
-      width: 14px;
-      height: 14px;
+      width: 14px; height: 14px;
       color: var(--text-muted);
-      transition: transform 0.2s;
+      transition: transform var(--transition);
     }
-
-    .sidebar-parent.open .sidebar-chevron {
-      transform: rotate(90deg);
-    }
+    .sidebar-parent.open .sidebar-chevron { transform: rotate(90deg); }
 
     .sidebar-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 16px 6px 28px;
-      font-size: 13px;
+      display: flex; align-items: center; gap: 8px;
+      padding: 6.5px 14px 6.5px 30px;
+      font-size: 12.5px;
       color: var(--text-secondary);
       cursor: pointer;
       position: relative;
-      transition: background 0.1s, color 0.1s;
+      border-radius: var(--radius-sm);
+      margin: 1px 6px;
+      transition: background var(--transition-fast), color var(--transition-fast);
     }
-
-    .sidebar-item:hover {
-      background: var(--bg);
-      color: var(--text-primary);
-    }
-
+    .sidebar-item:hover { background: var(--surface-2); color: var(--text-primary); }
     .sidebar-item.active {
       color: var(--accent);
       background: var(--accent-light);
-      font-weight: 500;
+      font-weight: 600;
     }
-
     .sidebar-item.active::before {
       content: '';
-      position: absolute;
-      left: 0;
-      top: 2px;
-      bottom: 2px;
-      width: 3px;
+      position: absolute; left: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 3px; height: 60%;
       background: var(--accent);
       border-radius: 0 2px 2px 0;
     }
 
-    .sidebar-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: currentColor;
-      opacity: 0.5;
-    }
+    .sidebar-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.45; flex-shrink: 0; }
+    .sidebar-divider { height: 1px; background: var(--border-light); margin: 8px 14px; }
 
-    .sidebar-divider {
-      height: 1px;
-      background: var(--border-light);
-      margin: 8px 16px;
-    }
+    /* ═══════════════════════════════════
+       MAIN CONTENT
+    ═══════════════════════════════════ */
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+    .main-inner { flex: 1; display: flex; overflow: hidden; }
+    .content { flex: 1; overflow-y: auto; padding: 22px 20px; min-width: 0; }
 
-    /* MAIN */
-    .main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .main-inner {
-      flex: 1;
-      display: flex;
-      overflow: hidden;
-    }
-
-    .content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px;
-    }
-
-    .content::-webkit-scrollbar {
-      width: 5px;
-    }
-
-    .content::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 3px;
-    }
-
-    /* PAGE HEADER */
+    /* ═══════════════════════════════════
+       PAGE HEADER — Enhanced
+    ═══════════════════════════════════ */
     .breadcrumb {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 4px;
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11.5px; color: var(--text-muted);
+      margin-bottom: 6px;
+      flex-wrap: wrap;
     }
+    .breadcrumb span { cursor: pointer; transition: color var(--transition-fast); }
+    .breadcrumb span:hover { color: var(--accent); }
 
     .page-header {
-      margin-bottom: 16px;
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 18px;
+      gap: 12px;
+      flex-wrap: wrap;
     }
-
+    .page-header-left {}
     .page-title {
       font-family: 'Playfair Display', serif;
-      font-size: 24px;
-      font-weight: 600;
-      letter-spacing: -0.5px;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.6px;
       color: var(--text-primary);
-      line-height: 1.2;
+      line-height: 1.15;
     }
-
-    .page-subtitle {
-      font-size: 12.5px;
-      color: var(--text-muted);
-      margin-top: 3px;
+    .page-meta-row {
+      display: flex; align-items: center; gap: 10px;
+      margin-top: 5px; flex-wrap: wrap;
     }
+    .page-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 9px;
+      font-size: 11px; font-weight: 600;
+      border-radius: 20px;
+    }
+    .page-badge.n46 { background: var(--accent-light); color: var(--accent); }
+    .page-badge.live { background: var(--green-light); color: var(--green); }
+    .live-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s ease-in-out infinite; display: inline-block; }
+    @keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:0.35 } }
 
-    /* MAIN TABS */
+    .page-subtitle { font-size: 12.5px; color: var(--text-muted); }
+
+    /* ═══════════════════════════════════
+       MAIN TABS — Enhanced
+    ═══════════════════════════════════ */
     .main-tabs {
       display: flex;
-      gap: 2px;
-      padding: 4px;
+      gap: 0;
       background: var(--surface);
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius);
       width: fit-content;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       border: 1px solid var(--border);
       box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      padding: 3px;
     }
-
     .main-tab {
-      padding: 6px 16px;
-      font-size: 12.5px;
+      padding: 7px 18px;
+      font-size: 13px;
       font-weight: 500;
       color: var(--text-muted);
       cursor: pointer;
       border-radius: var(--radius-sm);
-      transition: all 0.15s;
+      transition: all var(--transition);
       white-space: nowrap;
+      position: relative;
     }
-
-    .main-tab:hover {
-      color: var(--text-secondary);
-    }
-
+    .main-tab:hover { color: var(--text-secondary); background: var(--surface-2); }
     .main-tab.active {
       background: var(--accent);
       color: #fff;
-      box-shadow: 0 2px 8px rgba(8, 48, 107, 0.3);
+      font-weight: 600;
+      box-shadow: 0 2px 10px rgba(8,48,107,0.3);
     }
 
-    /* TAB PANELS */
-    .tab-panel {
-      display: none;
-    }
+    /* ═══════════════════════════════════
+       TAB PANELS
+    ═══════════════════════════════════ */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; animation: fadeUp 0.2s ease; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px) } to { opacity:1; transform:translateY(0) } }
 
-    .tab-panel.active {
-      display: block;
-      animation: fadeUp 0.18s ease;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* SHARED TABLE */
+    /* ═══════════════════════════════════
+       TABLES — Enhanced
+    ═══════════════════════════════════ */
     .table-outer {
       border-radius: var(--radius);
       border: 1px solid var(--border);
       overflow: hidden;
       box-shadow: var(--shadow-sm);
     }
+    .table-wrap { overflow-x: auto; }
 
-    .table-wrap {
-      overflow-x: auto;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12.5px;
-    }
-
-    thead tr {
-      background: var(--accent);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
+    thead tr { background: var(--accent); }
     th {
-      padding: 9px 14px;
+      padding: 10px 14px;
       text-align: left;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.6px;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.75);
+      color: rgba(255,255,255,0.7);
       white-space: nowrap;
       cursor: pointer;
       user-select: none;
+      position: relative;
     }
-
-    th.num {
-      text-align: right;
-    }
-
-    th .sort-icon {
-      display: inline-block;
-      margin-left: 4px;
-      opacity: 0.45;
-      font-size: 9px;
-    }
+    th:hover { color: rgba(255,255,255,0.95); }
+    th.num { text-align: right; }
+    th .sort-icon { display: inline-block; margin-left: 4px; opacity: 0.4; font-size: 9px; }
 
     tbody tr {
       border-bottom: 1px solid var(--border-light);
-      transition: background 0.1s;
+      transition: background var(--transition-fast);
       cursor: pointer;
     }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--accent-light); }
+    tbody tr.selected { background: var(--accent-light); border-left: 3px solid var(--accent); }
+    tbody tr:nth-child(even) { background: var(--surface-3); }
+    tbody tr:nth-child(even):hover { background: var(--accent-light); }
+    tbody tr.selected { background: var(--accent-light) !important; border-left: 3px solid var(--accent); }
 
-    tbody tr:last-child {
-      border-bottom: none;
-    }
+    td { padding: 10px 14px; vertical-align: middle; }
+    td.num { text-align: right; font-family: var(--font-mono); font-size: 12px; }
 
-    tbody tr:hover {
-      background: var(--accent-light);
-    }
-
-    tbody tr.selected {
-      background: var(--accent-light);
-      border-left: 3px solid var(--accent);
-    }
-
-    td {
-      padding: 10px 14px;
-      vertical-align: middle;
-    }
-
-    td.num {
-      text-align: right;
-      font-family: var(--font-mono);
-      font-size: 12px;
-    }
-
-    /* FERTILIZER TABLE */
+    /* ═══════════════════════════════════
+       BADGES & CHIPS
+    ═══════════════════════════════════ */
     .ticker-badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 3px 9px;
-      border-radius: 5px;
+      display: inline-flex; align-items: center;
+      padding: 3px 10px;
+      border-radius: 6px;
       font-family: var(--font-mono);
-      font-size: 11.5px;
-      font-weight: 600;
+      font-size: 11.5px; font-weight: 600;
       background: var(--accent);
       color: #fff;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.4px;
+      box-shadow: var(--shadow-xs);
     }
-
     .change-pos {
       font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 11.5px; font-weight: 600;
       color: var(--green);
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
+      display: inline-flex; align-items: center; gap: 3px;
       background: var(--green-light);
-      padding: 2px 7px;
-      border-radius: 4px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      border: 1px solid rgba(13,122,95,0.15);
     }
-
     .change-neg {
       font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 11.5px; font-weight: 600;
       color: var(--red);
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
+      display: inline-flex; align-items: center; gap: 3px;
       background: var(--red-light);
-      padding: 2px 7px;
-      border-radius: 4px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      border: 1px solid rgba(192,57,43,0.15);
     }
-
-    .ranking-bar-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      justify-content: flex-end;
-    }
-
-    .ranking-bar {
-      width: 48px;
-      height: 4px;
-      background: var(--border);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-
-    .ranking-bar-fill {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 2px;
-    }
-
+    .ranking-bar-wrap { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+    .ranking-bar { width: 52px; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .ranking-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-mid), var(--accent)); border-radius: 3px; }
     .exposure-badge {
       font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 11.5px; font-weight: 600;
       color: var(--accent);
       background: var(--accent-light);
-      padding: 2px 8px;
-      border-radius: 4px;
+      border: 1px solid var(--accent-subtle);
+      padding: 2px 9px;
+      border-radius: 20px;
     }
 
-    /* FILTERS */
+    /* ═══════════════════════════════════
+       FILTERS
+    ═══════════════════════════════════ */
     .filters-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
+      display: flex; align-items: flex-end; gap: 10px;
+      margin-bottom: 14px; flex-wrap: wrap;
     }
-
-    .filter-group {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
+    .filter-group { display: flex; flex-direction: column; gap: 3px; }
     .filter-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.6px; text-transform: uppercase;
       color: var(--text-muted);
     }
-
     .filter-select {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 10px;
+      display: flex; align-items: center; gap: 7px;
+      padding: 6px 10px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      font-size: 12.5px;
-      font-weight: 500;
+      font-size: 12.5px; font-weight: 500;
       color: var(--text-primary);
-      cursor: pointer;
-      min-width: 100px;
+      cursor: pointer; min-width: 110px;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      box-shadow: var(--shadow-xs);
     }
+    .filter-select:hover { border-color: var(--accent-subtle); box-shadow: var(--shadow-sm); }
+    .filter-select svg { width: 12px; height: 12px; color: var(--text-muted); margin-left: auto; }
 
-    .filter-select svg {
-      width: 12px;
-      height: 12px;
-      color: var(--text-muted);
-      margin-left: auto;
+    .search-mini { position: relative; }
+    .search-mini input {
+      height: 32px;
+      padding: 0 11px 0 30px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12.5px;
+      color: var(--text-primary);
+      background: var(--surface);
+      outline: none;
+      width: 170px;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      box-shadow: var(--shadow-xs);
     }
+    .search-mini input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(8,48,107,0.08); }
+    .search-mini input::placeholder { color: var(--text-muted); }
+    .search-mini svg { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; color: var(--text-muted); pointer-events: none; }
 
-    /* MARKET PROFILE */
+    /* ═══════════════════════════════════
+       MARKET PROFILE / SUB TABS
+    ═══════════════════════════════════ */
     .sub-tabs-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-      gap: 12px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px; flex-wrap: wrap; gap: 10px;
     }
-
     .sub-tabs {
       display: flex;
       border: 1px solid var(--border);
@@ -728,90 +589,36 @@
       overflow: hidden;
       background: var(--surface);
       box-shadow: var(--shadow-sm);
+      padding: 3px;
+      gap: 2px;
     }
-
     .sub-tab {
-      padding: 7px 18px;
-      font-size: 12.5px;
-      font-weight: 500;
+      padding: 7px 16px;
+      font-size: 12.5px; font-weight: 500;
       color: var(--text-secondary);
       cursor: pointer;
-      border-right: 1px solid var(--border);
-      transition: all 0.15s;
+      border-radius: 5px;
+      transition: all var(--transition);
       white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 7px;
+      display: flex; align-items: center; gap: 7px;
     }
-
-    .sub-tab:last-child {
-      border-right: none;
-    }
-
-    .sub-tab:hover {
-      background: var(--bg);
-      color: var(--text-primary);
-    }
-
-    .sub-tab.active {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-
-    .sub-tab-icon {
-      width: 14px;
-      height: 14px;
-      opacity: 0.8;
-    }
-
-    .sub-tab.active .sub-tab-icon {
-      opacity: 1;
-    }
-
+    .sub-tab:hover { background: var(--surface-2); color: var(--text-primary); }
+    .sub-tab.active { background: var(--accent); color: #fff; font-weight: 600; box-shadow: 0 2px 8px rgba(8,48,107,0.25); }
+    .sub-tab-icon { width: 14px; height: 14px; opacity: 0.8; }
+    .sub-tab.active .sub-tab-icon { opacity: 1; }
     .sub-tab-badge {
-      font-size: 10px;
-      font-weight: 600;
-      padding: 1px 6px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.2);
+      font-size: 10px; font-weight: 700;
+      padding: 1px 6px; border-radius: 10px;
+      background: rgba(255,255,255,0.2);
     }
+    .sub-tab:not(.active) .sub-tab-badge { background: var(--accent-subtle); color: var(--accent); }
 
-    .sub-tab:not(.active) .sub-tab-badge {
-      background: var(--accent-subtle);
-      color: var(--accent);
-    }
+    .sub-panel { display: none; }
+    .sub-panel.active { display: block; animation: fadeUp 0.2s ease; }
 
-    .live-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--green);
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-      display: inline-block;
-    }
-
-    @keyframes pulse {
-
-      0%,
-      100% {
-        opacity: 1;
-      }
-
-      50% {
-        opacity: 0.4;
-      }
-    }
-
-    .sub-panel {
-      display: none;
-    }
-
-    .sub-panel.active {
-      display: block;
-      animation: fadeUp 0.18s ease;
-    }
-
+    /* ═══════════════════════════════════
+       CARDS
+    ═══════════════════════════════════ */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -819,550 +626,242 @@
       box-shadow: var(--shadow-sm);
       overflow: hidden;
       margin-bottom: 16px;
+      transition: box-shadow var(--transition);
     }
-
+    .card:hover { box-shadow: var(--shadow); }
     .card-header {
-      padding: 12px 16px;
+      padding: 13px 16px;
       border-bottom: 1px solid var(--border-light);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--accent);
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(135deg, var(--accent) 0%, #0d3d82 100%);
     }
-
-    .card-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: #fff;
-    }
-
+    .card-title { font-size: 13.5px; font-weight: 700; color: #fff; letter-spacing: -0.1px; }
     .card-meta {
-      font-size: 11.5px;
-      color: rgba(255, 255, 255, 0.65);
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-size: 11.5px; color: rgba(255,255,255,0.6);
+      display: flex; align-items: center; gap: 8px;
     }
 
     .crop-name {
       font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      display: flex; align-items: center; gap: 9px;
     }
-
     .crop-icon {
-      width: 22px;
-      height: 22px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      flex-shrink: 0;
+      width: 24px; height: 24px;
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; flex-shrink: 0;
+      box-shadow: var(--shadow-xs);
     }
+    .price-tag { font-family: var(--font-mono); font-size: 12px; font-weight: 500; }
 
-    .price-tag {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 500;
-    }
+    .prod-bar-wrap { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+    .prod-bar { width: 50px; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .prod-bar-fill { height: 100%; border-radius: 3px; }
+    .prod-bar-fill.prod { background: linear-gradient(90deg, var(--accent-mid), var(--accent)); }
+    .prod-bar-fill.cons { background: linear-gradient(90deg, #c9650a, var(--amber)); }
+    .prod-bar-fill.imp { background: linear-gradient(90deg, #0a9070, var(--green)); }
+    .prod-bar-fill.exp { background: linear-gradient(90deg, #7236b0, var(--purple)); }
 
-    .prod-bar-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      justify-content: flex-end;
-    }
-
-    .prod-bar {
-      width: 48px;
-      height: 4px;
-      background: var(--border);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-
-    .prod-bar-fill {
-      height: 100%;
-      border-radius: 2px;
-    }
-
-    .prod-bar-fill.prod {
-      background: var(--accent);
-    }
-
-    .prod-bar-fill.cons {
-      background: var(--amber);
-    }
-
-    .prod-bar-fill.imp {
-      background: var(--green);
-    }
-
-    .prod-bar-fill.exp {
-      background: var(--purple);
-    }
-
-    /* CROP DETAIL SECTION */
-    /* .crop-detail-section {
-      display: none;
-      padding: 16px;
-      background: var(--surface-2);
-      border-top: 1px solid var(--border);
-    }
-
-    .crop-detail-section.active {
-      display: block;
-      animation: fadeUp 0.2s ease;
-    }
-
-    .crop-detail-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--accent);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .crop-detail-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-
-    .detail-col {}
-
-    .detail-col-header {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-      padding-bottom: 6px;
-      border-bottom: 2px solid var(--accent);
-      width: fit-content;
-    }
-
-    .detail-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      padding: 6px 0;
-      border-bottom: 1px solid var(--border-light);
-    }
-
-    .detail-item:last-child {
-      border-bottom: none;
-    }
-
-    .detail-item-country {
-      font-size: 12px;
-      font-weight: 500;
-      min-width: 50px;
-    }
-
-    .detail-item-value {
-      font-family: var(--font-mono);
-      font-size: 11.5px;
-      color: var(--text-secondary);
-    } */
-    /* CROP DETAIL SECTION - STYLED CONSISTENTLY */
+    /* ═══════════════════════════════════
+       CROP DETAIL SECTION
+    ═══════════════════════════════════ */
     .crop-detail-section {
       display: none;
       padding: 20px;
       background: var(--surface);
       border-top: 1px solid var(--border-light);
-      margin-top: 8px;
-      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     }
-
-    .crop-detail-section.active {
-      display: block;
-      animation: fadeUp 0.25s ease-out;
-    }
-
+    .crop-detail-section.active { display: block; animation: fadeUp 0.25s ease-out; }
     .crop-detail-title {
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 14px; font-weight: 700;
       color: var(--accent);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       padding-bottom: 10px;
       border-bottom: 2px solid var(--accent-subtle);
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      display: flex; align-items: center; gap: 10px;
       letter-spacing: -0.2px;
     }
-
-    .crop-detail-title svg {
-      stroke: var(--accent);
-    }
-
     .crop-detail-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      /* forcing 4 columns side by side */
-      gap: 20px;
+      gap: 16px;
     }
-
     .detail-col {
       background: var(--surface-2);
       border-radius: var(--radius);
       border: 1px solid var(--border);
       overflow: hidden;
-      transition: all 0.2s ease;
+      transition: box-shadow var(--transition), transform var(--transition);
     }
-
+    .detail-col:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
     .detail-col-header {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase;
       color: #fff;
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--accent) 0%, #0d3d82 100%);
       padding: 10px 14px;
-      margin: 0;
-      border-bottom: none;
-      width: 100%;
     }
-
-    .detail-items-list {
-      padding: 8px 0;
-    }
-
+    .detail-items-list { padding: 6px 0; }
     .detail-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 14px;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 9px 14px;
       border-bottom: 1px solid var(--border-light);
-      font-size: 13px;
+      font-size: 12.5px;
+      transition: background var(--transition-fast);
     }
-
-    .detail-item:last-child {
-      border-bottom: none;
-    }
-
+    .detail-item:last-child { border-bottom: none; }
+    .detail-item:hover { background: var(--accent-light); }
     .detail-item-country {
-      font-weight: 500;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-weight: 500; color: var(--text-primary);
+      display: flex; align-items: center; gap: 7px;
     }
-
-    .detail-item-country span:first-child {
-      font-size: 16px;
-    }
-
+    .detail-item-country span:first-child { font-size: 15px; }
     .detail-item-value {
-      font-family: var(--font-mono);
-      font-weight: 600;
+      font-family: var(--font-mono); font-weight: 600;
       color: var(--accent-mid);
-      background: rgba(8, 48, 107, 0.08);
-      padding: 2px 8px;
-      border-radius: 20px;
-      font-size: 12px;
+      background: rgba(8,48,107,0.07);
+      padding: 2px 9px; border-radius: 20px; font-size: 11.5px;
+      border: 1px solid rgba(8,48,107,0.08);
     }
 
+    /* ═══════════════════════════════════
+       COUNTRY FILTER
+    ═══════════════════════════════════ */
     .country-filter-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 16px;
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 14px;
       background: var(--surface-2);
       border-bottom: 1px solid var(--border);
       flex-wrap: wrap;
     }
-
     .filter-chip {
-      display: flex;
-      align-items: center;
-      padding: 4px 12px;
+      display: flex; align-items: center;
+      padding: 5px 13px;
       border-radius: 20px;
-      font-size: 11.5px;
-      font-weight: 500;
+      font-size: 12px; font-weight: 500;
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text-secondary);
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all var(--transition-fast);
+      box-shadow: var(--shadow-xs);
     }
+    .filter-chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    .filter-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 2px 8px rgba(8,48,107,0.25); }
 
-    .filter-chip:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
+    .country-chip { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; }
 
-    .filter-chip.active {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-
-    .search-mini {
-      margin-left: auto;
-      position: relative;
-    }
-
-    .search-mini input {
-      height: 30px;
-      padding: 0 10px 0 28px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 12px;
-      color: var(--text-primary);
-      background: var(--surface);
-      outline: none;
-      width: 160px;
-    }
-
-    .search-mini input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(8, 48, 107, 0.1);
-    }
-
-    .search-mini svg {
-      position: absolute;
-      left: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 12px;
-      height: 12px;
-      color: var(--text-muted);
-    }
-
-    .country-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12.5px;
-      font-weight: 500;
-    }
-
+    /* ═══════════════════════════════════
+       PAGINATION
+    ═══════════════════════════════════ */
     .pagination-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 16px;
       border-top: 1px solid var(--border);
       background: var(--surface-2);
     }
-
-    .page-info {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .page-info strong {
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-
-    .page-btns {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-    }
-
+    .page-info { font-size: 12px; color: var(--text-muted); }
+    .page-info strong { color: var(--text-secondary); font-weight: 600; }
+    .page-btns { display: flex; gap: 4px; align-items: center; }
     .page-btn {
-      min-width: 30px;
-      height: 30px;
-      padding: 0 8px;
+      min-width: 32px; height: 32px; padding: 0 8px;
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       background: var(--surface);
       color: var(--text-secondary);
       font-family: 'DM Sans', sans-serif;
-      font-size: 12px;
-      font-weight: 500;
+      font-size: 12px; font-weight: 500;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition-fast);
+      box-shadow: var(--shadow-xs);
     }
+    .page-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    .page-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 2px 8px rgba(8,48,107,0.25); }
+    .page-btn:disabled { opacity: 0.35; cursor: not-allowed; box-shadow: none; }
+    .page-dots { color: var(--text-muted); font-size: 12px; padding: 0 4px; }
 
-    .page-btn:hover:not(:disabled) {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .page-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-    }
-
-    .page-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
-    .page-dots {
-      color: var(--text-muted);
-      font-size: 12px;
-      padding: 0 4px;
-    }
-
-    /* RIGHT PANEL - LARGER */
+    /* ═══════════════════════════════════
+       RIGHT PANEL — Enhanced
+    ═══════════════════════════════════ */
     .right-panel {
       width: var(--right-panel);
       flex-shrink: 0;
       border-left: 1px solid var(--border);
       background: var(--surface);
       overflow-y: auto;
-      padding: 24px 20px;
+      padding: 20px 18px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
-    }
-
-    .right-panel::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .right-panel::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 2px;
+      gap: 20px;
     }
 
     .panel-section-title {
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.7px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 10px;
+      font-size: 10px; font-weight: 800;
+      letter-spacing: 0.9px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 10px;
     }
 
+    .commodity-header { margin-bottom: 2px; }
     .commodity-name {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-      margin-bottom: 8px;
-      color: var(--accent);
+      font-size: 19px; font-weight: 800;
+      letter-spacing: -0.4px; color: var(--accent);
+      font-family: 'Playfair Display', serif;
+      line-height: 1.2;
     }
-
     .commodity-desc {
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.65;
-      margin-bottom: 16px;
+      font-size: 12.5px; color: var(--text-secondary);
+      line-height: 1.65; margin-top: 6px;
     }
 
-    /* UREA VISUAL */
-    .urea-visual {
-      width: 100%;
-      height: 140px;
+    /* SOIL CONTEXT INFO BOX */
+    .soil-info-box {
+      background: linear-gradient(135deg, var(--surface-2) 0%, var(--accent-light) 100%);
+      border: 1px solid var(--accent-subtle);
       border-radius: var(--radius);
-      border: 1px solid var(--border);
-      background: linear-gradient(135deg, #e8f0fb 0%, #c5d9f0 50%, #8ab3d8 100%);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .urea-granules {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      grid-template-columns: repeat(9, 1fr);
-      grid-template-rows: repeat(5, 1fr);
-      gap: 4px;
-      padding: 18px;
-    }
-
-    .granule {
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff 0%, #c8dbf0 50%, #7aadda 100%);
-      box-shadow: 0 1px 3px rgba(8, 48, 107, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.7);
-      opacity: 0;
-      animation: pop 0.4s ease forwards;
-    }
-
-    @keyframes pop {
-      to {
-        opacity: 1;
-      }
-    }
-
-    /* PRICE BADGE */
-    .chart-header {
-      display: flex;
+      padding: 13px 14px;
+      display: flex; gap: 12px;
       align-items: flex-start;
-      justify-content: space-between;
+    }
+    .soil-info-icon {
+      width: 30px; height: 30px;
+      border-radius: 9px;
+      background: var(--accent-light);
+      border: 1px solid var(--accent-subtle);
+      color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .soil-info-icon svg { width: 15px; height: 15px; }
+    .soil-info-title { font-size: 11.5px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+    .soil-info-text { font-size: 11.5px; color: var(--text-secondary); line-height: 1.55; }
+
+    /* PRICE SECTION */
+    .price-section {}
+    .chart-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
       margin-bottom: 10px;
     }
-
-    .chart-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .chart-subtitle {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
+    .chart-title { font-size: 13.5px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.2px; }
+    .chart-subtitle { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
     .chart-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 5px 11px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 700;
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 5px 11px; border-radius: 7px;
+      font-size: 12.5px; font-weight: 700;
       font-family: var(--font-mono);
     }
+    .chart-badge.pos { background: var(--green-light); color: var(--green); border: 1px solid rgba(13,122,95,0.2); }
+    .chart-badge.neg { background: var(--red-light); color: var(--red); border: 1px solid rgba(192,57,43,0.2); }
 
-    .chart-badge.pos {
-      background: var(--green-light);
-      color: var(--green);
-      border: 1px solid #a7f3d0;
-    }
-
-    .chart-badge.neg {
-      background: var(--red-light);
-      color: var(--red);
-      border: 1px solid #fecaca;
-    }
-
-    /* PRICE INFO ROW */
-    .price-info-row {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
+    .price-info-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 13px; }
     .price-big {
       font-family: var(--font-mono);
-      font-size: 32px;
-      font-weight: 600;
-      color: var(--accent);
-      letter-spacing: -1px;
+      font-size: 30px; font-weight: 600;
+      color: var(--accent); letter-spacing: -1px;
     }
+    .price-change-small { font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--red); }
+    .price-label { font-size: 11px; color: var(--text-muted); }
 
-    .price-change-small {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--red);
-    }
-
-    .price-label {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    /* SVG LINE CHART */
     .line-chart-wrap {
       width: 100%;
       background: var(--surface);
@@ -1370,266 +869,129 @@
       border-radius: var(--radius);
       overflow: hidden;
       position: relative;
+      box-shadow: var(--shadow-sm);
     }
-
-    .chart-svg {
-      display: block;
-      width: 100%;
-    }
-
+    canvas { display: block; width: 100%; cursor: crosshair; }
     .chart-x-labels {
-      display: flex;
-      justify-content: space-between;
-      padding: 6px 10px 3px;
-      font-family: var(--font-mono);
-      font-size: 10px;
+      display: flex; justify-content: space-between;
+      padding: 5px 10px 4px;
+      font-family: var(--font-mono); font-size: 10px;
       color: var(--text-muted);
+      background: var(--surface-2);
     }
-
-    .chart-time-range {
-      display: flex;
-      gap: 5px;
-      margin-top: 10px;
-    }
-
+    .chart-time-range { display: flex; gap: 5px; margin-top: 10px; }
     .time-range-btn {
-      padding: 4px 12px;
-      border-radius: 4px;
-      font-size: 11.5px;
-      font-weight: 600;
+      padding: 4px 13px; border-radius: 5px;
+      font-size: 11.5px; font-weight: 600;
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text-muted);
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all var(--transition-fast);
       font-family: var(--font-mono);
     }
-
-    .time-range-btn.active {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-
-    .time-range-btn:hover:not(.active) {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
+    .time-range-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 2px 8px rgba(8,48,107,0.25); }
+    .time-range-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
 
     /* STAT CARDS */
-    .stat-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
+    .stat-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .stat-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 14px 16px;
+      padding: 13px 14px;
       position: relative;
       overflow: hidden;
+      box-shadow: var(--shadow-xs);
+      transition: box-shadow var(--transition), transform var(--transition);
     }
-
+    .stat-card:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); }
     .stat-card::before {
       content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--accent);
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent-mid), var(--accent));
     }
-
     .stat-card-label {
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 8px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 8px;
     }
-
     .stat-card-value {
       font-family: var(--font-mono);
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--accent);
-      letter-spacing: -0.5px;
-      line-height: 1;
-      display: flex;
-      align-items: baseline;
-      gap: 4px;
+      font-size: 21px; font-weight: 700;
+      color: var(--accent); letter-spacing: -0.5px;
+      line-height: 1; display: flex; align-items: baseline; gap: 4px;
     }
-
-    .stat-card-value .unit {
-      font-size: 12px;
-      color: var(--text-muted);
-      font-weight: 400;
-    }
-
+    .stat-card-value .unit { font-size: 12px; color: var(--text-muted); font-weight: 400; }
     .stat-change {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      font-size: 11.5px;
-      font-weight: 600;
-      margin-top: 5px;
-      padding: 2px 6px;
-      border-radius: 3px;
+      display: inline-flex; align-items: center; gap: 3px;
+      font-size: 11px; font-weight: 700;
+      margin-top: 6px; padding: 2px 7px;
+      border-radius: 20px;
     }
-
-    .stat-change.pos {
-      color: var(--green);
-      background: var(--green-light);
-    }
-
-    .stat-change.neg {
-      color: var(--red);
-      background: var(--red-light);
-    }
+    .stat-change.pos { color: var(--green); background: var(--green-light); }
+    .stat-change.neg { color: var(--red); background: var(--red-light); }
 
     /* BULLETIN */
+    .bulletin-list { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-xs); }
     .bulletin-item {
-      padding: 12px 0;
+      padding: 12px 14px;
       border-bottom: 1px solid var(--border-light);
+      transition: background var(--transition-fast);
     }
-
-    .bulletin-item:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
+    .bulletin-item:last-child { border-bottom: none; }
+    .bulletin-item:hover { background: var(--surface-2); }
     .bulletin-headline {
-      font-size: 13px;
-      line-height: 1.5;
-      font-weight: 500;
-      margin-bottom: 6px;
-      cursor: pointer;
+      font-size: 12.5px; line-height: 1.5; font-weight: 500;
+      margin-bottom: 6px; cursor: pointer;
+      color: var(--text-primary);
+      transition: color var(--transition-fast);
     }
+    .bulletin-headline:hover { color: var(--accent); }
+    .bulletin-meta { display: flex; align-items: center; gap: 8px; font-size: 10.5px; color: var(--text-muted); }
+    .bulletin-source { color: var(--accent); font-weight: 700; }
+    .bulletin-dot { opacity: 0.3; }
 
-    .bulletin-headline:hover {
-      color: var(--accent);
-    }
-
-    .bulletin-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .bulletin-source {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    /* ═══════════════════════════════════════════════
-   PRODUCTION INPUTS / PROCESS TAB - SPLIT LAYOUT
-═══════════════════════════════════════════════ */
-    .prod-layout {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .prod-left,
-    .prod-right {}
-
+    /* ═══════════════════════════════════
+       PRODUCTION TAB
+    ═══════════════════════════════════ */
+    .prod-layout { display: flex; flex-direction: column; gap: 18px; }
     .prod-section-title {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-size: 10px; font-weight: 800;
+      letter-spacing: 0.7px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
     }
+    .prod-section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    .prod-section-title::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .route-filter-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-    }
-
+    .route-filter-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
     .route-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 4px 10px;
-      border-radius: 16px;
-      font-size: 11px;
-      font-weight: 500;
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 12px; border-radius: 20px;
+      font-size: 11.5px; font-weight: 500;
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.15s;
+      cursor: pointer; transition: all var(--transition-fast);
+      box-shadow: var(--shadow-xs);
     }
+    .route-chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    .route-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 2px 8px rgba(8,48,107,0.25); }
+    .route-chip-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
 
-    .route-chip:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .route-chip.active {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-
-    .route-chip-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-
-    .route-cards {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
+    .route-cards { display: flex; flex-direction: row; flex-wrap: wrap; gap: 7px; }
     .route-card {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 4px 10px;
-      border-radius: 16px;
-      font-size: 11px;
-      font-weight: 500;
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 12px; border-radius: 20px;
+      font-size: 11.5px; font-weight: 500;
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.15s;
+      cursor: pointer; transition: all var(--transition-fast);
+      box-shadow: var(--shadow-xs);
     }
-
-    .route-card:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .route-card.active {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
+    .route-card:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); transform: translateY(-1px); }
+    .route-card.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 2px 10px rgba(8,48,107,0.3); }
 
     /* OUTPUT PANEL */
     .output-panel {
@@ -1639,545 +1001,299 @@
       overflow: hidden;
       box-shadow: var(--shadow-sm);
     }
-
     .output-empty {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 50px 20px;
-      text-align: center;
-      color: var(--text-muted);
-      min-height: 300px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 52px 24px; text-align: center;
+      color: var(--text-muted); min-height: 280px;
     }
-
-    .output-empty svg {
-      opacity: 0.2;
-      margin-bottom: 12px;
-      color: var(--accent);
+    .output-empty-icon {
+      width: 52px; height: 52px;
+      border-radius: var(--radius-lg);
+      background: var(--accent-light);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px;
     }
+    .output-empty-icon svg { opacity: 0.35; color: var(--accent); }
+    .output-empty h3 { font-size: 13.5px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
+    .output-empty p { font-size: 12px; line-height: 1.55; max-width: 220px; }
 
-    .output-empty p {
-      font-size: 12.5px;
-      line-height: 1.5;
-      max-width: 200px;
-    }
-
-    .output-content {
-      display: none;
-    }
-
-    .output-content.visible {
-      display: block;
-      animation: fadeUp 0.2s ease;
-    }
-
+    .output-content { display: none; }
+    .output-content.visible { display: block; animation: fadeUp 0.2s ease; }
     .output-header {
       padding: 14px 16px;
-      border-bottom: 1px solid var(--border);
-      background: var(--accent);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-
-    .output-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .output-subtitle {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.65);
-      margin-top: 2px;
-    }
+    .output-title { font-size: 14px; font-weight: 700; color: #fff; letter-spacing: -0.2px; }
+    .output-subtitle { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; }
 
     .new-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
-      padding: 16px;
+      padding: 18px;
       background: var(--surface);
     }
+    .output-left, .output-right { display: flex; flex-direction: column; gap: 14px; }
 
-    .output-left,
-    .output-right {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    /* METRICS */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 12px;
-    }
-
-    .metric-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius);
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .metric-card.highlight {
-      background: var(--accent-light);
-      border-color: var(--accent-subtle);
-    }
-
-    .metric-label {
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      letter-spacing: 0.5px;
-    }
-
-    .metric-card.highlight .metric-label {
-      color: var(--accent);
-    }
-
-    .metric-value {
-      font-family: var(--font-mono);
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--accent);
-      line-height: 1.1;
-      display: flex;
-      align-items: baseline;
-      gap: 4px;
-    }
-
-    .metric-bar {
-      height: 4px;
-      background: rgba(8, 48, 107, 0.1);
-      border-radius: 2px;
-      margin-top: 4px;
-      overflow: hidden;
-    }
-
-    .metric-bar-fill {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 2px;
-    }
-
-    /* INPUTS LIST */
-    .inputs-container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
+    /* METRIC & DATA BLOCKS */
     .input-block {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
+      box-shadow: var(--shadow-xs);
     }
-
     .input-block-title {
-      background: var(--surface-2);
-      padding: 8px 12px;
-      font-size: 10.5px;
-      font-weight: 700;
+      padding: 9px 13px;
+      font-size: 10.5px; font-weight: 700;
       color: var(--text-primary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      text-transform: uppercase; letter-spacing: 0.5px;
       border-bottom: 1px solid var(--border-light);
+      background: var(--surface-2);
     }
-
-    .input-unit {
-      color: var(--text-muted);
-      font-weight: 500;
-      text-transform: none;
-      letter-spacing: 0;
-    }
-
-    .data-list {
-      display: flex;
-      flex-direction: column;
-    }
-
+    .input-unit { color: var(--text-muted); font-weight: 500; text-transform: none; letter-spacing: 0; }
+    .data-list { display: flex; flex-direction: column; }
     .data-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 12px;
+      display: flex; justify-content: space-between;
+      padding: 8px 13px;
       border-bottom: 1px solid var(--border-light);
-      font-size: 11.5px;
+      font-size: 12px;
+      transition: background var(--transition-fast);
     }
-
-    .data-row:last-child {
-      border-bottom: none;
-    }
-
-    .data-label {
-      color: var(--text-secondary);
-    }
-
-    .data-value {
-      font-family: var(--font-mono);
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    /* INFO BOXES */
-    .info-boxes {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .info-box {
-      display: flex;
-      gap: 12px;
-      padding: 12px;
-      background: var(--surface-2);
-      border-radius: var(--radius);
-      border: 1px solid var(--border-light);
-    }
-
-    .info-box-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
-      background: var(--accent-light);
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .info-box-icon svg {
-      width: 14px;
-      height: 14px;
-    }
-
-    .info-box-title {
-      font-size: 11.5px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 4px;
-    }
-
-    .info-box-text {
-      font-size: 11px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
+    .data-row:last-child { border-bottom: none; }
+    .data-row:hover { background: var(--surface-2); }
+    .data-label { color: var(--text-secondary); }
+    .data-value { font-family: var(--font-mono); font-weight: 600; color: var(--text-primary); }
 
     /* TIMELINE */
     .timeline-container {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 12px;
+      padding: 14px;
+      box-shadow: var(--shadow-xs);
     }
-
     .timeline-title {
-      font-size: 10.5px;
-      font-weight: 700;
-      color: var(--text-primary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 12px;
+      font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.5px; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
     }
-
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      position: relative;
-    }
-
+    .timeline { display: flex; flex-direction: column; gap: 14px; position: relative; }
     .timeline::before {
-      content: '';
-      position: absolute;
-      top: 10px;
-      bottom: 10px;
-      left: 11px;
-      width: 2px;
-      background: var(--border-light);
+      content: ''; position: absolute;
+      top: 12px; bottom: 12px; left: 12px;
+      width: 2px; background: var(--border-light);
     }
-
-    .timeline-step {
-      display: flex;
-      gap: 12px;
-      position: relative;
-      z-index: 1;
-    }
-
+    .timeline-step { display: flex; gap: 12px; position: relative; z-index: 1; }
     .timeline-marker {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
+      width: 26px; height: 26px; border-radius: 50%;
       background: var(--surface);
       border: 2px solid var(--accent);
       color: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10.5px; font-weight: 700;
       flex-shrink: 0;
+      box-shadow: 0 0 0 3px rgba(8,48,107,0.08);
     }
-
-    .timeline-content {
-      padding-top: 2px;
-    }
-
-    .timeline-step-title {
-      font-size: 11.5px;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 3px;
-    }
-
-    .timeline-step-desc {
-      font-size: 11px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
+    .timeline-content { padding-top: 2px; }
+    .timeline-step-title { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .timeline-step-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.55; }
 
     /* TOOLTIP */
     .chart-tooltip {
       position: absolute;
       background: var(--accent);
       color: #fff;
-      border-radius: 6px;
-      padding: 7px 11px;
+      border-radius: 7px;
+      padding: 7px 12px;
       font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 12px; font-weight: 600;
       pointer-events: none;
       white-space: nowrap;
-      box-shadow: 0 4px 12px rgba(8, 48, 107, 0.4);
+      box-shadow: var(--shadow-lg);
       transform: translateX(-50%);
       transition: opacity 0.1s;
       z-index: 10;
     }
-
     .chart-tooltip::after {
       content: '';
-      position: absolute;
-      top: 100%;
-      left: 50%;
+      position: absolute; top: 100%; left: 50%;
       transform: translateX(-50%);
       border: 5px solid transparent;
       border-top-color: var(--accent);
     }
 
-    /* ═══════════════════════════════════════════════════════
-       RESPONSIVE — MOBILE  (≤ 768px)
-    ═══════════════════════════════════════════════════════ */
+    /* ═══════════════════════════════════
+       MOBILE RESPONSIVE
+    ═══════════════════════════════════ */
     @media (max-width: 768px) {
+      body { height: auto; overflow: auto; min-height: 100vh; padding-bottom: 64px; }
 
-      body {
-        height: auto;
-        overflow: auto;
-        min-height: 100vh;
-        padding-bottom: 68px;
-      }
-
-      /* ── NAVBAR ── */
       .navbar { padding: 0 14px; gap: 10px; }
       .logo { width: auto; }
+      .logo-tagline { display: none; }
       .search-wrap { display: none; }
-      .search-hint { display: none; }
       .export-btn { display: none; }
       .profile-pill { display: none; }
       .icon-btn { display: none; }
-      .nav-actions { gap: 6px; }
+      .nav-divider { display: none; }
 
-      /* Hamburger stays visible */
       .hamburger-btn {
-        width: 36px;
-        height: 36px;
+        width: 37px; height: 37px;
         border-radius: var(--radius-sm);
         border: 1px solid rgba(255,255,255,0.2);
         background: rgba(255,255,255,0.08);
         display: flex !important;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        color: rgba(255,255,255,0.9);
+        align-items: center; justify-content: center;
+        cursor: pointer; color: rgba(255,255,255,0.9);
         flex-shrink: 0;
+        transition: background var(--transition-fast);
       }
+      .hamburger-btn:hover { background: rgba(255,255,255,0.15); }
 
-      /* ── DRAWER OVERLAY ── */
       .drawer-overlay {
         display: block;
-        position: fixed;
-        inset: 0;
-        background: rgba(8,48,107,0.4);
-        z-index: 250;
-        opacity: 0;
+        position: fixed; inset: 0;
+        background: rgba(8,48,107,0.45);
+        z-index: 250; opacity: 0;
         pointer-events: none;
         transition: opacity 0.28s ease;
+        backdrop-filter: blur(2px);
       }
       .drawer-overlay.visible { opacity: 1; pointer-events: auto; }
 
-      /* ── SIDEBAR DRAWER ── */
       .sidebar {
-        position: fixed;
-        top: 0; left: 0;
-        width: 260px;
-        height: 100vh;
+        position: fixed; top: 0; left: 0;
+        width: 270px; height: 100vh;
         z-index: 300;
         transform: translateX(-100%);
         transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
-        padding-top: calc(var(--navbar-height) + 12px);
-        box-shadow: var(--shadow-lg);
+        padding-top: calc(var(--navbar-height) + 14px);
+        box-shadow: var(--shadow-xl);
       }
       .sidebar.open { transform: translateX(0); }
 
-      /* ── LAYOUT ── */
       .app-body { flex-direction: column; overflow: visible; height: auto; }
       .main { overflow: visible; }
       .main-inner { flex-direction: column; overflow: visible; }
       .content { overflow: visible; padding: 14px 12px; }
 
-      /* ── MAIN TABS ── scrollable */
-      .main-tabs {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        width: 100%;
-        scrollbar-width: none;
-      }
+      .main-tabs { display: flex; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; scrollbar-width: none; }
       .main-tabs::-webkit-scrollbar { display: none; }
-      .main-tab { flex-shrink: 0; font-size: 12px; padding: 6px 12px; }
+      .main-tab { flex-shrink: 0; font-size: 12px; padding: 6px 13px; }
 
-      /* ── PAGE HEADER ── */
-      .page-title { font-size: 20px; }
+      .page-title { font-size: 22px; }
+      .page-header { flex-direction: column; gap: 8px; }
 
-      /* ── FILTERS ROW ── */
       .filters-row { flex-direction: column; align-items: stretch; gap: 8px; }
       .filter-group { width: 100%; }
       .filter-select { width: 100%; }
       .filters-row .search-mini { margin-left: 0; width: 100%; }
       .filters-row .search-mini input { width: 100%; }
 
-      /* ── TABLES ── */
       .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-      table { min-width: 520px; font-size: 11.5px; }
-      th, td { padding: 8px 10px; }
+      table { min-width: 500px; font-size: 11.5px; }
+      th, td { padding: 9px 11px; }
 
-      /* ── SUB TABS ── */
       .sub-tabs-wrap { flex-direction: column; gap: 8px; }
       .sub-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
-      .sub-tab { flex-shrink: 0; font-size: 12px; padding: 7px 14px; }
+      .sub-tab { flex-shrink: 0; font-size: 12px; padding: 7px 13px; }
       .country-filter-row { padding: 8px 12px; flex-wrap: wrap; }
 
-      /* ── CROP DETAIL GRID ── */
-      .crop-detail-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-
-      /* ── STAT CARDS ── */
-      .stat-cards { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .crop-detail-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stat-cards { grid-template-columns: 1fr 1fr; gap: 9px; }
       .stat-card-value { font-size: 18px; }
-
-      /* ── PRICE ── */
       .price-big { font-size: 26px; }
-
-      /* ── CARD ── */
       .card { border-radius: var(--radius); }
-
-      /* ── PAGINATION ── */
-      .pagination-row { flex-direction: column; gap: 10px; align-items: center; }
-
-      /* ── ROUTE CHIPS & CARDS ── */
+      .pagination-row { flex-direction: column; gap: 9px; align-items: center; }
       .route-filter-row { gap: 6px; }
       .route-chip { font-size: 11px; padding: 5px 10px; }
       .route-cards { gap: 6px; }
       .route-card { font-size: 11px; padding: 5px 10px; }
+      .prod-layout { gap: 14px; }
+      .output-body, .new-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
 
-      /* ── PRODUCTION TAB ── stack */
-      .prod-layout { gap: 16px; }
-
-      /* ── OUTPUT BODY GRID ── single column */
-      .output-body, .new-grid { grid-template-columns: 1fr !important; }
-
-      /* ── RIGHT PANEL ── accordion */
       .right-panel {
-        width: 100%;
-        border-left: none;
+        width: 100%; border-left: none;
         border-top: 2px solid var(--accent);
-        padding: 0;
-        gap: 0;
-        overflow: visible;
+        padding: 0; gap: 0; overflow: visible;
       }
-
       .right-panel-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 13px 14px;
-        background: var(--accent);
-        color: #fff;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 600;
-        user-select: none;
-        letter-spacing: 0.1px;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 13px 16px;
+        background: linear-gradient(135deg, var(--accent) 0%, #0d3d82 100%);
+        color: #fff; cursor: pointer;
+        font-size: 13px; font-weight: 600;
+        user-select: none; letter-spacing: 0.1px;
       }
       .right-panel-toggle svg { transition: transform 0.25s; }
       .right-panel-toggle.open svg { transform: rotate(180deg); }
-
-      .right-panel-inner {
-        display: none;
-        padding: 16px 14px;
-        gap: 20px;
-        flex-direction: column;
-      }
+      .right-panel-inner { display: none; padding: 16px 14px; gap: 18px; flex-direction: column; }
       .right-panel-inner.open { display: flex; }
 
-      /* ── MOBILE BOTTOM NAV ── */
+      /* MOBILE BOTTOM NAV */
       .mobile-bottom-nav {
         display: flex;
-        position: fixed;
-        bottom: 0; left: 0; right: 0;
+        position: fixed; bottom: 0; left: 0; right: 0;
         z-index: 150;
         background: var(--surface);
         border-top: 1px solid var(--border);
-        box-shadow: 0 -4px 16px rgba(8,48,107,0.12);
+        box-shadow: 0 -4px 20px rgba(8,48,107,0.12);
         height: 58px;
       }
       .mobile-nav-item {
         flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 3px;
-        cursor: pointer;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        gap: 3px; cursor: pointer;
         color: var(--text-muted);
-        font-size: 9.5px;
-        font-weight: 600;
-        letter-spacing: 0.3px;
-        padding: 6px 4px;
-        border-top: 2px solid transparent;
-        transition: all 0.15s;
+        font-size: 9.5px; font-weight: 600;
+        letter-spacing: 0.3px; padding: 6px 4px;
+        border-top: 2.5px solid transparent;
+        transition: all var(--transition-fast);
+        position: relative;
       }
       .mobile-nav-item.active { color: var(--accent); border-top-color: var(--accent); }
       .mobile-nav-item svg { width: 18px; height: 18px; }
-
     }
 
-    /* ── DESKTOP: hide mobile-only elements ── */
     @media (min-width: 769px) {
       .hamburger-btn { display: none; }
       .drawer-overlay { display: none; }
       .mobile-bottom-nav { display: none; }
       .right-panel-toggle { display: none; }
-      .right-panel-inner { display: flex !important; padding: 0; gap: 24px; flex-direction: column; }
+      .right-panel-inner { display: flex !important; padding: 0; gap: 20px; flex-direction: column; }
     }
 
+    /* ═══════════════════════════════════
+       SKELETON LOADING (new)
+    ═══════════════════════════════════ */
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .skeleton {
+      background: linear-gradient(90deg, var(--border-light) 25%, var(--surface-2) 50%, var(--border-light) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: var(--radius-sm);
+    }
+
+    /* ═══════════════════════════════════
+       FOCUS VISIBLE (accessibility)
+    ═══════════════════════════════════ */
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    button:focus-visible, [tabindex="0"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* ═══════════════════════════════════
+       PRINT STYLES
+    ═══════════════════════════════════ */
+    @media print {
+      .sidebar, .navbar, .right-panel, .mobile-bottom-nav { display: none; }
+      .main-inner { flex-direction: column; }
+      .content { overflow: visible; }
+    }
   </style>
 </head>
 
@@ -2187,52 +1303,51 @@
 
   <!-- NAVBAR -->
   <nav class="navbar">
-    <div class="logo">
+    <a class="logo" href="#" onclick="return false;">
       <div class="logo-icon">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-          <path d="M12 2L2 7l10 5 10-5-10-5z" />
-          <path d="M2 17l10 5 10-5" />
-          <path d="M2 12l10 5 10-5" />
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5"/>
+          <path d="M2 12l10 5 10-5"/>
         </svg>
       </div>
-      <span class="logo-text">Market <span>Neurons</span></span>
-    </div>
+      <div>
+        <div class="logo-text">Market <span>Neurons</span></div>
+        <div class="logo-tagline">Commodity Intelligence</div>
+      </div>
+    </a>
+
     <div class="search-wrap">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <circle cx="11" cy="11" r="8" />
-        <path d="m21 21-4.35-4.35" />
-      </svg>
-      <input class="search-input" type="text" placeholder="Search markets, tickers, or reports…">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="search-input" type="text" placeholder="Search markets, tickers, reports…">
       <span class="search-hint">⌘K</span>
     </div>
+
     <div class="nav-actions">
-      <button class="hamburger-btn" onclick="toggleDrawer()" aria-label="Menu">
+      <button class="hamburger-btn" onclick="toggleDrawer()" aria-label="Open Menu">
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <line x1="3" y1="12" x2="21" y2="12"/>
-          <line x1="3" y1="18" x2="21" y2="18"/>
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
         </svg>
       </button>
-      <button class="icon-btn"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-        </svg><span class="notif-dot"></span></button>
-      <button class="icon-btn"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="3" />
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" />
-        </svg></button>
-      <button class="icon-btn"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="10" />
-          <path d="M12 8v4M12 16h.01" />
-        </svg></button>
+
+      <button class="icon-btn" aria-label="Notifications">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="notif-dot"></span>
+      </button>
+      <button class="icon-btn" aria-label="Live Feed">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Help">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      </button>
+
+      <div class="nav-divider"></div>
+
       <button class="export-btn">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-          <polyline points="7 10 12 15 17 10" />
-          <line x1="12" y1="15" x2="12" y2="3" />
-        </svg>
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Export Data
       </button>
+
       <div class="profile-pill">
         <div class="avatar">IT</div>
         <div>
@@ -2247,25 +1362,23 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-section-header">Sector</div>
-      <div style="padding:2px 16px 10px;font-size:11px;color:var(--text-muted)">Fertilizers</div>
+      <div class="sidebar-category-badge">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 22V12M12 12C12 7 17 4 17 4M12 12C12 7 7 4 7 4"/></svg>
+        Fertilizers
+      </div>
+
       <div class="sidebar-group">
         <div class="sidebar-parent open">
-          <div class="sidebar-parent-label"><svg width="14" height="14" fill="none" stroke="currentColor"
-              stroke-width="2" viewBox="0 0 24 24">
-              <path d="M12 2v20M2 12h20" />
-            </svg>Nitrogen</div>
-          <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
+          <div class="sidebar-parent-label">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg>
+            Nitrogen
+          </div>
+          <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
         <div class="sidebar-children">
-          <div class="sidebar-parent"
-            style="font-size:12.5px;font-weight:500;padding-left:28px;color:var(--text-secondary)">
+          <div class="sidebar-parent" style="font-size:12.5px;font-weight:500;padding-left:28px;color:var(--text-secondary)">
             <div class="sidebar-parent-label">Urea</div>
-            <svg class="sidebar-chevron" style="width:12px;height:12px" fill="none" stroke="currentColor"
-              stroke-width="2" viewBox="0 0 24 24">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
+            <svg class="sidebar-chevron" style="width:12px;height:12px" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
           </div>
           <div class="sidebar-item active">Granular</div>
           <div class="sidebar-item">Prilled</div>
@@ -2275,41 +1388,38 @@
           <div class="sidebar-item">Liquid Urea</div>
         </div>
       </div>
+
       <div class="sidebar-divider"></div>
+
       <div class="sidebar-group">
         <div class="sidebar-parent">
-          <div class="sidebar-parent-label"><svg width="14" height="14" fill="none" stroke="currentColor"
-              stroke-width="2" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M8 12h8M12 8v8" />
-            </svg>Ammonia</div>
-          <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
+          <div class="sidebar-parent-label">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+            Ammonia
+          </div>
+          <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
       </div>
+
       <div class="sidebar-divider"></div>
+
       <div class="sidebar-group">
         <div class="sidebar-parent">
-          <div class="sidebar-parent-label"><svg width="14" height="14" fill="none" stroke="currentColor"
-              stroke-width="2" viewBox="0 0 24 24">
-              <polygon
-                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-            </svg>Phosphates</div>
-          <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
+          <div class="sidebar-parent-label">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Phosphates
+          </div>
+          <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
       </div>
+
       <div class="sidebar-group">
         <div class="sidebar-parent">
-          <div class="sidebar-parent-label"><svg width="14" height="14" fill="none" stroke="currentColor"
-              stroke-width="2" viewBox="0 0 24 24">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-            </svg>Potash</div>
-          <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
+          <div class="sidebar-parent-label">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            Potash
+          </div>
+          <svg class="sidebar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
       </div>
     </aside>
@@ -2317,13 +1427,19 @@
     <div class="main">
       <div class="main-inner">
         <div class="content">
+
           <!-- PAGE HEADER -->
           <div class="page-header">
-            <div class="breadcrumb">
-              <span>Commodities</span><span>›</span><span>Nitrogen</span><span>›</span><span>Urea</span><span>›</span><span
-                style="color:var(--accent);font-weight:500">Granular</span>
+            <div class="page-header-left">
+              <div class="breadcrumb">
+                <span>Commodities</span><span>›</span><span>Nitrogen</span><span>›</span><span>Urea</span><span>›</span><span style="color:var(--accent);font-weight:600">Granular</span>
+              </div>
+              <h1 class="page-title">Granular Urea</h1>
+              <div class="page-meta-row">
+                <span class="page-badge n46">N — 46% Active Ingredient</span>
+                <span class="page-badge live"><span class="live-dot"></span> Live Data</span>
+              </div>
             </div>
-            <h1 class="page-title">Granular Urea</h1>
           </div>
 
           <!-- MAIN TABS -->
@@ -2336,29 +1452,20 @@
           <!-- TAB 1: FERTILIZERS STOCKS -->
           <div id="tab-fertilizers" class="tab-panel active">
             <div class="filters-row">
-              <div class="filter-group"><span class="filter-label"> Home Country</span>
-                <div class="filter-select">Egypt<svg fill="none" stroke="currentColor" stroke-width="2"
-                    viewBox="0 0 24 24">
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg></div>
+              <div class="filter-group">
+                <span class="filter-label">Home Country</span>
+                <div class="filter-select">Egypt<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
               </div>
-              <div class="filter-group"><span class="filter-label">Export Market</span>
-                <div class="filter-select">Europe<svg fill="none" stroke="currentColor" stroke-width="2"
-                    viewBox="0 0 24 24">
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg></div>
+              <div class="filter-group">
+                <span class="filter-label">Export Market</span>
+                <div class="filter-select">Europe<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
               </div>
-              <div class="filter-group"><span class="filter-label">Exchange</span>
-                <div class="filter-select">NASDAQ<svg fill="none" stroke="currentColor" stroke-width="2"
-                    viewBox="0 0 24 24">
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg></div>
+              <div class="filter-group">
+                <span class="filter-label">Exchange</span>
+                <div class="filter-select">NASDAQ<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
               </div>
               <div class="search-mini" style="margin-left:auto">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <circle cx="11" cy="11" r="8" />
-                  <path d="m21 21-4.35-4.35" />
-                </svg>
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
                 <input type="text" placeholder="Search stocks…" oninput="searchStocks(this.value)">
               </div>
             </div>
@@ -2381,36 +1488,25 @@
             </div>
           </div>
 
-
           <!-- TAB 2: MARKET PROFILE -->
           <div id="tab-market-profile" class="tab-panel">
             <div class="sub-tabs-wrap">
               <div class="sub-tabs">
                 <div class="sub-tab active" onclick="switchSub('crop-market',this)">
-                  <svg class="sub-tab-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M12 22V12M12 12C12 7 17 4 17 4M12 12C12 7 7 4 7 4" />
-                  </svg>
+                  <svg class="sub-tab-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22V12M12 12C12 7 17 4 17 4M12 12C12 7 7 4 7 4"/></svg>
                   Crop Market<span class="sub-tab-badge">5</span>
                 </div>
                 <div class="sub-tab" onclick="switchSub('country-data',this)">
-                  <svg class="sub-tab-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10" />
-                    <path
-                      d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                  </svg>
+                  <svg class="sub-tab-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                   Country Data<span class="sub-tab-badge">32</span>
                 </div>
               </div>
-              <div class="country-filter-row">
-                <div class="search-mini">
-                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="8" />
-                    <path d="m21 21-4.35-4.35" />
-                  </svg>
-                  <input type="text" placeholder="Search crop…" oninput="searchCrop(this.value)">
-                </div>
+              <div class="search-mini">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input type="text" placeholder="Search crop…" oninput="searchCrop(this.value)">
               </div>
             </div>
+
             <div id="sub-crop-market" class="sub-panel active">
               <div class="card">
                 <div class="card-header">
@@ -2433,31 +1529,26 @@
                 </div>
                 <div id="crop-detail-section" class="crop-detail-section">
                   <div class="crop-detail-title">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                      <circle cx="12" cy="12" r="10" />
-                      <path
-                        d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                    </svg>
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                     <span id="selected-crop-name">Select a crop above</span>
                   </div>
                   <div class="crop-detail-grid" id="crop-detail-grid"></div>
                 </div>
               </div>
             </div>
+
             <div id="sub-country-data" class="sub-panel">
               <div class="card">
-                <div class="card-header"><span class="card-title">Country Trade Data</span>
+                <div class="card-header">
+                  <span class="card-title">Country Trade Data</span>
                   <div class="card-meta"><span>Production · Consumption · Imports · Exports</span></div>
                 </div>
                 <div class="country-filter-row">
                   <div class="filter-chip active" onclick="filterCountry('all',this)">All</div>
                   <div class="filter-chip" onclick="filterCountry('importer',this)">Net Importers</div>
                   <div class="filter-chip" onclick="filterCountry('exporter',this)">Net Exporters</div>
-                  <div class="search-mini">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                      <circle cx="11" cy="11" r="8" />
-                      <path d="m21 21-4.35-4.35" />
-                    </svg>
+                  <div class="search-mini" style="margin-left:auto">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
                     <input type="text" placeholder="Search country…" oninput="searchCountry(this.value)">
                   </div>
                 </div>
@@ -2489,14 +1580,9 @@
               <div class="prod-left">
                 <div class="prod-section-title">Production Routes</div>
                 <div class="route-filter-row">
-                  <!-- <div class="route-chip active" onclick="filterRoute('all',this)"><span
-                      class="route-chip-dot"></span>All Routes</div> -->
-                  <div class="route-chip" onclick="filterRoute('natural-gas',this)"><span class="route-chip-dot"
-                      style="background:#08306B"></span>Natural Gas</div>
-                  <div class="route-chip" onclick="filterRoute('coal',this)"><span class="route-chip-dot"
-                      style="background:#374151"></span>Coal</div>
-                  <div class="route-chip" onclick="filterRoute('green',this)"><span class="route-chip-dot"
-                      style="background:#0d7a5f"></span>Green</div>
+                  <div class="route-chip" onclick="filterRoute('natural-gas',this)"><span class="route-chip-dot" style="background:#08306B"></span>Natural Gas</div>
+                  <div class="route-chip" onclick="filterRoute('coal',this)"><span class="route-chip-dot" style="background:#374151"></span>Coal</div>
+                  <div class="route-chip" onclick="filterRoute('green',this)"><span class="route-chip-dot" style="background:#0d7a5f"></span>Green</div>
                 </div>
                 <div class="route-cards" id="routeCards"></div>
               </div>
@@ -2504,108 +1590,108 @@
                 <div class="prod-section-title">Process Details</div>
                 <div class="output-panel">
                   <div class="output-empty" id="outputEmpty">
-                    <svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.3"
-                      viewBox="0 0 24 24">
-                      <path
-                        d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18" />
-                    </svg>
-                    <p>Select a production route to view inputs and process details</p>
+                    <div class="output-empty-icon">
+                      <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+                    </div>
+                    <h3>No Route Selected</h3>
+                    <p>Select a production route above to view inputs and process details</p>
                   </div>
                   <div class="output-content" id="outputContent"></div>
                 </div>
               </div>
             </div>
           </div>
+
         </div><!-- /content -->
 
         <!-- RIGHT PANEL -->
         <aside class="right-panel">
           <div class="right-panel-toggle" id="rightPanelToggle" onclick="toggleRightPanel()">
             <span>📊 Market Info &amp; Price Chart</span>
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-              <polyline points="6 9 12 15 18 9"/>
-            </svg>
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="right-panel-inner" id="rightPanelInner">
-          <div>
-            <div class="commodity-name">Granular Urea</div>
-            <p class="commodity-desc">Solid nitrogenous fertilizer produced through the granulation of liquid urea.
-              Primary nitrogen source for large-scale agriculture due to high nutrient density and favorable handling
-              characteristics.</p>
-            <!-- <div class="urea-visual">
-              <div class="urea-granules" id="granules"></div>
-            </div> -->
-          </div>
-          <div id="rightPanelSoilContext" class="info-box"
-            style="background: var(--surface-2); border-radius: var(--radius); padding: 14px; margin-bottom: 12px;">
-            <div class="info-box-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
-                <path d="M12 22V12M12 12C12 7 17 4 17 4M12 12C12 7 7 4 7 4" />
-              </svg>
+
+            <div>
+              <div class="panel-section-title">Commodity Overview</div>
+              <div class="commodity-name">Granular Urea</div>
+              <p class="commodity-desc">Solid nitrogenous fertilizer produced through granulation of liquid urea. Primary nitrogen source for large-scale agriculture due to high nutrient density and favorable handling characteristics.</p>
             </div>
-            <div style="flex:1">
-              <div class="info-box-title" style="font-size: 12px; font-weight: 700; margin-bottom: 4px;">Soil Use
-                Context</div>
-              <div id="rightPanelSoilUseText" class="info-box-text"
-                style="font-size: 12px; line-height: 1.5; color: var(--text-secondary);">
-                Select a production route to see soil recommendations.
+
+            <!-- SOIL CONTEXT -->
+            <div class="soil-info-box" id="rightPanelSoilContext">
+              <div class="soil-info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12C12 7 17 4 17 4M12 12C12 7 7 4 7 4"/></svg>
+              </div>
+              <div style="flex:1">
+                <div class="soil-info-title">Soil Use Context</div>
+                <div id="rightPanelSoilUseText" class="soil-info-text">
+                  Select a production route to see soil recommendations.
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- PRICE CHART SECTION -->
-          <div>
-            <div class="chart-header">
-              <div>
-                <div class="chart-title">Urea Price (USD/T)</div>
-                <div class="chart-subtitle">1 Year · Daily</div>
+            <!-- PRICE CHART -->
+            <div class="price-section">
+              <div class="chart-header">
+                <div>
+                  <div class="chart-title">Urea Price (USD/T)</div>
+                  <div class="chart-subtitle">1 Year · Daily</div>
+                </div>
+                <span class="chart-badge neg">▼ −0.36%</span>
               </div>
-              <span class="chart-badge neg">▼ -0.36%</span>
-            </div>
-            <div class="price-info-row">
-              <span class="price-big">692.25</span>
-              <span class="price-change-small">-2.50</span>
-            </div>
-            <div class="line-chart-wrap" id="lineChartWrap">
-              <canvas id="priceChart" height="160" style="display:block;width:100%;cursor:crosshair;"></canvas>
-              <div class="chart-tooltip" id="chartTooltip" style="opacity:0;position:absolute;top:8px;left:50%"></div>
-            </div>
-            <div class="chart-x-labels" id="chartXLabels"></div>
-            <div class="chart-time-range">
-              <button class="time-range-btn active">1Y</button>
-              <button class="time-range-btn">5Y</button>
-              <button class="time-range-btn">All</button>
-            </div>
-          </div>
-
-          <div class="stat-cards">
-            <div class="stat-card">
-              <div class="stat-card-label">Input Cost Index</div>
-              <div class="stat-card-value">114.2</div>
-              <div class="stat-change pos">▲ 2.1</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-card-label">Energy Delta</div>
-              <div class="stat-card-value">−2.4<span class="unit">%</span></div>
-              <div class="stat-change neg">▼ 2.4%</div>
-            </div>
-          </div>
-
-          <div>
-            <div class="panel-section-title">Market Bulletin</div>
-            <div class="bulletin-item">
-              <div class="bulletin-headline">Black Sea export restrictions causing price volatility in Mediterranean
-                markets.</div>
-              <div class="bulletin-meta"><span>2 hours ago</span><span style="opacity:.4">•</span><span
-                  class="bulletin-source">Reuters</span></div>
-            </div>
-            <div class="bulletin-item">
-              <div class="bulletin-headline">CF Industries reports record Q3 production efficiency in Louisiana plant.
+              <div class="price-info-row">
+                <span class="price-big">692.25</span>
+                <span class="price-change-small">−2.50</span>
+                <span class="price-label">USD / Ton</span>
               </div>
-              <div class="bulletin-meta"><span>5 hours ago</span><span style="opacity:.4">•</span><span
-                  class="bulletin-source">Bloomberg</span></div>
+              <div class="line-chart-wrap" id="lineChartWrap">
+                <canvas id="priceChart" height="160" style="display:block;width:100%;cursor:crosshair;"></canvas>
+                <div class="chart-tooltip" id="chartTooltip" style="opacity:0;position:absolute;top:8px;left:50%"></div>
+              </div>
+              <div class="chart-x-labels" id="chartXLabels"></div>
+              <div class="chart-time-range">
+                <button class="time-range-btn active">1Y</button>
+                <button class="time-range-btn">5Y</button>
+                <button class="time-range-btn">All</button>
+              </div>
             </div>
-          </div>
+
+            <!-- STAT CARDS -->
+            <div class="stat-cards">
+              <div class="stat-card">
+                <div class="stat-card-label">Input Cost Index</div>
+                <div class="stat-card-value">114.2</div>
+                <div class="stat-change pos">▲ 2.1</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-card-label">Energy Delta</div>
+                <div class="stat-card-value">−2.4<span class="unit">%</span></div>
+                <div class="stat-change neg">▼ 2.4%</div>
+              </div>
+            </div>
+
+            <!-- BULLETIN -->
+            <div>
+              <div class="panel-section-title">Market Bulletin</div>
+              <div class="bulletin-list">
+                <div class="bulletin-item">
+                  <div class="bulletin-headline">Black Sea export restrictions causing price volatility in Mediterranean markets.</div>
+                  <div class="bulletin-meta">
+                    <span>2 hours ago</span><span class="bulletin-dot">•</span>
+                    <span class="bulletin-source">Reuters</span>
+                  </div>
+                </div>
+                <div class="bulletin-item">
+                  <div class="bulletin-headline">CF Industries reports record Q3 production efficiency in Louisiana plant.</div>
+                  <div class="bulletin-meta">
+                    <span>5 hours ago</span><span class="bulletin-dot">•</span>
+                    <span class="bulletin-source">Bloomberg</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div><!-- /right-panel-inner -->
         </aside>
       </div>
@@ -2632,42 +1718,37 @@
     function renderStocksTable() {
       const tbody = document.getElementById('stocks-tbody');
       tbody.innerHTML = filteredStocks.map(row => {
-        const chg = row.change >= 0 ? `<span class="change-pos">▲ ${row.change}</span>` : `<span class="change-neg">▼ ${Math.abs(row.change)}</span>`;
-        return `<tr><td><span class="ticker-badge">${row.symbol}</span></td><td class="num">${row.price}</td><td class="num">${chg}</td><td class="num">${row.mktCap}</td><td class="num"><div class="ranking-bar-wrap">${row.ranking}<div class="ranking-bar"><div class="ranking-bar-fill" style="width:${row.ranking}%"></div></div></div></td><td class="num"><span class="exposure-badge">${row.exposure}%</span></td></tr>`;
+        const chg = row.change >= 0
+          ? `<span class="change-pos">▲ ${row.change}</span>`
+          : `<span class="change-neg">▼ ${Math.abs(row.change)}</span>`;
+        return `<tr>
+          <td><span class="ticker-badge">${row.symbol}</span></td>
+          <td class="num"><span style="font-family:var(--font-mono);font-weight:600">${row.price}</span></td>
+          <td class="num">${chg}</td>
+          <td class="num"><span style="font-family:var(--font-mono)">${row.mktCap}</span></td>
+          <td class="num">
+            <div class="ranking-bar-wrap">
+              <span style="font-family:var(--font-mono);font-weight:600;color:var(--text-primary)">${row.ranking}</span>
+              <div class="ranking-bar"><div class="ranking-bar-fill" style="width:${row.ranking}%"></div></div>
+            </div>
+          </td>
+          <td class="num"><span class="exposure-badge">${row.exposure}%</span></td>
+        </tr>`;
       }).join('');
     }
 
-    function searchStocks(q) {
-      filteredStocks = stocksData.filter(r => r.symbol.toLowerCase().includes(q.toLowerCase()));
-      renderStocksTable();
-    }
-
-    function sortStocks(col) {
-      stocksSortState[col] = stocksSortState[col] === 'asc' ? 'desc' : 'asc';
-      const asc = stocksSortState[col] === 'asc';
-      const keys = ['symbol', 'price', 'change', 'mktCap', 'ranking', 'exposure'];
-      filteredStocks.sort((a, b) => asc ? (a[keys[col]] > b[keys[col]] ? 1 : -1) : (a[keys[col]] < b[keys[col]] ? 1 : -1));
-      renderStocksTable();
-    }
+    function searchStocks(q) { filteredStocks = stocksData.filter(r => r.symbol.toLowerCase().includes(q.toLowerCase())); renderStocksTable(); }
+    function sortStocks(col) { stocksSortState[col] = stocksSortState[col] === 'asc' ? 'desc' : 'asc'; const asc = stocksSortState[col] === 'asc'; const keys = ['symbol','price','change','mktCap','ranking','exposure']; filteredStocks.sort((a,b) => asc ? (a[keys[col]] > b[keys[col]] ? 1 : -1) : (a[keys[col]] < b[keys[col]] ? 1 : -1)); renderStocksTable(); }
 
     // ═══════════════════════════════════════════════════
-    // UREA PRICE CHART
+    // PRICE CHART
     // ═══════════════════════════════════════════════════
-    const PRICE_DATA = [
-      480, 472, 468, 461, 455, 448, 440, 432, 425, 418, 410, 400, 392, 383, 375, 368, 365, 367, 370, 375, 380, 388, 393, 400, 408, 415, 420, 428, 435, 442,
-      448, 455, 462, 468, 472, 478, 480, 475, 470, 465, 460, 456, 452, 448, 445, 442, 440, 438, 436, 433, 430, 428, 425, 422, 418, 415, 412, 410, 408, 406,
-      404, 402, 400, 398, 396, 394, 392, 390, 388, 386, 384, 382, 380, 379, 378, 377, 376, 375, 376, 377, 378, 380, 382, 385, 388, 390, 392, 395, 398, 400,
-      402, 404, 406, 408, 410, 408, 405, 402, 398, 395, 392, 388, 385, 382, 380, 378, 376, 375, 374, 373, 372, 371, 370, 370, 369, 368, 368, 367, 366, 365,
-      364, 362, 360, 358, 357, 356, 355, 354, 354, 353, 352, 351, 350, 350, 351, 352, 353, 355, 357, 360, 363, 367, 370, 374, 378, 383, 388, 394, 400, 408,
-      416, 424, 432, 440, 445, 448, 450, 452, 454, 456, 458, 460, 462, 455, 450, 445, 442, 440, 445, 452, 460, 468, 475, 480, 478, 475, 472, 470, 468, 465,
-      468, 472, 478, 485, 492, 500, 508, 516, 525, 535, 545, 555, 562, 568, 574, 580, 585, 590, 594, 598, 600, 598, 595, 598, 602, 605, 608,
-      615, 625, 635, 648, 660, 672, 682, 690, 700, 710, 718, 725, 720, 715, 710, 705, 700, 698, 695, 692
-    ];
+    const PRICE_DATA = [480,472,468,461,455,448,440,432,425,418,410,400,392,383,375,368,365,367,370,375,380,388,393,400,408,415,420,428,435,442,448,455,462,468,472,478,480,475,470,465,460,456,452,448,445,442,440,438,436,433,430,428,425,422,418,415,412,410,408,406,404,402,400,398,396,394,392,390,388,386,384,382,380,379,378,377,376,375,376,377,378,380,382,385,388,390,392,395,398,400,402,404,406,408,410,408,405,402,398,395,392,388,385,382,380,378,376,375,374,373,372,371,370,370,369,368,368,367,366,365,364,362,360,358,357,356,355,354,354,353,352,351,350,350,351,352,353,355,357,360,363,367,370,374,378,383,388,394,400,408,416,424,432,440,445,448,450,452,454,456,458,460,462,455,450,445,442,440,445,452,460,468,475,480,478,475,472,470,468,465,468,472,478,485,492,500,508,516,525,535,545,555,562,568,574,580,585,590,594,598,600,598,595,598,602,605,608,615,625,635,648,660,672,682,690,700,710,718,725,720,715,710,705,700,698,695,692];
 
     function drawPriceChart() {
       const canvas = document.getElementById('priceChart');
       const wrap = document.getElementById('lineChartWrap');
-      const W = wrap.clientWidth || 380;
+      const W = wrap.clientWidth || 360;
       const H = 160;
       canvas.width = W * window.devicePixelRatio;
       canvas.height = H * window.devicePixelRatio;
@@ -2675,109 +1756,41 @@
       canvas.style.height = H + 'px';
       const ctx = canvas.getContext('2d');
       ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-
-      const pad = { top: 12, right: 10, bottom: 10, left: 10 };
+      const pad = { top: 12, right: 36, bottom: 10, left: 10 };
       const cw = W - pad.left - pad.right;
       const ch = H - pad.top - pad.bottom;
       const data = PRICE_DATA;
       const minV = Math.min(...data) - 20;
       const maxV = Math.max(...data) + 20;
-
       function xOf(i) { return pad.left + (i / (data.length - 1)) * cw; }
       function yOf(v) { return pad.top + ch - ((v - minV) / (maxV - minV)) * ch; }
-
-      ctx.strokeStyle = 'rgba(8,48,107,0.07)';
-      ctx.lineWidth = 1;
-      for (let i = 0; i <= 4; i++) {
-        const y = pad.top + (ch / 4) * i;
-        ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + cw, y); ctx.stroke();
-      }
-
-      ctx.fillStyle = 'rgba(122,155,184,0.9)';
-      ctx.font = '10px DM Mono, monospace';
-      ctx.textAlign = 'right';
-      const yLabels = [750, 700, 650, 600, 550, 500, 450, 400, 350];
-      for (const v of yLabels) {
-        if (v >= minV && v <= maxV) {
-          const y = yOf(v);
-          if (y > pad.top + 6 && y < H - pad.bottom - 4) {
-            ctx.fillText(v, W - 5, y + 4);
-          }
-        }
-      }
-
       const grad = ctx.createLinearGradient(0, pad.top, 0, H);
-      grad.addColorStop(0, 'rgba(8,48,107,0.18)');
-      grad.addColorStop(1, 'rgba(8,48,107,0.0)');
-
-      ctx.beginPath();
-      ctx.moveTo(xOf(0), yOf(data[0]));
-      for (let i = 1; i < data.length; i++) ctx.lineTo(xOf(i), yOf(data[i]));
-      ctx.lineTo(xOf(data.length - 1), H - pad.bottom);
-      ctx.lineTo(xOf(0), H - pad.bottom);
-      ctx.closePath();
-      ctx.fillStyle = grad;
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.moveTo(xOf(0), yOf(data[0]));
-      for (let i = 1; i < data.length; i++) ctx.lineTo(xOf(i), yOf(data[i]));
-      ctx.strokeStyle = '#08306B';
-      ctx.lineWidth = 2;
-      ctx.lineJoin = 'round';
-      ctx.stroke();
-
-      const lastX = xOf(data.length - 1);
-      const lastY = yOf(data[data.length - 1]);
-      ctx.beginPath();
-      ctx.arc(lastX, lastY, 4, 0, Math.PI * 2);
-      ctx.fillStyle = '#08306B';
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(lastX, lastY, 7, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(8,48,107,0.15)';
-      ctx.fill();
-
-      const labels = ['Jun', 'Aug', 'Oct', 'Dec', '2026', 'Apr'];
-      document.getElementById('chartXLabels').innerHTML = labels.map(l => `<span>${l}</span>`).join('');
-
+      grad.addColorStop(0, 'rgba(8,48,107,0.15)');
+      grad.addColorStop(1, 'rgba(8,48,107,0.01)');
+      drawPriceChartStatic(ctx, W, H, data, pad, cw, ch, minV, maxV, xOf, yOf, grad);
       const tooltip = document.getElementById('chartTooltip');
-      canvas.onmousemove = function (e) {
+      canvas.onmousemove = function(e) {
         const rect = canvas.getBoundingClientRect();
         const mx = e.clientX - rect.left;
         const idx = Math.round(((mx - pad.left) / cw) * (data.length - 1));
         if (idx < 0 || idx >= data.length) return;
-        const val = data[idx];
-        const x = xOf(idx);
-        const y = yOf(val);
-
+        const val = data[idx]; const x = xOf(idx); const y = yOf(val);
         ctx.clearRect(0, 0, W, H);
         drawPriceChartStatic(ctx, W, H, data, pad, cw, ch, minV, maxV, xOf, yOf, grad);
-
         ctx.save();
-        ctx.strokeStyle = 'rgba(8,48,107,0.35)';
-        ctx.lineWidth = 1;
-        ctx.setLineDash([3, 3]);
+        ctx.strokeStyle = 'rgba(8,48,107,0.3)'; ctx.lineWidth = 1;
+        ctx.setLineDash([3,3]);
         ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, H - pad.bottom); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + cw, y); ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.restore();
-
-        ctx.beginPath();
-        ctx.arc(x, y, 4.5, 0, Math.PI * 2);
-        ctx.fillStyle = '#08306B';
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(x, y, 8, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(8,48,107,0.2)';
-        ctx.fill();
-
+        ctx.setLineDash([]); ctx.restore();
+        ctx.beginPath(); ctx.arc(x, y, 4.5, 0, Math.PI * 2); ctx.fillStyle = '#08306B'; ctx.fill();
+        ctx.beginPath(); ctx.arc(x, y, 8, 0, Math.PI * 2); ctx.fillStyle = 'rgba(8,48,107,0.18)'; ctx.fill();
         tooltip.style.opacity = '1';
         tooltip.style.left = Math.min(Math.max(x, 40), W - 40) + 'px';
-        tooltip.style.top = Math.max(y - 40, 5) + 'px';
+        tooltip.style.top = Math.max(y - 42, 5) + 'px';
         tooltip.textContent = '$' + val.toFixed(2);
       };
-      canvas.onmouseleave = function () {
+      canvas.onmouseleave = function() {
         tooltip.style.opacity = '0';
         ctx.clearRect(0, 0, W, H);
         drawPriceChartStatic(ctx, W, H, data, pad, cw, ch, minV, maxV, xOf, yOf, grad);
@@ -2785,90 +1798,49 @@
     }
 
     function drawPriceChartStatic(ctx, W, H, data, pad, cw, ch, minV, maxV, xOf, yOf, grad) {
-      ctx.strokeStyle = 'rgba(8,48,107,0.07)';
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(8,48,107,0.06)'; ctx.lineWidth = 1;
       for (let i = 0; i <= 4; i++) {
         const y = pad.top + (ch / 4) * i;
         ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + cw, y); ctx.stroke();
       }
-
-      ctx.fillStyle = 'rgba(122,155,184,0.9)';
+      ctx.fillStyle = 'rgba(122,155,184,0.85)';
       ctx.font = '10px DM Mono, monospace';
       ctx.textAlign = 'right';
-      const yLabels = [750, 700, 650, 600, 550, 500, 450, 400, 350];
-      for (const v of yLabels) {
+      for (const v of [750,700,650,600,550,500,450,400,350]) {
         if (v >= minV && v <= maxV) {
           const y = yOf(v);
           if (y > pad.top + 6 && y < H - pad.bottom - 4) ctx.fillText(v, W - 5, y + 4);
         }
       }
-
       ctx.beginPath();
       ctx.moveTo(xOf(0), yOf(data[0]));
       for (let i = 1; i < data.length; i++) ctx.lineTo(xOf(i), yOf(data[i]));
       ctx.lineTo(xOf(data.length - 1), H - pad.bottom);
       ctx.lineTo(xOf(0), H - pad.bottom);
-      ctx.closePath();
-      ctx.fillStyle = grad;
-      ctx.fill();
-
+      ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
       ctx.beginPath();
       ctx.moveTo(xOf(0), yOf(data[0]));
       for (let i = 1; i < data.length; i++) ctx.lineTo(xOf(i), yOf(data[i]));
-      ctx.strokeStyle = '#08306B';
-      ctx.lineWidth = 2;
-      ctx.lineJoin = 'round';
-      ctx.stroke();
-
-      const lastX = xOf(data.length - 1);
-      const lastY = yOf(data[data.length - 1]);
+      ctx.strokeStyle = '#08306B'; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
+      const lastX = xOf(data.length - 1); const lastY = yOf(data[data.length - 1]);
       ctx.beginPath(); ctx.arc(lastX, lastY, 4, 0, Math.PI * 2); ctx.fillStyle = '#08306B'; ctx.fill();
       ctx.beginPath(); ctx.arc(lastX, lastY, 7, 0, Math.PI * 2); ctx.fillStyle = 'rgba(8,48,107,0.15)'; ctx.fill();
+      document.getElementById('chartXLabels').innerHTML = ['Jun','Aug','Oct','Dec','2026','Apr'].map(l => `<span>${l}</span>`).join('');
     }
 
     // ═══════════════════════════════════════════════════
-    // CROP DATA WITH DETAILS
+    // CROP DATA
     // ═══════════════════════════════════════════════════
-    const CROP_ICONS = { 'Wheat': '🌾', 'Corn': '🌽', 'Soybeans': '🫘', 'Sugar': '🎋', 'Rice': '🍚' };
-    const CROP_BG = { 'Wheat': '#fef3c7', 'Corn': '#fef9c3', 'Soybeans': '#d0f0e8', 'Sugar': '#ede9fe', 'Rice': '#e8f0fb' };
-    const FLAG = { 'Brazil': '🇧🇷', 'China': '🇨🇳', 'Russia': '🇷🇺', 'Saudi Arabia': '🇸🇦', 'Egypt': '🇪🇬', 'India': '🇮🇳', 'US': '🇺🇸', 'Ukraine': '🇺🇦', 'Europe': '🇪🇺' };
+    const CROP_ICONS = { 'Wheat':'🌾','Corn':'🌽','Soybeans':'🫘','Sugar':'🎋','Rice':'🍚' };
+    const CROP_BG = { 'Wheat':'#fef3c7','Corn':'#fef9c3','Soybeans':'#d0f0e8','Sugar':'#ede9fe','Rice':'#e8f0fb' };
+    const FLAG = { 'Brazil':'🇧🇷','China':'🇨🇳','Russia':'🇷🇺','Saudi Arabia':'🇸🇦','Egypt':'🇪🇬','India':'🇮🇳','US':'🇺🇸','Ukraine':'🇺🇦','Europe':'🇪🇺' };
 
     let cropData = [
-      {
-        crop: 'Wheat', consumption: 40, price: 300, change: 5, ureaRatio: 50,
-        topConsumers: [{ c: 'Egypt', v: '20' }, { c: 'China', v: '18' }, { c: 'India', v: '15' }, { c: 'Russia', v: '12' }, { c: 'US', v: '10' }],
-        topProducers: [{ c: 'Russia', v: '300' }, { c: 'China', v: '280' }, { c: 'India', v: '250' }, { c: 'US', v: '50' }, { c: 'Europe', v: '45' }],
-        topExporters: [{ c: 'US', v: '400' }, { c: 'Russia', v: '350' }, { c: 'Europe', v: '200' }, { c: 'Ukraine', v: '10' }, { c: 'Brazil', v: '8' }],
-        topImporters: [{ c: 'Egypt', v: '100' }, { c: 'China', v: '80' }, { c: 'Brazil', v: '50' }, { c: 'Saudi Arabia', v: '40' }, { c: 'India', v: '30' }]
-      },
-      {
-        crop: 'Corn', consumption: 60, price: 500, change: 2, ureaRatio: 10,
-        topConsumers: [{ c: 'China', v: '200' }, { c: 'US', v: '180' }, { c: 'Brazil', v: '120' }, { c: 'Europe', v: '100' }, { c: 'India', v: '80' }],
-        topProducers: [{ c: 'US', v: '50' }, { c: 'China', v: '45' }, { c: 'Brazil', v: '40' }, { c: 'Europe', v: '30' }, { c: 'India', v: '25' }],
-        topExporters: [{ c: 'Ukraine', v: '10' }, { c: 'US', v: '9' }, { c: 'Brazil', v: '8' }, { c: 'Russia', v: '5' }, { c: 'Europe', v: '3' }],
-        topImporters: [{ c: 'China', v: '500' }, { c: 'Europe', v: '300' }, { c: 'Egypt', v: '200' }, { c: 'Saudi Arabia', v: '150' }, { c: 'India', v: '100' }]
-      },
-      {
-        crop: 'Soybeans', consumption: 70, price: 500, change: 2, ureaRatio: 70,
-        topConsumers: [{ c: 'China', v: '250' }, { c: 'US', v: '200' }, { c: 'Brazil', v: '150' }, { c: 'Europe', v: '120' }, { c: 'India', v: '100' }],
-        topProducers: [{ c: 'US', v: '60' }, { c: 'Brazil', v: '55' }, { c: 'China', v: '40' }, { c: 'India', v: '30' }, { c: 'Europe', v: '20' }],
-        topExporters: [{ c: 'US', v: '400' }, { c: 'Brazil', v: '350' }, { c: 'Europe', v: '200' }, { c: 'China', v: '150' }, { c: 'India', v: '100' }],
-        topImporters: [{ c: 'China', v: '600' }, { c: 'Europe', v: '400' }, { c: 'Egypt', v: '250' }, { c: 'Saudi Arabia', v: '180' }, { c: 'India', v: '120' }]
-      },
-      {
-        crop: 'Sugar', consumption: 100, price: 200, change: -2, ureaRatio: 40,
-        topConsumers: [{ c: 'Brazil', v: '180' }, { c: 'India', v: '160' }, { c: 'China', v: '140' }, { c: 'US', v: '120' }, { c: 'Europe', v: '100' }],
-        topProducers: [{ c: 'Brazil', v: '80' }, { c: 'India', v: '70' }, { c: 'China', v: '60' }, { c: 'US', v: '40' }, { c: 'Europe', v: '30' }],
-        topExporters: [{ c: 'Brazil', v: '500' }, { c: 'India', v: '400' }, { c: 'US', v: '300' }, { c: 'China', v: '200' }, { c: 'Europe', v: '150' }],
-        topImporters: [{ c: 'Europe', v: '350' }, { c: 'China', v: '300' }, { c: 'Egypt', v: '200' }, { c: 'Saudi Arabia', v: '150' }, { c: 'US', v: '100' }]
-      },
-      {
-        crop: 'Rice', consumption: 200, price: 300, change: -4, ureaRatio: 60,
-        topConsumers: [{ c: 'China', v: '300' }, { c: 'India', v: '280' }, { c: 'Brazil', v: '150' }, { c: 'US', v: '120' }, { c: 'Europe', v: '100' }],
-        topProducers: [{ c: 'China', v: '90' }, { c: 'India', v: '85' }, { c: 'Brazil', v: '60' }, { c: 'US', v: '40' }, { c: 'Europe', v: '30' }],
-        topExporters: [{ c: 'India', v: '450' }, { c: 'China', v: '400' }, { c: 'Brazil', v: '300' }, { c: 'US', v: '200' }, { c: 'Europe', v: '150' }],
-        topImporters: [{ c: 'Egypt', v: '400' }, { c: 'Saudi Arabia', v: '350' }, { c: 'Europe', v: '280' }, { c: 'US', v: '200' }, { c: 'Brazil', v: '150' }]
-      },
+      { crop:'Wheat', consumption:40, price:300, change:5, ureaRatio:50, topConsumers:[{c:'Egypt',v:'20'},{c:'China',v:'18'},{c:'India',v:'15'},{c:'Russia',v:'12'},{c:'US',v:'10'}], topProducers:[{c:'Russia',v:'300'},{c:'China',v:'280'},{c:'India',v:'250'},{c:'US',v:'50'},{c:'Europe',v:'45'}], topExporters:[{c:'US',v:'400'},{c:'Russia',v:'350'},{c:'Europe',v:'200'},{c:'Ukraine',v:'10'},{c:'Brazil',v:'8'}], topImporters:[{c:'Egypt',v:'100'},{c:'China',v:'80'},{c:'Brazil',v:'50'},{c:'Saudi Arabia',v:'40'},{c:'India',v:'30'}] },
+      { crop:'Corn', consumption:60, price:500, change:2, ureaRatio:10, topConsumers:[{c:'China',v:'200'},{c:'US',v:'180'},{c:'Brazil',v:'120'},{c:'Europe',v:'100'},{c:'India',v:'80'}], topProducers:[{c:'US',v:'50'},{c:'China',v:'45'},{c:'Brazil',v:'40'},{c:'Europe',v:'30'},{c:'India',v:'25'}], topExporters:[{c:'Ukraine',v:'10'},{c:'US',v:'9'},{c:'Brazil',v:'8'},{c:'Russia',v:'5'},{c:'Europe',v:'3'}], topImporters:[{c:'China',v:'500'},{c:'Europe',v:'300'},{c:'Egypt',v:'200'},{c:'Saudi Arabia',v:'150'},{c:'India',v:'100'}] },
+      { crop:'Soybeans', consumption:70, price:500, change:2, ureaRatio:70, topConsumers:[{c:'China',v:'250'},{c:'US',v:'200'},{c:'Brazil',v:'150'},{c:'Europe',v:'120'},{c:'India',v:'100'}], topProducers:[{c:'US',v:'60'},{c:'Brazil',v:'55'},{c:'China',v:'40'},{c:'India',v:'30'},{c:'Europe',v:'20'}], topExporters:[{c:'US',v:'400'},{c:'Brazil',v:'350'},{c:'Europe',v:'200'},{c:'China',v:'150'},{c:'India',v:'100'}], topImporters:[{c:'China',v:'600'},{c:'Europe',v:'400'},{c:'Egypt',v:'250'},{c:'Saudi Arabia',v:'180'},{c:'India',v:'120'}] },
+      { crop:'Sugar', consumption:100, price:200, change:-2, ureaRatio:40, topConsumers:[{c:'Brazil',v:'180'},{c:'India',v:'160'},{c:'China',v:'140'},{c:'US',v:'120'},{c:'Europe',v:'100'}], topProducers:[{c:'Brazil',v:'80'},{c:'India',v:'70'},{c:'China',v:'60'},{c:'US',v:'40'},{c:'Europe',v:'30'}], topExporters:[{c:'Brazil',v:'500'},{c:'India',v:'400'},{c:'US',v:'300'},{c:'China',v:'200'},{c:'Europe',v:'150'}], topImporters:[{c:'Europe',v:'350'},{c:'China',v:'300'},{c:'Egypt',v:'200'},{c:'Saudi Arabia',v:'150'},{c:'US',v:'100'}] },
+      { crop:'Rice', consumption:200, price:300, change:-4, ureaRatio:60, topConsumers:[{c:'China',v:'300'},{c:'India',v:'280'},{c:'Brazil',v:'150'},{c:'US',v:'120'},{c:'Europe',v:'100'}], topProducers:[{c:'China',v:'90'},{c:'India',v:'85'},{c:'Brazil',v:'60'},{c:'US',v:'40'},{c:'Europe',v:'30'}], topExporters:[{c:'India',v:'450'},{c:'China',v:'400'},{c:'Brazil',v:'300'},{c:'US',v:'200'},{c:'Europe',v:'150'}], topImporters:[{c:'Egypt',v:'400'},{c:'Saudi Arabia',v:'350'},{c:'Europe',v:'280'},{c:'US',v:'200'},{c:'Brazil',v:'150'}] },
     ];
 
     let filteredCrop = [...cropData];
@@ -2882,109 +1854,44 @@
         const chg = row.change >= 0 ? `<span class="change-pos">▲ ${row.change}%</span>` : `<span class="change-neg">▼ ${Math.abs(row.change)}%</span>`;
         const pct = Math.round((row.consumption / maxCons) * 100);
         const isSelected = selectedCrop && selectedCrop.crop === row.crop;
-        return `<tr class="${isSelected ? 'selected' : ''}" onclick="selectCropRow(${idx})"><td><div class="crop-name"><div class="crop-icon" style="background:${CROP_BG[row.crop]}">${CROP_ICONS[row.crop]}</div>${row.crop}</div></td><td class="num"><div class="prod-bar-wrap">${row.consumption}<div class="prod-bar"><div class="prod-bar-fill prod" style="width:${pct}%"></div></div></div></td><td class="num"><span class="price-tag">$${row.price}</span></td><td class="num">${chg}</td><td class="num">${row.ureaRatio}</td></tr>`;
+        return `<tr class="${isSelected ? 'selected' : ''}" onclick="selectCropRow(${idx})">
+          <td><div class="crop-name"><div class="crop-icon" style="background:${CROP_BG[row.crop]}">${CROP_ICONS[row.crop]}</div>${row.crop}</div></td>
+          <td class="num"><div class="prod-bar-wrap">${row.consumption}<div class="prod-bar"><div class="prod-bar-fill prod" style="width:${pct}%"></div></div></div></td>
+          <td class="num"><span class="price-tag">$${row.price}</span></td>
+          <td class="num">${chg}</td>
+          <td class="num"><span style="font-family:var(--font-mono);font-weight:600">${row.ureaRatio}</span></td>
+        </tr>`;
       }).join('');
     }
 
-    function selectCropRow(idx) {
-      selectedCrop = filteredCrop[idx];
-      renderCropTable();
-      showCropDetail();
-    }
+    function selectCropRow(idx) { selectedCrop = filteredCrop[idx]; renderCropTable(); showCropDetail(); }
 
     function showCropDetail() {
       const section = document.getElementById('crop-detail-section');
       const nameEl = document.getElementById('selected-crop-name');
       const gridEl = document.getElementById('crop-detail-grid');
-
-      if (!selectedCrop) {
-        section.classList.remove('active');
-        return;
-      }
-
+      if (!selectedCrop) { section.classList.remove('active'); return; }
       section.classList.add('active');
       nameEl.textContent = `${CROP_ICONS[selectedCrop.crop]} ${selectedCrop.crop} — Global Trade Data`;
-
-      // Helper function to build a column HTML
       function buildColumn(title, dataList) {
-        if (!dataList || dataList.length === 0) return '';
-        return `
-          <div class="detail-col">
-            <div class="detail-col-header">${title}</div>
-            <div class="detail-items-list">
-              ${dataList.map(d => `
-                <div class="detail-item">
-                  <div class="detail-item-country">
-                    <span>${FLAG[d.c] || '🌐'}</span> 
-                    <span>${d.c}</span>
-                  </div>
-                  <div class="detail-item-value">${d.v}</div>
-                </div>
-              `).join('')}
-            </div>
+        if (!dataList || !dataList.length) return '';
+        return `<div class="detail-col">
+          <div class="detail-col-header">${title}</div>
+          <div class="detail-items-list">
+            ${dataList.map(d => `<div class="detail-item"><div class="detail-item-country"><span>${FLAG[d.c]||'🌐'}</span><span>${d.c}</span></div><div class="detail-item-value">${d.v}</div></div>`).join('')}
           </div>
-        `;
+        </div>`;
       }
-
-      gridEl.innerHTML = `
-        ${buildColumn('Top Consumers', selectedCrop.topConsumers)}
-        ${buildColumn('Top Producers', selectedCrop.topProducers)}
-        ${buildColumn('Top Exporters', selectedCrop.topExporters)}
-        ${buildColumn('Top Importers', selectedCrop.topImporters)}
-      `;
-    }
-    function searchCrop(q) {
-      filteredCrop = cropData.filter(r => r.crop.toLowerCase().includes(q.toLowerCase()));
-      selectedCrop = null;
-      renderCropTable();
-      showCropDetail();
+      gridEl.innerHTML = buildColumn('Top Consumers', selectedCrop.topConsumers) + buildColumn('Top Producers', selectedCrop.topProducers) + buildColumn('Top Exporters', selectedCrop.topExporters) + buildColumn('Top Importers', selectedCrop.topImporters);
     }
 
-    function sortCrop(col) {
-      cropSortState[col] = cropSortState[col] === 'asc' ? 'desc' : 'asc';
-      const asc = cropSortState[col] === 'asc';
-      const keys = ['crop', 'consumption', 'price', 'change', 'ureaRatio'];
-      filteredCrop.sort((a, b) => asc ? (a[keys[col]] > b[keys[col]] ? 1 : -1) : (a[keys[col]] < b[keys[col]] ? 1 : -1));
-      renderCropTable();
-    }
+    function searchCrop(q) { filteredCrop = cropData.filter(r => r.crop.toLowerCase().includes(q.toLowerCase())); selectedCrop = null; renderCropTable(); showCropDetail(); }
+    function sortCrop(col) { cropSortState[col] = cropSortState[col] === 'asc' ? 'desc' : 'asc'; const asc = cropSortState[col] === 'asc'; const keys = ['crop','consumption','price','change','ureaRatio']; filteredCrop.sort((a,b) => asc ? (a[keys[col]] > b[keys[col]] ? 1 : -1) : (a[keys[col]] < b[keys[col]] ? 1 : -1)); renderCropTable(); }
 
     // ═══════════════════════════════════════════════════
     // COUNTRY DATA
     // ═══════════════════════════════════════════════════
-    const countryData = [
-      { country: 'Brazil', production: 5, consumption: 2, imports: 1, exports: 3 },
-      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
-      { country: 'Russia', production: 80, consumption: 40, imports: 0, exports: 40 },
-      { country: 'Saudi Arabia', production: 200, consumption: 160, imports: 0, exports: 40 },
-      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
-      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
-      { country: 'Russia', production: 80, consumption: 40, imports: 0, exports: 40 },
-      { country: 'Saudi Arabia', production: 200, consumption: 160, imports: 0, exports: 40 },
-      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
-      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
-      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
-      { country: 'Russia', production: 80, consumption: 40, imports: 0, exports: 40 },
-      { country: 'Saudi Arabia', production: 200, consumption: 160, imports: 0, exports: 40 },
-      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
-      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
-      { country: 'Russia', production: 80, consumption: 40, imports: 0, exports: 40 },
-      { country: 'Russia', production: 80, consumption: 40, imports: 0, exports: 40 },
-      { country: 'Russia', production: 80, consumption: 40, imports: 0, exports: 40 },
-      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
-      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
-      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
-      { country: 'Russia', production: 80, consumption: 40, imports: 0, exports: 40 },
-      { country: 'Saudi Arabia', production: 200, consumption: 160, imports: 0, exports: 40 },
-      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
-      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
-      { country: 'Saudi Arabia', production: 200, consumption: 160, imports: 0, exports: 40 },
-      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
-      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
-      { country: 'Saudi Arabia', production: 200, consumption: 160, imports: 0, exports: 40 },
-      { country: 'Egypt', production: 70, consumption: 50, imports: 0.5, exports: 20 },
-      { country: 'China', production: 60, consumption: 30, imports: 2, exports: 30 },
-      { country: 'Brazil', production: 5, consumption: 2, imports: 1, exports: 3 },
-    ];
+    const countryData = [{country:'Brazil',production:5,consumption:2,imports:1,exports:3},{country:'China',production:60,consumption:30,imports:2,exports:30},{country:'Russia',production:80,consumption:40,imports:0,exports:40},{country:'Saudi Arabia',production:200,consumption:160,imports:0,exports:40},{country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},{country:'China',production:60,consumption:30,imports:2,exports:30},{country:'Russia',production:80,consumption:40,imports:0,exports:40},{country:'Saudi Arabia',production:200,consumption:160,imports:0,exports:40},{country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},{country:'China',production:60,consumption:30,imports:2,exports:30},{country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},{country:'Russia',production:80,consumption:40,imports:0,exports:40},{country:'Saudi Arabia',production:200,consumption:160,imports:0,exports:40},{country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},{country:'China',production:60,consumption:30,imports:2,exports:30},{country:'Russia',production:80,consumption:40,imports:0,exports:40},{country:'Russia',production:80,consumption:40,imports:0,exports:40},{country:'Russia',production:80,consumption:40,imports:0,exports:40},{country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},{country:'China',production:60,consumption:30,imports:2,exports:30},{country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},{country:'Russia',production:80,consumption:40,imports:0,exports:40},{country:'Saudi Arabia',production:200,consumption:160,imports:0,exports:40},{country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},{country:'China',production:60,consumption:30,imports:2,exports:30},{country:'Saudi Arabia',production:200,consumption:160,imports:0,exports:40},{country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},{country:'China',production:60,consumption:30,imports:2,exports:30},{country:'Saudi Arabia',production:200,consumption:160,imports:0,exports:40},{country:'Egypt',production:70,consumption:50,imports:0.5,exports:20},{country:'China',production:60,consumption:30,imports:2,exports:30},{country:'Brazil',production:5,consumption:2,imports:1,exports:3}];
     const ROWS_PER_PAGE = 10;
     let currentPage = 1;
     let filteredCountry = [...countryData];
@@ -3001,7 +1908,13 @@
         const cp = Math.round((row.consumption / maxProd) * 100);
         const ip = Math.round((row.imports / maxProd) * 100);
         const ep = Math.round((row.exports / maxProd) * 100);
-        return `<tr><td><span class="country-chip"><span>${flag}</span>${row.country}</span></td><td class="num"><div class="prod-bar-wrap">${row.production}<div class="prod-bar"><div class="prod-bar-fill prod" style="width:${pp}%"></div></div></div></td><td class="num"><div class="prod-bar-wrap">${row.consumption}<div class="prod-bar"><div class="prod-bar-fill cons" style="width:${cp}%"></div></div></div></td><td class="num"><div class="prod-bar-wrap">${row.imports}<div class="prod-bar"><div class="prod-bar-fill imp" style="width:${ip}%"></div></div></div></td><td class="num"><div class="prod-bar-wrap">${row.exports}<div class="prod-bar"><div class="prod-bar-fill exp" style="width:${ep}%"></div></div></div></td></tr>`;
+        return `<tr>
+          <td><span class="country-chip"><span>${flag}</span>${row.country}</span></td>
+          <td class="num"><div class="prod-bar-wrap">${row.production}<div class="prod-bar"><div class="prod-bar-fill prod" style="width:${pp}%"></div></div></div></td>
+          <td class="num"><div class="prod-bar-wrap">${row.consumption}<div class="prod-bar"><div class="prod-bar-fill cons" style="width:${cp}%"></div></div></div></td>
+          <td class="num"><div class="prod-bar-wrap">${row.imports}<div class="prod-bar"><div class="prod-bar-fill imp" style="width:${ip}%"></div></div></div></td>
+          <td class="num"><div class="prod-bar-wrap">${row.exports}<div class="prod-bar"><div class="prod-bar-fill exp" style="width:${ep}%"></div></div></div></td>
+        </tr>`;
       }).join('');
       renderPagination();
     }
@@ -3013,42 +1926,42 @@
       const end = Math.min(currentPage * ROWS_PER_PAGE, total);
       document.getElementById('page-info').innerHTML = `Showing <strong>${start}–${end}</strong> of <strong>${total}</strong> countries`;
       const wrap = document.getElementById('page-btns');
-      let html = `<button class="page-btn" onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>`;
-      for (let p = 1; p <= totalPages; p++) { if (totalPages > 6 && p > 2 && p < totalPages - 1 && Math.abs(p - currentPage) > 1) { if (p === 3 || p === totalPages - 2) html += `<span class="page-dots">…</span>`; continue; } html += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="goPage(${p})">${p}</button>`; }
-      html += `<button class="page-btn" onclick="goPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>`;
+      let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>`;
+      for (let p = 1; p <= totalPages; p++) { if (totalPages > 6 && p > 2 && p < totalPages - 1 && Math.abs(p - currentPage) > 1) { if (p === 3 || p === totalPages - 2) html += `<span class="page-dots">…</span>`; continue; } html += `<button class="page-btn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`; }
+      html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>`;
       wrap.innerHTML = html;
     }
 
     function goPage(p) { const total = Math.ceil(filteredCountry.length / ROWS_PER_PAGE); if (p < 1 || p > total) return; currentPage = p; renderCountryTable(); }
-    function filterCountry(type, el) { document.querySelectorAll('.country-filter-row .filter-chip').forEach(c => c.classList.remove('active')); el.classList.add('active'); if (type === 'all') filteredCountry = [...countryData]; else if (type === 'importer') filteredCountry = countryData.filter(r => r.imports > r.exports); else if (type === 'exporter') filteredCountry = countryData.filter(r => r.exports > r.imports); currentPage = 1; renderCountryTable(); }
-    function searchCountry(q) { filteredCountry = countryData.filter(r => r.country.toLowerCase().includes(q.toLowerCase())); currentPage = 1; renderCountryTable(); }
-    function sortCountry(col) { countrySortState[col] = countrySortState[col] === 'asc' ? 'desc' : 'asc'; const asc = countrySortState[col] === 'asc'; const keys = ['country', 'production', 'consumption', 'imports', 'exports']; filteredCountry.sort((a, b) => asc ? (a[keys[col]] > b[keys[col]] ? 1 : -1) : (a[keys[col]] < b[keys[col]] ? 1 : -1)); renderCountryTable(); }
+    function filterCountry(type, el) { document.querySelectorAll('.country-filter-row .filter-chip').forEach(c => c.classList.remove('active')); el.classList.add('active'); if (type==='all') filteredCountry=[...countryData]; else if (type==='importer') filteredCountry=countryData.filter(r=>r.imports>r.exports); else if (type==='exporter') filteredCountry=countryData.filter(r=>r.exports>r.imports); currentPage=1; renderCountryTable(); }
+    function searchCountry(q) { filteredCountry = countryData.filter(r => r.country.toLowerCase().includes(q.toLowerCase())); currentPage=1; renderCountryTable(); }
+    function sortCountry(col) { countrySortState[col] = countrySortState[col]==='asc'?'desc':'asc'; const asc=countrySortState[col]==='asc'; const keys=['country','production','consumption','imports','exports']; filteredCountry.sort((a,b)=>asc?(a[keys[col]]>b[keys[col]]?1:-1):(a[keys[col]]<b[keys[col]]?1:-1)); renderCountryTable(); }
 
     // ═══════════════════════════════════════════════════
-    // PRODUCTION ROUTES DATA
+    // PRODUCTION ROUTES DATA (UNCHANGED)
     // ═══════════════════════════════════════════════════
     const ROUTES = [
-      { id: 'SMR', name: 'Steam Methane Reforming', shortName: 'SMR', desc: 'Natural Gas · Traditional', category: 'natural-gas', color: '#08306B' },
-      { id: 'ATR', name: 'Autothermal Reforming', shortName: 'ATR', desc: 'Natural Gas · Traditional', category: 'natural-gas', color: '#08306B' },
-      { id: 'MethPyrolysis', name: 'Methane Pyrolysis', shortName: 'Methane Pyrolysis', desc: 'Natural Gas · Green (Turquoise H₂)', category: 'natural-gas', tag: 'Green', color: '#0891b2' },
-      { id: 'ATR_CCS', name: 'ATR with CCS', shortName: 'ATR + CCS', desc: 'Natural Gas · Blue H₂', category: 'natural-gas', tag: 'CCS', color: '#5b2d8e' },
-      { id: 'SMR_CCS', name: 'SMR with CCS', shortName: 'SMR + CCS', desc: 'Natural Gas · Blue H₂', category: 'natural-gas', tag: 'CCS', color: '#5b2d8e' },
-      { id: 'CoalGasification', name: 'Coal Gasification', shortName: 'Coal Gas.', desc: 'Coal · Traditional', category: 'coal', color: '#374151' },
-      { id: 'Coal_CCS', name: 'Coal with CCS', shortName: 'Coal + CCS', desc: 'Coal · Carbon Capture', category: 'coal', tag: 'CCS', color: '#6b7280' },
-      { id: 'Electrolysis', name: 'Water Electrolysis', shortName: 'Electrolysis', desc: 'Green · Renewable H₂', category: 'green', tag: 'Green', color: '#0d7a5f' },
-      { id: 'BiomassGas', name: 'Biomass Gasification', shortName: 'Biomass Gas.', desc: 'Green · Bio H₂', category: 'green', tag: 'Bio', color: '#16a34a' },
+      { id:'SMR', name:'Steam Methane Reforming', shortName:'SMR', desc:'Natural Gas · Traditional', category:'natural-gas', color:'#08306B' },
+      { id:'ATR', name:'Autothermal Reforming', shortName:'ATR', desc:'Natural Gas · Traditional', category:'natural-gas', color:'#08306B' },
+      { id:'MethPyrolysis', name:'Methane Pyrolysis', shortName:'Methane Pyrolysis', desc:'Natural Gas · Green (Turquoise H₂)', category:'natural-gas', tag:'Green', color:'#0891b2' },
+      { id:'ATR_CCS', name:'ATR with CCS', shortName:'ATR + CCS', desc:'Natural Gas · Blue H₂', category:'natural-gas', tag:'CCS', color:'#5b2d8e' },
+      { id:'SMR_CCS', name:'SMR with CCS', shortName:'SMR + CCS', desc:'Natural Gas · Blue H₂', category:'natural-gas', tag:'CCS', color:'#5b2d8e' },
+      { id:'CoalGasification', name:'Coal Gasification', shortName:'Coal Gas.', desc:'Coal · Traditional', category:'coal', color:'#374151' },
+      { id:'Coal_CCS', name:'Coal with CCS', shortName:'Coal + CCS', desc:'Coal · Carbon Capture', category:'coal', tag:'CCS', color:'#6b7280' },
+      { id:'Electrolysis', name:'Water Electrolysis', shortName:'Electrolysis', desc:'Green · Renewable H₂', category:'green', tag:'Green', color:'#0d7a5f' },
+      { id:'BiomassGas', name:'Biomass Gasification', shortName:'Biomass Gas.', desc:'Green · Bio H₂', category:'green', tag:'Bio', color:'#16a34a' },
     ];
 
     const ROUTE_DETAILS = {
-      SMR: { title: 'Steam Methane Reforming', subtitle: 'Natural Gas Route · Traditional', color: '#08306B', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Natural Gas, urea plant only (in mml)', value: '4.1' }, { label: 'Electricity (kwh/ton)', value: '170' }], ammonia: [{ label: 'Natural Gas (Feed Stock) in mmbtu', value: '13.3' }, { label: 'Natural Gas (Fuel) in mmbtu', value: '10.5' }, { label: 'Electricity (kwh/ton)', value: '80' }], totals: [{ label: 'Total Natural Gas', value: '21.1', bold: true }, { label: 'Electricity', value: '215', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'Standard agricultural urea produced by reacting ammonia with CO₂ at high pressure, then granulated into 2–4 mm spherical particles for broadcast application.', soilUse: 'All soil types but REQUIRES incorporation or >12mm rain within 2–3 days to prevent ammonia volatilization. Best for mechanized cereal/oilseed systems.', steps: [{ title: 'Ammonia', body: 'Natural gas reacts with steam over nickel catalyst at 800–900°C producing syngas (H₂+CO). Water-gas shift converts CO to H₂+CO₂. CO₂ captured via MDEA amine absorption. Purified H₂ combined with N₂ in Haber-Bosch synthesis loop at 150–250 bar and 400–500°C forming ammonia.' }, { title: 'Urea', body: 'NH3 and CO₂ react in high-pressure synthesis reactor at 140–200 bar and 160–200°C forming urea solution. Solution evaporated to 96–99.7% concentration. Molten urea fed to granulation drum, cooled in fluidised bed, anti-caking coating applied.' }] },
-      ATR: { title: 'Autothermal Reforming', subtitle: 'Natural Gas Route · Traditional', color: '#08306B', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Natural Gas, urea plant only (in mmbtu)', value: '3.5' }, { label: 'Electricity (kwh/ton)', value: '140' }], ammonia: [{ label: 'Natural Gas (Feed Stock) in mmbtu', value: '13.3' }, { label: 'Natural Gas (Fuel) in mmbtu', value: '10.5' }, { label: 'Electricity (kwh/ton)', value: '80' }], totals: [{ label: 'Total Natural Gas', value: '20.5', bold: true }, { label: 'Electricity', value: '185', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'ATR combines partial oxidation and steam reforming in a single reactor using oxygen from an air separation unit. More energy-efficient than SMR at large scales.', soilUse: 'Same suitability as granular. More common in Asian and Middle Eastern markets. Dissolves faster — useful for fertigation or quick-response applications.', steps: [{ title: 'Ammonia', body: 'Natural gas reacts with steam and O₂ over nickel catalyst at 800–1000°C. Single-pass conversion higher than SMR. CO₂ captured via amine absorption.' }, { title: 'Urea', body: 'NH3 and CO₂ react at 140–200 bar. Standard granulation applied.' }] },
-      MethPyrolysis: { title: 'Methane Pyrolysis', subtitle: 'Natural Gas Route · Green (Turquoise H₂)', color: '#0891b2', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Natural Gas (mmbtu)', value: '8.5' }, { label: 'Electricity (kwh/ton)', value: '220' }], ammonia: [{ label: 'Natural Gas (Feed Stock) in mmbtu', value: '8.5' }, { label: 'Electricity (kwh/ton)', value: '120' }], totals: [{ label: 'Total Natural Gas', value: '8.5', bold: true }, { label: 'Electricity', value: '220', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'Methane is split into H₂ and solid carbon (no CO₂ emitted). Produces turquoise hydrogen with carbon black as saleable by-product.', soilUse: 'Identical agronomic profile to conventional granular urea. Carbon footprint significantly lower than SMR without CCS.', steps: [{ title: 'Turquoise H₂', body: 'Methane heated to 700–1200°C in molten metal or plasma reactor. CH₄ → C(solid) + 2H₂. No combustion, no CO₂.' }, { title: 'Ammonia & Urea', body: 'H₂ combined with N₂ in Haber-Bosch loop at 150–250 bar. Standard granulation.' }] },
-      ATR_CCS: { title: 'ATR with Carbon Capture', subtitle: 'Natural Gas Route · CCS (Blue H₂)', color: '#5b2d8e', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Natural Gas (mmbtu)', value: '4.0' }, { label: 'Electricity (kwh/ton)', value: '160' }], ammonia: [{ label: 'Natural Gas (Feed Stock) in mmbtu', value: '14.0' }, { label: 'Natural Gas (Fuel) in mmbtu', value: '9.0' }, { label: 'Electricity (kwh/ton)', value: '95' }], totals: [{ label: 'Total Natural Gas', value: '21.5', bold: true }, { label: 'Electricity', value: '220', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'ATR with post-combustion or pre-combustion carbon capture achieving 90–95% CO₂ removal.', soilUse: 'Agronomically identical to standard granular urea. Premium pricing possible in carbon-conscious markets.', steps: [{ title: 'ATR + CCS', body: 'Standard ATR with additional amine absorption unit capturing >90% of CO₂. Captured CO₂ compressed and stored in geological formations.' }, { title: 'Urea Synthesis', body: 'NH₃ + CO₂ → urea. Standard granulation.' }] },
-      SMR_CCS: { title: 'SMR with Carbon Capture', subtitle: 'Natural Gas Route · CCS (Blue H₂)', color: '#5b2d8e', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Natural Gas (mmbtu)', value: '4.5' }, { label: 'Electricity (kwh/ton)', value: '175' }], ammonia: [{ label: 'Natural Gas (Feed Stock) in mmbtu', value: '14.5' }, { label: 'Natural Gas (Fuel) in mmbtu', value: '11.0' }, { label: 'Electricity (kwh/ton)', value: '85' }], totals: [{ label: 'Total Natural Gas', value: '22.5', bold: true }, { label: 'Electricity', value: '235', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'SMR with integrated CCS unit achieving 85–95% capture rate.', soilUse: 'Qualifies for low-carbon fertilizer certification in EU and North American markets.', steps: [{ title: 'SMR + CCS', body: 'Standard SMR with capture unit on reformer flue gas. MDEA or Econamine solvent. CO₂ compressed to 100–150 bar for pipeline transport.' }, { title: 'Urea Synthesis', body: 'Portion of captured CO₂ fed to urea synthesis. Standard granulation.' }] },
-      CoalGasification: { title: 'Coal Gasification', subtitle: 'Coal Route · Traditional', color: '#374151', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Coal (in ton)', value: '1.8' }, { label: 'Electricity (kwh/ton)', value: '350' }], ammonia: [{ label: 'Coal (Feed Stock) in ton', value: '5.2' }, { label: 'Electricity (kwh/ton)', value: '180' }], totals: [{ label: 'Total Coal', value: '7.0', bold: true }, { label: 'Electricity', value: '530', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'Coal is gasified with steam and oxygen to produce syngas. Dominant route in China, ~70% of Chinese urea production.', soilUse: 'Agronomically identical to natural gas-based granular urea. Higher carbon footprint. 30–40% lower cost in coal-rich regions.', steps: [{ title: 'Syngas Production', body: 'Coal fed to gasifier at 1200–1500°C with steam and O₂. Produces syngas cleaned and shifted to maximize H₂.' }, { title: 'Ammonia & Urea', body: 'H₂ combined with N₂ in Haber-Bosch. Standard granulation.' }] },
-      Coal_CCS: { title: 'Coal with CCS', subtitle: 'Coal Route · Carbon Capture', color: '#6b7280', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Coal (in ton)', value: '1.8' }, { label: 'Electricity (kwh/ton)', value: '420' }], ammonia: [{ label: 'Coal (Feed Stock) in ton', value: '5.2' }, { label: 'Electricity (kwh/ton)', value: '220' }], totals: [{ label: 'Total Coal', value: '7.0', bold: true }, { label: 'Electricity', value: '640', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'Coal gasification with integrated pre- or post-combustion CCS achieving 85–90% CO₂ removal.', soilUse: 'Qualifies for lower carbon intensity certification.', steps: [{ title: 'Gasification + CCS', body: 'Rectisol or Selexol wash capturing CO₂ and sulfur. CO₂ injected into geological storage.' }, { title: 'Urea Synthesis', body: 'Standard NH₃+CO₂ reaction and granulation.' }] },
-      Electrolysis: { title: 'Water Electrolysis', subtitle: 'Green Route · Renewable H₂', color: '#0d7a5f', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Water (m³)', value: '9.0' }, { label: 'Electricity (kwh/ton)', value: '1,200' }], ammonia: [{ label: 'Electricity (kwh/ton)', value: '9,500' }, { label: 'Water (m³)', value: '8.5' }], totals: [{ label: 'Total Electricity', value: '10,700', bold: true }, { label: 'Water (m³)', value: '17.5', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'Green hydrogen produced by electrolyzing water using renewable electricity. Zero direct CO₂ emissions.', soilUse: 'Identical agronomic performance. Commands green premium in carbon credit-linked markets.', steps: [{ title: 'Green H₂', body: 'PEM or alkaline electrolyzer splits water into H₂ and O₂. Efficiency 60–80% (LHV basis).' }, { title: 'Green Ammonia & Urea', body: 'H₂ fed to Haber-Bosch with N₂. CO₂ sourced from biogenic or direct air capture. Standard granulation.' }] },
-      BiomassGas: { title: 'Biomass Gasification', subtitle: 'Green Route · Bio H₂', color: '#16a34a', inputs: { direct: [{ label: 'Ammonia (in ton)', value: '0.56' }, { label: 'Biomass (dry ton)', value: '3.2' }, { label: 'Electricity (kwh/ton)', value: '280' }], ammonia: [{ label: 'Biomass (Feed Stock) dry ton', value: '8.5' }, { label: 'Electricity (kwh/ton)', value: '160' }], totals: [{ label: 'Total Biomass', value: '11.7', bold: true }, { label: 'Electricity', value: '440', bold: true }], activeIngredient: { name: 'Nitrogen', pct: 46 } }, overview: 'Agricultural residues or energy crops gasified. Near carbon-neutral or carbon-negative when combined with CCS.', soilUse: 'Certified bio-based urea may qualify for renewable content credits in EU.', steps: [{ title: 'Biomass Syngas', body: 'Biomass dried and fed to fluidized bed gasifier at 700–900°C. Cleaned via tar reformer and filtration.' }, { title: 'Ammonia & Urea', body: 'Biogenic CO₂ from gasifier used in urea synthesis, making product carbon-neutral. Standard granulation.' }] }
+      SMR: { title:'Steam Methane Reforming', subtitle:'Natural Gas Route · Traditional', color:'#08306B', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas, urea plant only (in mml)',value:'4.1'},{label:'Electricity (kwh/ton)',value:'170'}], ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'13.3'},{label:'Natural Gas (Fuel) in mmbtu',value:'10.5'},{label:'Electricity (kwh/ton)',value:'80'}], totals:[{label:'Total Natural Gas',value:'21.1',bold:true},{label:'Electricity',value:'215',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'Standard agricultural urea produced by reacting ammonia with CO₂ at high pressure, then granulated into 2–4 mm spherical particles for broadcast application.', soilUse:'All soil types but REQUIRES incorporation or >12mm rain within 2–3 days to prevent ammonia volatilization. Best for mechanized cereal/oilseed systems.', steps:[{title:'Ammonia',body:'Natural gas reacts with steam over nickel catalyst at 800–900°C producing syngas (H₂+CO). Water-gas shift converts CO to H₂+CO₂. CO₂ captured via MDEA amine absorption. Purified H₂ combined with N₂ in Haber-Bosch synthesis loop at 150–250 bar and 400–500°C forming ammonia.'},{title:'Urea',body:'NH3 and CO₂ react in high-pressure synthesis reactor at 140–200 bar and 160–200°C forming urea solution. Solution evaporated to 96–99.7% concentration. Molten urea fed to granulation drum, cooled in fluidised bed, anti-caking coating applied.'}] },
+      ATR: { title:'Autothermal Reforming', subtitle:'Natural Gas Route · Traditional', color:'#08306B', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas, urea plant only (in mmbtu)',value:'3.5'},{label:'Electricity (kwh/ton)',value:'140'}], ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'13.3'},{label:'Natural Gas (Fuel) in mmbtu',value:'10.5'},{label:'Electricity (kwh/ton)',value:'80'}], totals:[{label:'Total Natural Gas',value:'20.5',bold:true},{label:'Electricity',value:'185',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'ATR combines partial oxidation and steam reforming in a single reactor using oxygen from an air separation unit.', soilUse:'Same suitability as granular. More common in Asian and Middle Eastern markets. Dissolves faster — useful for fertigation or quick-response applications.', steps:[{title:'Ammonia',body:'Natural gas reacts with steam and O₂ over nickel catalyst at 800–1000°C. Single-pass conversion higher than SMR. CO₂ captured via amine absorption.'},{title:'Urea',body:'NH3 and CO₂ react at 140–200 bar. Standard granulation applied.'}] },
+      MethPyrolysis: { title:'Methane Pyrolysis', subtitle:'Natural Gas Route · Green (Turquoise H₂)', color:'#0891b2', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas (mmbtu)',value:'8.5'},{label:'Electricity (kwh/ton)',value:'220'}], ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'8.5'},{label:'Electricity (kwh/ton)',value:'120'}], totals:[{label:'Total Natural Gas',value:'8.5',bold:true},{label:'Electricity',value:'220',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'Methane is split into H₂ and solid carbon (no CO₂ emitted). Produces turquoise hydrogen with carbon black as saleable by-product.', soilUse:'Identical agronomic profile to conventional granular urea. Carbon footprint significantly lower than SMR without CCS.', steps:[{title:'Turquoise H₂',body:'Methane heated to 700–1200°C in molten metal or plasma reactor. CH₄ → C(solid) + 2H₂. No combustion, no CO₂.'},{title:'Ammonia & Urea',body:'H₂ combined with N₂ in Haber-Bosch loop at 150–250 bar. Standard granulation.'}] },
+      ATR_CCS: { title:'ATR with Carbon Capture', subtitle:'Natural Gas Route · CCS (Blue H₂)', color:'#5b2d8e', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas (mmbtu)',value:'4.0'},{label:'Electricity (kwh/ton)',value:'160'}], ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'14.0'},{label:'Natural Gas (Fuel) in mmbtu',value:'9.0'},{label:'Electricity (kwh/ton)',value:'95'}], totals:[{label:'Total Natural Gas',value:'21.5',bold:true},{label:'Electricity',value:'220',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'ATR with post-combustion or pre-combustion carbon capture achieving 90–95% CO₂ removal.', soilUse:'Agronomically identical to standard granular urea. Premium pricing possible in carbon-conscious markets.', steps:[{title:'ATR + CCS',body:'Standard ATR with additional amine absorption unit capturing >90% of CO₂. Captured CO₂ compressed and stored in geological formations.'},{title:'Urea Synthesis',body:'NH₃ + CO₂ → urea. Standard granulation.'}] },
+      SMR_CCS: { title:'SMR with Carbon Capture', subtitle:'Natural Gas Route · CCS (Blue H₂)', color:'#5b2d8e', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Natural Gas (mmbtu)',value:'4.5'},{label:'Electricity (kwh/ton)',value:'175'}], ammonia:[{label:'Natural Gas (Feed Stock) in mmbtu',value:'14.5'},{label:'Natural Gas (Fuel) in mmbtu',value:'11.0'},{label:'Electricity (kwh/ton)',value:'85'}], totals:[{label:'Total Natural Gas',value:'22.5',bold:true},{label:'Electricity',value:'235',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'SMR with integrated CCS unit achieving 85–95% capture rate.', soilUse:'Qualifies for low-carbon fertilizer certification in EU and North American markets.', steps:[{title:'SMR + CCS',body:'Standard SMR with capture unit on reformer flue gas. MDEA or Econamine solvent. CO₂ compressed to 100–150 bar for pipeline transport.'},{title:'Urea Synthesis',body:'Portion of captured CO₂ fed to urea synthesis. Standard granulation.'}] },
+      CoalGasification: { title:'Coal Gasification', subtitle:'Coal Route · Traditional', color:'#374151', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Coal (in ton)',value:'1.8'},{label:'Electricity (kwh/ton)',value:'350'}], ammonia:[{label:'Coal (Feed Stock) in ton',value:'5.2'},{label:'Electricity (kwh/ton)',value:'180'}], totals:[{label:'Total Coal',value:'7.0',bold:true},{label:'Electricity',value:'530',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'Coal is gasified with steam and oxygen to produce syngas. Dominant route in China, ~70% of Chinese urea production.', soilUse:'Agronomically identical to natural gas-based granular urea. Higher carbon footprint. 30–40% lower cost in coal-rich regions.', steps:[{title:'Syngas Production',body:'Coal fed to gasifier at 1200–1500°C with steam and O₂. Produces syngas cleaned and shifted to maximize H₂.'},{title:'Ammonia & Urea',body:'H₂ combined with N₂ in Haber-Bosch. Standard granulation.'}] },
+      Coal_CCS: { title:'Coal with CCS', subtitle:'Coal Route · Carbon Capture', color:'#6b7280', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Coal (in ton)',value:'1.8'},{label:'Electricity (kwh/ton)',value:'420'}], ammonia:[{label:'Coal (Feed Stock) in ton',value:'5.2'},{label:'Electricity (kwh/ton)',value:'220'}], totals:[{label:'Total Coal',value:'7.0',bold:true},{label:'Electricity',value:'640',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'Coal gasification with integrated pre- or post-combustion CCS achieving 85–90% CO₂ removal.', soilUse:'Qualifies for lower carbon intensity certification.', steps:[{title:'Gasification + CCS',body:'Rectisol or Selexol wash capturing CO₂ and sulfur. CO₂ injected into geological storage.'},{title:'Urea Synthesis',body:'Standard NH₃+CO₂ reaction and granulation.'}] },
+      Electrolysis: { title:'Water Electrolysis', subtitle:'Green Route · Renewable H₂', color:'#0d7a5f', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Water (m³)',value:'9.0'},{label:'Electricity (kwh/ton)',value:'1,200'}], ammonia:[{label:'Electricity (kwh/ton)',value:'9,500'},{label:'Water (m³)',value:'8.5'}], totals:[{label:'Total Electricity',value:'10,700',bold:true},{label:'Water (m³)',value:'17.5',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'Green hydrogen produced by electrolyzing water using renewable electricity. Zero direct CO₂ emissions.', soilUse:'Identical agronomic performance. Commands green premium in carbon credit-linked markets.', steps:[{title:'Green H₂',body:'PEM or alkaline electrolyzer splits water into H₂ and O₂. Efficiency 60–80% (LHV basis).'},{title:'Green Ammonia & Urea',body:'H₂ fed to Haber-Bosch with N₂. CO₂ sourced from biogenic or direct air capture. Standard granulation.'}] },
+      BiomassGas: { title:'Biomass Gasification', subtitle:'Green Route · Bio H₂', color:'#16a34a', inputs:{ direct:[{label:'Ammonia (in ton)',value:'0.56'},{label:'Biomass (dry ton)',value:'3.2'},{label:'Electricity (kwh/ton)',value:'280'}], ammonia:[{label:'Biomass (Feed Stock) dry ton',value:'8.5'},{label:'Electricity (kwh/ton)',value:'160'}], totals:[{label:'Total Biomass',value:'11.7',bold:true},{label:'Electricity',value:'440',bold:true}], activeIngredient:{name:'Nitrogen',pct:46} }, overview:'Agricultural residues or energy crops gasified. Near carbon-neutral or carbon-negative when combined with CCS.', soilUse:'Certified bio-based urea may qualify for renewable content credits in EU.', steps:[{title:'Biomass Syngas',body:'Biomass dried and fed to fluidized bed gasifier at 700–900°C. Cleaned via tar reformer and filtration.'},{title:'Ammonia & Urea',body:'Biogenic CO₂ from gasifier used in urea synthesis, making product carbon-neutral. Standard granulation.'}] }
     };
 
     let filteredRoutes = [...ROUTES];
@@ -3057,223 +1970,148 @@
     function buildRouteCards() {
       const container = document.getElementById('routeCards');
       container.innerHTML = filteredRoutes.map(r => `
-    <div class="route-card ${selectedRoute && selectedRoute.id === r.id ? 'active' : ''}" onclick="selectRouteCard('${r.id}')">
-      ${r.shortName || r.name}
-    </div>
-  `).join('');
+        <div class="route-card ${selectedRoute && selectedRoute.id === r.id ? 'active' : ''}" onclick="selectRouteCard('${r.id}')">
+          ${r.shortName || r.name}
+        </div>`).join('');
     }
 
-    function selectRouteCard(id) {
-      selectedRoute = ROUTES.find(r => r.id === id);
-      buildRouteCards();
-      showOutput();
-    }
+    function selectRouteCard(id) { selectedRoute = ROUTES.find(r => r.id === id); buildRouteCards(); showOutput(); }
 
     function filterRoute(cat, el) {
       document.querySelectorAll('.route-filter-row .route-chip').forEach(c => c.classList.remove('active'));
       el.classList.add('active');
       if (cat === 'all') filteredRoutes = [...ROUTES];
       else filteredRoutes = ROUTES.filter(r => r.category === cat);
-      selectedRoute = null;
-      buildRouteCards();
-      showOutput();
+      selectedRoute = null; buildRouteCards(); showOutput();
     }
 
-       function showOutput() {
+    function showOutput() {
       const empty = document.getElementById('outputEmpty');
       const content = document.getElementById('outputContent');
-
-      if (!selectedRoute) {
-        empty.style.display = 'flex';
-        content.classList.remove('visible');
-        updateRightPanelSoilContext(null);
-        return;
-      }
-
+      if (!selectedRoute) { empty.style.display = 'flex'; content.classList.remove('visible'); updateRightPanelSoilContext(null); return; }
       const d = ROUTE_DETAILS[selectedRoute.id];
       if (!d) return;
-
       updateRightPanelSoilContext(d.soilUse);
-
       empty.style.display = 'none';
       content.classList.add('visible');
-
       const inp = d.inputs;
       content.innerHTML = `
-    <div class="output-header" style="background:${d.color}">
-      <div>
-        <div class="output-title">${d.title}</div>
-        <div class="output-subtitle">${d.subtitle}</div>
-      </div>
-    </div>
-    <div class="output-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; background: var(--surface);">
-      
-      <!-- القسم الأيسر -->
-      <div class="output-left" style="display: flex; flex-direction: column; gap: 20px;">
-        <!-- Key Metrics -->
-        <div class="input-block">
-          <div class="input-block-title" style="background: ${d.color}; color: white; border-bottom: none;">
-            Key Metrics <span class="input-unit" style="color: rgba(255,255,255,0.7);">(per ton urea)</span>
-          </div>
-          <div class="data-list">
-            ${inp.totals.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}
-            <div class="data-row"><span class="data-label">${inp.activeIngredient.name}</span><span class="data-value">${inp.activeIngredient.pct}%</span></div>
-          </div>
+        <div class="output-header" style="background:linear-gradient(135deg,${d.color} 0%,${d.color}dd 100%)">
+          <div class="output-title">${d.title}</div>
+          <div class="output-subtitle">${d.subtitle}</div>
         </div>
-        
-        <!-- Direct Inputs -->
-        <div class="input-block">
-          <div class="input-block-title">Direct Inputs <span class="input-unit">(per ton urea)</span></div>
-          <div class="data-list">
-            ${inp.direct.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}
-          </div>
-        </div>
-      </div>
-      
-      <!-- القسم الأيمن -->
-      <div class="output-right" style="display: flex; flex-direction: column; gap: 20px;">
-        <!-- Ammonia Production Inputs -->
-        <div class="input-block">
-          <div class="input-block-title">Ammonia Production Inputs</div>
-          <div class="data-list">
-            ${inp.ammonia.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}
-          </div>
-        </div>
-        
-        <!-- Manufacturing Process Timeline -->
-        <div class="timeline-container" style="margin: 0;">
-          <div class="timeline-title" style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
-            <svg width="14" height="14" fill="none" stroke="${d.color}" stroke-width="2" viewBox="0 0 24 24">
-              <rect x="2" y="4" width="20" height="16" rx="2"/>
-              <path d="M8 12h8M12 8v8"/>
-            </svg>
-            Manufacturing Process
-          </div>
-          <div class="timeline" style="display: flex; flex-direction: column; gap: 16px;">
-            ${d.steps.map((s, i) => `
-              <div class="timeline-step" style="display: flex; gap: 12px;">
-                <div class="timeline-marker" style="width: 26px; height: 26px; border-radius: 50%; background: ${d.color}; color: white; border: none; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;">${i + 1}</div>
-                <div class="timeline-content" style="flex: 1;">
-                  <div class="timeline-step-title" style="font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">${s.title}</div>
-                  <div class="timeline-step-desc" style="font-size: 11.5px; color: var(--text-secondary); line-height: 1.5;">${s.body}</div>
-                </div>
+        <div class="new-grid">
+          <div class="output-left">
+            <div class="input-block">
+              <div class="input-block-title" style="background:${d.color};color:#fff;border-bottom:none">Key Metrics <span class="input-unit" style="color:rgba(255,255,255,0.65);font-size:10px">(per ton urea)</span></div>
+              <div class="data-list">
+                ${inp.totals.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value" style="color:${d.color}">${r.value}</span></div>`).join('')}
+                <div class="data-row"><span class="data-label">${inp.activeIngredient.name}</span><span class="data-value" style="color:${d.color}">${inp.activeIngredient.pct}%</span></div>
               </div>
-            `).join('')}
+            </div>
+            <div class="input-block">
+              <div class="input-block-title">Direct Inputs <span class="input-unit">(per ton urea)</span></div>
+              <div class="data-list">
+                ${inp.direct.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      
-    </div>
-  `;
-    }  // TABS
-    function switchMain(id, el) { document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active')); document.getElementById('tab-' + id).classList.add('active'); }
-    function switchSub(id, el) { document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active')); document.getElementById('sub-' + id).classList.add('active'); }
-
-    // TIME RANGE BUTTONS
-    document.querySelectorAll('.time-range-btn').forEach(btn => {
-      btn.onclick = function () {
-        document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-      };
-    });
-
-    // INIT
-    // INIT
-    renderStocksTable();
-    renderCropTable();
-    renderCountryTable();
-
-    // ✅ بدلاً من buildRouteCards() فقط، قم بتعيين الفلتر الافتراضي أولاً
-    // تأكد من أن الفلتر "Natural Gas" نشط في البداية
-    const defaultFilterChip = document.querySelector('.route-filter-row .route-chip');
-    if (defaultFilterChip && defaultFilterChip.textContent.includes('Natural Gas')) {
-      // هذا يحاكي النقر على فلتر Natural Gas في البداية
-      filterRoute('natural-gas', defaultFilterChip);
-    } else {
-      // في حالة لم يتم العثور على الفلتر، اعرض فقط Natural Gas routes
-      filteredRoutes = ROUTES.filter(r => r.category === 'natural-gas');
-      buildRouteCards();
-      showOutput();
+          <div class="output-right">
+            <div class="input-block">
+              <div class="input-block-title">Ammonia Production Inputs</div>
+              <div class="data-list">
+                ${inp.ammonia.map(r => `<div class="data-row"><span class="data-label">${r.label}</span><span class="data-value">${r.value}</span></div>`).join('')}
+              </div>
+            </div>
+            <div class="timeline-container">
+              <div class="timeline-title" style="color:${d.color}">
+                <svg width="14" height="14" fill="none" stroke="${d.color}" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M8 12h8M12 8v8"/></svg>
+                Manufacturing Process
+              </div>
+              <div class="timeline">
+                ${d.steps.map((s,i) => `
+                  <div class="timeline-step">
+                    <div class="timeline-marker" style="background:${d.color};color:#fff;border-color:${d.color}">${i+1}</div>
+                    <div class="timeline-content">
+                      <div class="timeline-step-title">${s.title}</div>
+                      <div class="timeline-step-desc">${s.body}</div>
+                    </div>
+                  </div>`).join('')}
+              </div>
+            </div>
+          </div>
+        </div>`;
     }
 
-    // تحديث اللوحة اليمنى
-    function updateRightPanelSoilContext(soilUseText) {
-      const textElement = document.getElementById('rightPanelSoilUseText');
-      if (textElement) {
-        if (soilUseText) {
-          textElement.textContent = soilUseText;
-        } else {
-          textElement.textContent = 'Select a production route from "Production Inputs / Process" tab to see soil recommendations.';
-        }
-      }
+    // TABS
+    function switchMain(id, el) { document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active')); document.getElementById('tab-'+id).classList.add('active'); }
+    function switchSub(id, el) { document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active')); document.getElementById('sub-'+id).classList.add('active'); }
+
+    // TIME RANGE
+    document.querySelectorAll('.time-range-btn').forEach(btn => { btn.onclick = function() { document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); }; });
+
+    // RIGHT PANEL SOIL CONTEXT
+    function updateRightPanelSoilContext(text) {
+      const el = document.getElementById('rightPanelSoilUseText');
+      if (el) el.textContent = text || 'Select a production route from "Production Inputs / Process" tab to see soil recommendations.';
     }
 
-    // استدعاء لتحديث اللوحة اليمنى في البداية
-    updateRightPanelSoilContext(null);
-
-
-    // ══════════════ MOBILE / RESPONSIVE JS ══════════════
-    function toggleDrawer() {
-      document.querySelector('.sidebar').classList.toggle('open');
-      document.getElementById('drawerOverlay').classList.toggle('visible');
-    }
-    function closeDrawer() {
-      document.querySelector('.sidebar').classList.remove('open');
-      document.getElementById('drawerOverlay').classList.remove('visible');
-    }
-    function toggleRightPanel() {
-      document.getElementById('rightPanelInner').classList.toggle('open');
-      document.getElementById('rightPanelToggle').classList.toggle('open');
-    }
+    // MOBILE
+    function toggleDrawer() { document.querySelector('.sidebar').classList.toggle('open'); document.getElementById('drawerOverlay').classList.toggle('visible'); }
+    function closeDrawer() { document.querySelector('.sidebar').classList.remove('open'); document.getElementById('drawerOverlay').classList.remove('visible'); }
+    function toggleRightPanel() { document.getElementById('rightPanelInner').classList.toggle('open'); document.getElementById('rightPanelToggle').classList.toggle('open'); }
     function openInfo(el) {
       const inner = document.getElementById('rightPanelInner');
       const toggle = document.getElementById('rightPanelToggle');
-      if (!inner.classList.contains('open')) {
-        inner.classList.add('open');
-        toggle.classList.add('open');
-      }
+      if (!inner.classList.contains('open')) { inner.classList.add('open'); toggle.classList.add('open'); }
       setTimeout(() => document.querySelector('.right-panel').scrollIntoView({behavior:'smooth'}), 50);
       document.querySelectorAll('.mobile-nav-item').forEach(i => i.classList.remove('active'));
       el.classList.add('active');
     }
     function mobileTab(id, el) {
-      const labelMap = { 'fertilizers': 'Fertilizers', 'market-profile': 'Market Profile', 'production': 'Production' };
-      document.querySelectorAll('.main-tab').forEach(t => {
-        if (t.textContent.includes(labelMap[id])) t.classList.add('active');
-        else t.classList.remove('active');
-      });
+      const labelMap = { 'fertilizers':'Fertilizers', 'market-profile':'Market Profile', 'production':'Production' };
+      document.querySelectorAll('.main-tab').forEach(t => { if (t.textContent.includes(labelMap[id])) t.classList.add('active'); else t.classList.remove('active'); });
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      const panel = document.getElementById('tab-' + id);
+      const panel = document.getElementById('tab-'+id);
       if (panel) { panel.classList.add('active'); }
       document.querySelectorAll('.mobile-nav-item').forEach(i => i.classList.remove('active'));
       el.classList.add('active');
-      window.scrollTo({top: 0, behavior: 'smooth'});
+      window.scrollTo({top:0,behavior:'smooth'});
     }
-    // ═════════════════════════════════════════════════════
+
+    // INIT
+    renderStocksTable();
+    renderCropTable();
+    renderCountryTable();
+
+    const defaultFilterChip = document.querySelector('.route-filter-row .route-chip');
+    if (defaultFilterChip) { filterRoute('natural-gas', defaultFilterChip); }
+    else { filteredRoutes = ROUTES.filter(r => r.category === 'natural-gas'); buildRouteCards(); showOutput(); }
+
+    updateRightPanelSoilContext(null);
     setTimeout(drawPriceChart, 150);
     window.addEventListener('resize', drawPriceChart);
   </script>
 
   <!-- MOBILE BOTTOM NAV -->
   <nav class="mobile-bottom-nav">
-    <div class="mobile-nav-item active" id="mbn-fertilizers" onclick="mobileTab('fertilizers',this)">
+    <div class="mobile-nav-item active" onclick="mobileTab('fertilizers',this)">
       <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
       Stocks
     </div>
-    <div class="mobile-nav-item" id="mbn-market-profile" onclick="mobileTab('market-profile',this)">
+    <div class="mobile-nav-item" onclick="mobileTab('market-profile',this)">
       <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
       Market
     </div>
-    <div class="mobile-nav-item" id="mbn-production" onclick="mobileTab('production',this)">
+    <div class="mobile-nav-item" onclick="mobileTab('production',this)">
       <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
       Process
     </div>
-    <div class="mobile-nav-item" id="mbn-info" onclick="openInfo(this)">
+    <div class="mobile-nav-item" onclick="openInfo(this)">
       <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       Info
     </div>
   </nav>
 
 </body>
-
 </html>
