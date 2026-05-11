@@ -61,12 +61,10 @@
     .profile-role { font-size: 10.5px; color: rgba(255,255,255,0.48); line-height: 1.2; }
 
     /* APP BODY */
-    .app-body { display: flex; flex-direction: row-reverse; flex: 1; overflow: hidden; padding-right: 12px; padding-top: 12px; padding-bottom: 12px; }
+    .app-body { display: flex; flex-direction: row-reverse; flex: 1; overflow: hidden; padding: 12px; max-width: 1400px; margin: 0 auto; }
 
-    /* ═══════════════════════════════════
-       SIDEBAR — Market data (left)
-    ═══════════════════════════════════ */
-    .sidebar { width: var(--sidebar-width); background: linear-gradient(180deg, var(--surface) 0%, var(--surface-3) 100%); border-left: 1px solid var(--border); flex-shrink: 0; overflow-y: auto; display: flex; flex-direction: column; box-shadow: −2px 0 12px rgba(8,48,107,0.08); border-radius: var(--radius); margin-right: 12px; margin-top: 12px; margin-bottom: 12px; }
+    /* SIDEBAR */
+    .sidebar { width: var(--sidebar-width); background: linear-gradient(180deg, var(--surface) 0%, var(--surface-3) 100%); border-left: 1px solid var(--border); flex-shrink: 0; overflow-y: auto; display: flex; flex-direction: column; box-shadow: -2px 0 12px rgba(8,48,107,0.08); border-radius: var(--radius); margin-right: 0; margin-top: 12px; margin-bottom: 12px; }
 
     /* tabs */
     .sb-tabs { display: flex; border-bottom: 2px solid var(--border); background: var(--surface); position: sticky; top: 0; z-index: 10; }
@@ -103,14 +101,6 @@
     .sb-sec { padding: 9px 12px 4px; font-size: 9.5px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between; }
     .sb-sec a { font-size: 10px; font-weight: 600; color: var(--accent); text-decoration: none; text-transform: none; letter-spacing: 0; }
 
-    /* challenge */
-    .sb-challenge { margin: 8px 10px 10px; background: linear-gradient(135deg, var(--accent) 0%, var(--accent-mid) 100%); border-radius: var(--radius); padding: 12px; color: #fff; box-shadow: 0 4px 16px rgba(8,48,107,0.25); transition: all var(--transition); }
-    .sb-challenge:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(8,48,107,0.35); }
-    .sb-challenge-title { font-size: 12px; font-weight: 700; margin-bottom: 3px; }
-    .sb-challenge-sub { font-size: 10.5px; color: rgba(255,255,255,0.7); margin-bottom: 9px; line-height: 1.4; }
-    .sb-challenge-btn { display: block; text-align: center; background: #fff; color: var(--accent); font-size: 11.5px; font-weight: 700; padding: 7px; border-radius: var(--radius-sm); cursor: pointer; border: none; font-family: 'DM Sans', sans-serif; width: 100%; transition: all var(--transition-fast); }
-    .sb-challenge-btn:hover { background: var(--accent-light); }
-
     /* article tabs */
     .sb-art-tabs { display: flex; padding: 0 12px; border-bottom: 1px solid var(--border-light); }
     .sb-atab { font-size: 11.5px; font-weight: 600; padding: 6px 0; margin-right: 14px; cursor: pointer; color: var(--text-muted); border-bottom: 2px solid transparent; transition: all var(--transition-fast); }
@@ -125,46 +115,58 @@
     .sb-art-body { flex: 1; min-width: 0; }
     .sb-art-title { font-size: 11px; font-weight: 600; color: var(--text-primary); line-height: 1.35; margin-bottom: 2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .sb-art-meta { font-size: 9.5px; color: var(--text-muted); }
-
-    /* movers */
-    .sb-mv-tabs { display: flex; padding: 0 12px; border-bottom: 1px solid var(--border-light); }
-    .sb-mvtab { font-size: 10px; font-weight: 700; padding: 5px 0; margin-right: 12px; cursor: pointer; color: var(--text-muted); border-bottom: 2px solid transparent; transition: all var(--transition-fast); text-transform: uppercase; letter-spacing: 0.3px; }
-    .sb-mvtab.active { color: var(--accent); border-bottom-color: var(--accent); }
-    .sb-mv-hdr { display: flex; justify-content: space-between; padding: 4px 12px 2px; }
-    .sb-mv-hdr span { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); }
-    .sb-mv-row { display: flex; align-items: center; padding: 4px 12px; cursor: pointer; transition: background var(--transition-fast); border-bottom: 1px solid var(--border-light); }
-    .sb-mv-row:hover { background: var(--surface-2); }
-    .sb-mv-row:last-child { border-bottom: none; }
-    .sb-mv-ticker { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--accent); width: 40px; flex-shrink: 0; }
-    .sb-mv-last { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-secondary); flex: 1; }
-    .sb-mv-chg { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; padding: 1px 6px; border-radius: 4px; }
-    .sb-mv-chg.pos { color: var(--green); background: var(--green-light); }
-    .sb-mv-chg.neg { color: var(--red); background: var(--red-light); }
-
-    /* webinar */
-    .sb-webinar { margin: 4px 10px 6px; background: var(--accent-light); border: 1px solid var(--accent-subtle); border-radius: var(--radius); padding: 10px 12px; cursor: pointer; }
-    .sb-webinar-title { font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 3px; line-height: 1.35; }
-    .sb-webinar-meta { font-size: 9.5px; color: var(--text-muted); }
-
-    /* trending */
-    .sb-trend-row { display: flex; align-items: center; justify-content: space-between; padding: 5px 12px; cursor: pointer; transition: background var(--transition-fast); border-bottom: 1px solid var(--border-light); }
-    .sb-trend-row:hover { background: var(--surface-2); }
-    .sb-trend-row:last-child { border-bottom: none; }
-    .sb-trend-left { display: flex; align-items: center; gap: 7px; }
-    .sb-trend-icon { width: 24px; height: 24px; border-radius: 5px; background: var(--accent-light); border: 1px solid var(--accent-subtle); display: flex; align-items: center; justify-content: center; font-size: 7.5px; font-weight: 700; color: var(--accent); font-family: var(--font-mono); flex-shrink: 0; }
-    .sb-trend-name { font-size: 11px; font-weight: 600; color: var(--text-primary); }
-    .sb-trend-right { text-align: right; }
-    .sb-trend-price { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-primary); }
-    .sb-trend-chg { font-family: var(--font-mono); font-size: 9.5px; font-weight: 600; }
-    .sb-trend-chg.pos { color: var(--green); }
-    .sb-trend-chg.neg { color: var(--red); }
-
     .sb-more { padding: 7px 12px 12px; }
     .sb-more a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; }
 
     /* ═══════════════════════════════════
-       MAIN — Article
+       NEW: COMMODITIES TABLE SECTION
     ═══════════════════════════════════ */
+    .market-data-section { padding: 0 0 6px; border-bottom: 2px solid var(--border-light); }
+
+    /* Inner tabs for commodities / symbols */
+    .mkt-inner-tabs { display: flex; padding: 0 12px; border-bottom: 1px solid var(--border-light); gap: 0; }
+    .mkt-itab { font-size: 10.5px; font-weight: 700; padding: 5px 0; margin-right: 14px; cursor: pointer; color: var(--text-muted); border-bottom: 2px solid transparent; transition: all var(--transition-fast); letter-spacing: 0.2px; }
+    .mkt-itab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* Table styling */
+    .mkt-table-wrap { padding: 6px 10px 4px; }
+    .mkt-table { width: 100%; border-collapse: collapse; }
+    .mkt-table thead tr { border-bottom: 1.5px solid var(--border); }
+    .mkt-table thead th { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); padding: 4px 5px; text-align: left; }
+    .mkt-table thead th:not(:first-child) { text-align: right; }
+    .mkt-table tbody tr { border-bottom: 1px solid var(--border-light); cursor: pointer; transition: background var(--transition-fast); }
+    .mkt-table tbody tr:hover { background: var(--surface-2); }
+    .mkt-table tbody tr:last-child { border-bottom: none; }
+    .mkt-table td { font-size: 11px; padding: 4px 5px; color: var(--text-secondary); }
+    .mkt-table td:first-child { font-weight: 600; color: var(--text-primary); }
+    .mkt-table td:not(:first-child) { text-align: right; font-family: var(--font-mono); font-size: 10.5px; }
+    .mkt-chg-pos { color: var(--green) !important; font-weight: 700 !important; }
+    .mkt-chg-neg { color: var(--red) !important; font-weight: 700 !important; }
+
+    /* See More link inside table section */
+    .mkt-see-more { padding: 3px 12px 5px; }
+    .mkt-see-more a { font-size: 10px; font-weight: 600; color: var(--accent); text-decoration: none; }
+
+    /* Table panel toggle */
+    .mkt-panel { display: none; }
+    .mkt-panel.active { display: block; }
+
+    /* ═══════════════════════════════════
+       NEW: UREA TRADE DATA TABLES
+    ═══════════════════════════════════ */
+    .trade-tables-section { padding: 2px 0 8px; border-bottom: 2px solid var(--border-light); }
+    .trade-tables-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 6px 10px; }
+    .trade-tbl-block { }
+    .trade-tbl-title { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--accent); padding: 0 0 3px; border-bottom: 1.5px solid var(--accent-subtle); margin-bottom: 3px; display: flex; justify-content: space-between; }
+    .trade-tbl-title span { color: var(--text-muted); font-weight: 600; font-size: 8.5px; text-transform: none; letter-spacing: 0; }
+    .trade-tbl { width: 100%; border-collapse: collapse; }
+    .trade-tbl tr { border-bottom: 1px solid var(--border-light); }
+    .trade-tbl tr:last-child { border-bottom: none; }
+    .trade-tbl td { font-size: 10px; padding: 3px 2px; color: var(--text-secondary); }
+    .trade-tbl td:first-child { font-weight: 500; }
+    .trade-tbl td:last-child { text-align: right; font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: var(--accent); }
+
+    /* MAIN */
     .main { flex: 1; overflow: hidden; min-width: 0; }
     .content { height: 100%; overflow-y: auto; padding: 32px 48px 64px 48px; animation: fadeUp 0.25s ease; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)} }
@@ -189,21 +191,17 @@
     .meta-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-muted); }
     .meta-item svg { width: 13px; height: 13px; }
     .meta-item strong { color: var(--text-secondary); font-weight: 600; }
-    .art-tags { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-left: auto; }
-    
-    /* Article tags section (after image) */
+
     .art-tags-section { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; margin-top: 16px; }
     .tag-chip { font-size: 11px; padding: 2px 9px; border-radius: 20px; border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; transition: all var(--transition-fast); }
     .tag-chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
 
-    /* Image */
     .art-img-wrap { border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 24px; position: relative; box-shadow: var(--shadow); border: 1px solid var(--border); max-width: 860px; transition: all var(--transition); }
     .art-img-wrap:hover { box-shadow: 0 8px 32px rgba(8,48,107,0.15); }
     .art-img-wrap img { width: 100%; height: 360px; object-fit: cover; display: block; }
     .art-img-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(8,48,107,.88) 0%, transparent 100%); padding: 30px 18px 14px; font-size: 11.5px; color: rgba(255,255,255,.85); font-style: italic; }
     .art-img-badge { position: absolute; top: 14px; left: 14px; background: rgba(8,48,107,.85); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; padding: 5px 12px; border-radius: 20px; text-transform: uppercase; backdrop-filter: blur(4px); }
 
-    /* Key figures */
     .kfig-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 22px 0; max-width: 800px; }
     .kfig { background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow-sm); transition: all var(--transition); }
     .kfig:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--accent-light); }
@@ -214,7 +212,6 @@
     .kfig-chg.pos { color: var(--green); }
     .kfig-chg.neg { color: var(--red); }
 
-    /* Body */
     .art-body { font-size: 15px; line-height: 1.8; color: var(--text-primary); max-width: 800px; margin-bottom: 32px; }
     .art-body p { margin-bottom: 18px; }
     .art-body strong { color: var(--accent); font-weight: 600; }
@@ -222,12 +219,11 @@
     .art-body .hbox-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--accent); margin-bottom: 5px; }
     .art-body .mono { font-family: var(--font-mono); font-weight: 600; color: var(--accent); }
 
-    /* Related */
     .rel-title { font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin: 40px 0 18px; display: flex; align-items: center; gap: 8px; max-width: 800px; }
     .rel-title::after { content:''; flex:1; height:1px; background:var(--border-light); }
     .rel-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; max-width: 800px; margin-bottom: 48px; }
     .rel-card { background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; cursor: pointer; transition: all var(--transition); box-shadow: var(--shadow-sm); }
-    .rel-card:hover { border-color: var(--accent); box-shadow: var(--shadow); transform: translateY(-3px); background: linear-gradient(135deg, var(--surface-2) 0%, var(--surface-3) 100%); }
+    .rel-card:hover { border-color: var(--accent); box-shadow: var(--shadow); transform: translateY(-3px); }
     .rel-cat { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--accent); margin-bottom: 5px; }
     .rel-card-title { font-size: 13px; font-weight: 600; color: var(--text-primary); line-height: 1.35; margin-bottom: 6px; }
     .rel-meta { font-size: 11px; color: var(--text-muted); }
@@ -277,9 +273,7 @@
 
 <div class="app-body">
 
-  <!-- ═══════════════════════════════════════
-       LEFT SIDEBAR
-  ═══════════════════════════════════════ -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
 
     <!-- Market tabs -->
@@ -339,20 +333,12 @@
       </div>
     </div>
 
-    <!-- Challenge banner -->
-    <!-- <div class="sb-challenge">
-      <div class="sb-challenge-title">🏆 Investing Challenge</div>
-      <div class="sb-challenge-sub">Join our investing challenges and compete for rewards across your market.</div>
-      <button class="sb-challenge-btn">Take the Challenge</button>
-    </div> -->
-
     <!-- Popular articles -->
     <div class="sb-sec">Most Popular Articles</div>
     <div class="sb-art-tabs">
       <div class="sb-atab active">News</div>
       <div class="sb-atab">Analysis</div>
     </div>
-
     <div class="sb-art-item">
       <div class="sb-art-thumb"><img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=100&q=80" alt=""></div>
       <div class="sb-art-body">
@@ -374,80 +360,135 @@
         <div class="sb-art-meta">By investing.com · May 04, 2026</div>
       </div>
     </div>
-    <div class="sb-art-item">
-      <div class="sb-art-thumb"><img src="https://images.unsplash.com/photo-1543168256-418811576931?w=100&q=80" alt=""></div>
-      <div class="sb-art-body">
-        <div class="sb-art-title">After seeing IPO, this AI-picked small cap is up 71% in pre-market today</div>
-        <div class="sb-art-meta">By investing.com · May 03, 2026</div>
-      </div>
-    </div>
-    <div class="sb-art-item">
-      <div class="sb-art-thumb"><img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=100&q=80" alt=""></div>
-      <div class="sb-art-body">
-        <div class="sb-art-title">Barclays sets the best setup for energy services in 30 years, names top stocks</div>
-        <div class="sb-art-meta">By investing.com · May 03, 2026</div>
-      </div>
-    </div>
     <div class="sb-more"><a href="#">More News ›</a></div>
 
-    <!-- Market Movers -->
-    <div class="sb-sec">Market Movers <a href="#">›</a></div>
-    <div class="sb-mv-tabs">
-      <div class="sb-mvtab active">Most Active</div>
-      <div class="sb-mvtab">Gainers %</div>
-      <div class="sb-mvtab">Losers %</div>
-    </div>
-    <div class="sb-mv-hdr"><span>Name</span><span>Last</span><span>Vol</span></div>
-    <div class="sb-mv-row"><span class="sb-mv-ticker">NVDA</span><span class="sb-mv-last">$874.73</span><span class="sb-mv-chg pos">+2.3%</span></div>
-    <div class="sb-mv-row"><span class="sb-mv-ticker">INTC</span><span class="sb-mv-last">$30.85</span><span class="sb-mv-chg pos">+4.1%</span></div>
-    <div class="sb-mv-row"><span class="sb-mv-ticker">TSLA</span><span class="sb-mv-last">$170.18</span><span class="sb-mv-chg neg">−3.2%</span></div>
-    <div class="sb-mv-row"><span class="sb-mv-ticker">AMD</span><span class="sb-mv-last">$161.49</span><span class="sb-mv-chg neg">−2.1%</span></div>
-    <div class="sb-mv-row"><span class="sb-mv-ticker">MSFT</span><span class="sb-mv-last">$421.77</span><span class="sb-mv-chg pos">+0.8%</span></div>
-    <div class="sb-mv-row"><span class="sb-mv-ticker">MSTR</span><span class="sb-mv-last">$1,620.3</span><span class="sb-mv-chg neg">−5.5%</span></div>
+    <!-- ═══════════════════════════════════
+         COMMODITIES & SYMBOLS TABLES
+    ═══════════════════════════════════ -->
+    <div class="sb-sec">Market Prices</div>
+    <div class="market-data-section">
+      <div class="mkt-inner-tabs">
+        <div class="mkt-itab active" onclick="switchMktTab(this,'commodities')">Commodities</div>
+        <div class="mkt-itab" onclick="switchMktTab(this,'symbols')">Symbols</div>
+      </div>
 
-    <!-- Webinars -->
-    <div class="sb-sec">Webinars <a href="#">›</a></div>
-    <div class="sb-webinar">
-      <div class="sb-webinar-title">From Beginner to Pro: Navigating markets with Investing.com Pro</div>
-      <div class="sb-webinar-meta">Thursday, May 30 · 02:00 PM EST</div>
+      <!-- Commodities Panel -->
+      <div class="mkt-panel active" id="panel-commodities">
+        <div class="mkt-table-wrap">
+          <table class="mkt-table">
+            <thead>
+              <tr>
+                <th>Commodity</th>
+                <th>Price</th>
+                <th>Chg %</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Urea</td><td>700</td><td class="mkt-chg-pos">+5%</td></tr>
+              <tr><td>DAP</td><td>500</td><td class="mkt-chg-pos">+1%</td></tr>
+              <tr><td>Natural Gas</td><td>2.5</td><td class="mkt-chg-pos">+2%</td></tr>
+              <tr><td>LNG</td><td>19</td><td class="mkt-chg-neg">−1%</td></tr>
+              <tr><td>Crude Oil WTI</td><td>80</td><td class="mkt-chg-neg">−5%</td></tr>
+              <tr><td>Brent Oil</td><td>90</td><td class="mkt-chg-pos">+5%</td></tr>
+              <tr><td>Wheat</td><td>200</td><td class="mkt-chg-pos">+1%</td></tr>
+              <tr><td>Corn</td><td>700</td><td class="mkt-chg-pos">+2%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Symbols Panel -->
+      <div class="mkt-panel" id="panel-symbols">
+        <div class="mkt-table-wrap">
+          <table class="mkt-table">
+            <thead>
+              <tr>
+                <th>Symbol</th>
+                <th>Price</th>
+                <th>Chg %</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>ABUK</td><td>100</td><td class="mkt-chg-pos">+5%</td></tr>
+              <tr><td>MPCO</td><td>70</td><td class="mkt-chg-pos">+1%</td></tr>
+              <tr><td>YAR</td><td>20</td><td class="mkt-chg-pos">+2%</td></tr>
+              <tr><td>2020</td><td>30</td><td class="mkt-chg-neg">−1%</td></tr>
+              <tr><td>CF</td><td>26</td><td class="mkt-chg-neg">−5%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mkt-see-more"><a href="#">See More ›</a></div>
+      </div>
     </div>
 
-    <!-- Trending Stocks -->
-    <div class="sb-sec">Trending Stocks <a href="#">›</a></div>
-    <div class="sb-trend-row">
-      <div class="sb-trend-left"><div class="sb-trend-icon">NVDA</div><div class="sb-trend-name">NVIDIA Corp</div></div>
-      <div class="sb-trend-right"><div class="sb-trend-price">877.80</div><div class="sb-trend-chg pos">+188.57% ▲</div></div>
+    <!-- ═══════════════════════════════════
+         UREA TRADE DATA: 4 TABLES IN 2×2
+    ═══════════════════════════════════ -->
+    <div class="sb-sec">Urea Trade Data <a href="#">›</a></div>
+    <div class="trade-tables-section">
+      <div class="trade-tables-grid">
+
+        <!-- Top Exporters -->
+        <div class="trade-tbl-block">
+          <div class="trade-tbl-title">Top Exporters <span>mn ton</span></div>
+          <table class="trade-tbl">
+            <tr><td>Brazil</td><td>3</td></tr>
+            <tr><td>China</td><td>30</td></tr>
+            <tr><td>Russia</td><td>40</td></tr>
+            <tr><td>S. Arabia</td><td>40</td></tr>
+            <tr><td>Egypt</td><td>20</td></tr>
+          </table>
+        </div>
+
+        <!-- Top Importers -->
+        <div class="trade-tbl-block">
+          <div class="trade-tbl-title">Top Importers <span>mn ton</span></div>
+          <table class="trade-tbl">
+            <tr><td>Brazil</td><td>1</td></tr>
+            <tr><td>China</td><td>2</td></tr>
+            <tr><td>Russia</td><td>0</td></tr>
+            <tr><td>S. Arabia</td><td>0</td></tr>
+            <tr><td>Egypt</td><td>0.5</td></tr>
+          </table>
+        </div>
+
+        <!-- Top Consumers -->
+        <div class="trade-tbl-block">
+          <div class="trade-tbl-title">Top Consumers <span>mn ton</span></div>
+          <table class="trade-tbl">
+            <tr><td>Brazil</td><td>2</td></tr>
+            <tr><td>China</td><td>30</td></tr>
+            <tr><td>Russia</td><td>40</td></tr>
+            <tr><td>S. Arabia</td><td>160</td></tr>
+            <tr><td>Egypt</td><td>50</td></tr>
+          </table>
+        </div>
+
+        <!-- Top Producers -->
+        <div class="trade-tbl-block">
+          <div class="trade-tbl-title">Top Producers <span>mn ton</span></div>
+          <table class="trade-tbl">
+            <tr><td>Brazil</td><td>5</td></tr>
+            <tr><td>China</td><td>60</td></tr>
+            <tr><td>Russia</td><td>80</td></tr>
+            <tr><td>S. Arabia</td><td>200</td></tr>
+            <tr><td>Egypt</td><td>70</td></tr>
+          </table>
+        </div>
+
+      </div>
     </div>
-    <div class="sb-trend-row">
-      <div class="sb-trend-left"><div class="sb-trend-icon" style="background:var(--red-light);border-color:rgba(192,57,43,.2);color:var(--red)">TSLA</div><div class="sb-trend-name">Tesla Inc</div></div>
-      <div class="sb-trend-right"><div class="sb-trend-price">170.18</div><div class="sb-trend-chg neg">−33.0% ▼</div></div>
-    </div>
-    <div class="sb-trend-row">
-      <div class="sb-trend-left"><div class="sb-trend-icon" style="background:var(--green-light);border-color:rgba(13,122,95,.2);color:var(--green)">MU</div><div class="sb-trend-name">Micron Tech</div></div>
-      <div class="sb-trend-right"><div class="sb-trend-price">414.43</div><div class="sb-trend-chg pos">+479M ▲</div></div>
-    </div>
-    <div class="sb-trend-row">
-      <div class="sb-trend-left"><div class="sb-trend-icon" style="background:var(--amber-light);border-color:rgba(180,83,9,.2);color:var(--amber)">REM</div><div class="sb-trend-name">iShares Mortg.</div></div>
-      <div class="sb-trend-right"><div class="sb-trend-price">9.80</div><div class="sb-trend-chg pos">+2.3% ▲</div></div>
-    </div>
-    <div class="sb-trend-row">
-      <div class="sb-trend-left"><div class="sb-trend-icon" style="background:var(--purple-light);border-color:rgba(91,45,142,.2);color:var(--purple)">ABUK</div><div class="sb-trend-name">Abu Qir Fert.</div></div>
-      <div class="sb-trend-right"><div class="sb-trend-price">EGP 100</div><div class="sb-trend-chg pos">+5.0% ▲</div></div>
-    </div>
-    <div class="sb-more"><a href="#">Show More ›</a></div>
 
   </aside>
 
-  <!-- ═══════════════════════════════════════
-       MAIN ARTICLE CONTENT
-  ═══════════════════════════════════════ -->
+  <!-- MAIN ARTICLE -->
   <div class="main">
     <div class="content">
 
       <div class="breadcrumb">
         <span>Home</span>
         <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-        <span>News & Analysis</span>
+        <span>News &amp; Analysis</span>
         <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         <span style="color:var(--text-secondary)">India Urea Import Record</span>
       </div>
@@ -477,17 +518,13 @@
         </div>
       </div>
 
-      <!-- HERO IMAGE — Unsplash fertilizer/agriculture -->
       <div class="art-img-wrap">
-        <img
-          src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1200&q=85"
-          alt="Fertilizer bags stacked in an Indian warehouse"
+        <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1200&q=85" alt="Fertilizer bags"
           onerror="this.style.height='220px';this.style.background='linear-gradient(135deg,#08306B,#1a5499)';this.removeAttribute('src')">
         <div class="art-img-badge">📦 Trade Intelligence</div>
         <div class="art-img-caption">India's 2.5 million metric ton urea tender — the largest single purchase ever — covers ~25% of the country's annual imports · April 2025</div>
       </div>
 
-      <!-- Article Tags -->
       <div class="art-tags-section">
         <span class="tag-chip">#Urea</span>
         <span class="tag-chip">#India</span>
@@ -495,7 +532,6 @@
         <span class="tag-chip">#Fertilizer</span>
       </div>
 
-      <!-- Key figures -->
       <div class="kfig-grid">
         <div class="kfig">
           <div class="kfig-lbl">Import Volume</div>
@@ -518,30 +554,14 @@
       </div>
 
       <div class="art-body">
-        <p>
-          India's government-backed fertilizer procurement agency has finalized a tender for <strong>2.5 million metric tons of granular urea</strong> — the largest single purchase ever recorded — at a price approaching <span class="mono">$700/ton</span>, nearly double the <span class="mono">~$360/ton</span> paid in February. The purchases, covering roughly a quarter of India's annual imports, are set to tighten global supply and push prices higher across the entire fertilizer complex.
-        </p>
-
+        <p>India's government-backed fertilizer procurement agency has finalized a tender for <strong>2.5 million metric tons of granular urea</strong> — the largest single purchase ever recorded — at a price approaching <span class="mono">$700/ton</span>, nearly double the <span class="mono">~$360/ton</span> paid in February.</p>
         <div class="hbox">
           <div class="hbox-lbl">📌 Key Context</div>
           The record purchase comes amid reduced Russian and Chinese export availability, gas price spikes in Europe reducing European urea output, and seasonal pre-kharif procurement demand in India. Analysts warn the ripple effects will reach DAP, MAP, and ammonia markets within 4–6 weeks.
         </div>
-
-        <p>
-          Global urea supply has been under pressure since Q4 2024, with China — traditionally the swing exporter — implementing informal export restrictions to secure domestic food security. Russia, another major supplier, continues to face logistical constraints due to ongoing sanctions. This structural tightening left India with limited sourcing options, forcing acceptance of significantly higher prices to secure the required volumes ahead of the critical planting season.
-        </p>
-
-        <p>
-          The tender attracted bids from suppliers across the Middle East, North Africa, and South Asia. <strong>Saudi Arabia</strong> and <strong>Egypt</strong> were among the confirmed suppliers, with Saudi Aramco's fertilizer arm and Egypt's Abu Qir Fertilizers each contributing significant tonnage. Delivery is expected between May and June 2025, aligning with India's Kharif sowing window.
-        </p>
-
-        <p>
-          Market participants are closely monitoring whether this Indian purchase will pull volumes away from other regional buyers including <strong>Brazil</strong>, Southeast Asia, and East Africa — all of whom face their own seasonal demand peaks in the coming months. With global urea inventory at multi-year lows, the pressure on prices is unlikely to ease before Q3 2025.
-        </p>
-
-        <p>
-          <strong>What to watch:</strong> Chinese export policy decisions expected in late May, ammonia contract rollovers in June, and India's post-tender domestic price pass-through which could affect crop-planting decisions in the following season.
-        </p>
+        <p>Global urea supply has been under pressure since Q4 2024, with China implementing informal export restrictions to secure domestic food security. Russia continues to face logistical constraints due to ongoing sanctions. This structural tightening left India with limited sourcing options, forcing acceptance of significantly higher prices to secure the required volumes ahead of the critical planting season.</p>
+        <p>The tender attracted bids from suppliers across the Middle East, North Africa, and South Asia. <strong>Saudi Arabia</strong> and <strong>Egypt</strong> were among the confirmed suppliers, with Saudi Aramco's fertilizer arm and Egypt's Abu Qir Fertilizers each contributing significant tonnage. Delivery is expected between May and June 2025.</p>
+        <p><strong>What to watch:</strong> Chinese export policy decisions expected in late May, ammonia contract rollovers in June, and India's post-tender domestic price pass-through which could affect crop-planting decisions in the following season.</p>
       </div>
 
       <div class="rel-title">Related Articles</div>
@@ -588,23 +608,19 @@
     const mn = Math.min(...pts), mx = Math.max(...pts), rng = mx - mn;
     const x = i => (i / (pts.length-1)) * W;
     const y = v => H - ((v - mn) / rng) * H * 0.82 - H * 0.08;
-
     const g = ctx.createLinearGradient(0,0,0,H);
     g.addColorStop(0,'rgba(13,122,95,0.2)'); g.addColorStop(1,'rgba(13,122,95,0)');
     ctx.beginPath(); ctx.moveTo(x(0),H);
     pts.forEach((v,i) => ctx.lineTo(x(i),y(v)));
     ctx.lineTo(x(pts.length-1),H); ctx.closePath();
     ctx.fillStyle = g; ctx.fill();
-
     ctx.beginPath();
     pts.forEach((v,i) => i===0 ? ctx.moveTo(x(i),y(v)) : ctx.lineTo(x(i),y(v)));
     ctx.strokeStyle='#0d7a5f'; ctx.lineWidth=1.8; ctx.lineJoin='round'; ctx.stroke();
-
     ctx.beginPath();
     ctx.arc(x(pts.length-1), y(pts[pts.length-1]), 3, 0, Math.PI*2);
     ctx.fillStyle='#0d7a5f'; ctx.fill();
   }
-
   window.addEventListener('load', () => setTimeout(drawChart, 80));
   window.addEventListener('resize', drawChart);
 
@@ -619,6 +635,12 @@
   function switchTab(tab) {
     document.querySelectorAll('.sb-tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
+  }
+  function switchMktTab(tab, panelId) {
+    document.querySelectorAll('.mkt-itab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll('.mkt-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + panelId).classList.add('active');
   }
 </script>
 </body>
