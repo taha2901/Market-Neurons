@@ -23,6 +23,15 @@ export default function LegacyPageClient({
 
   useEffect(() => {
     const appendedScripts: HTMLScriptElement[] = [];
+    const previousScrollRestoration = window.history.scrollRestoration;
+
+    if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    document.body.style.overflow = "";
+    document.body.style.height = "auto";
+    window.scrollTo(0, 0);
 
     scripts.forEach((scriptBody) => {
       const script = document.createElement("script");
@@ -37,6 +46,9 @@ export default function LegacyPageClient({
 
     return () => {
       appendedScripts.forEach((script) => script.remove());
+      if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+        window.history.scrollRestoration = previousScrollRestoration;
+      }
     };
   }, [scripts]);
 

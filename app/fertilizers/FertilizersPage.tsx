@@ -313,6 +313,12 @@ export default function FertilizersPage() {
     };
   }, [commitChart]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.body.style.overflow = "";
+    document.body.style.height = "auto";
+  }, []);
+
   const onChartMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     const wrap = chartWrapRef.current;
