@@ -21,8 +21,17 @@
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-primary); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
-    .report-root { display: flex; flex-direction: column; min-height: 100vh; }
+    .report-root {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
     .report-root > .navbar { flex-shrink: 0; }
     .report-root > .app-body { flex: 1; min-height: 0; }
 

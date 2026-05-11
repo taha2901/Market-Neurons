@@ -49,12 +49,9 @@ function readLegacyHtmlFromGit(fileName: string): string {
 }
 
 function sanitizeLegacyStyles(styles: string): string {
-  return styles.replace(/body\s*\{([\s\S]*?)\}/gi, (_, bodyContent) => {
-    const cleaned = bodyContent
-      .replace(/\boverflow\s*:\s*hidden\s*;?/gi, "")
-      .replace(/\bheight\s*:\s*100vh\s*;?/gi, "");
-    return `body {${cleaned}}`;
-  });
+  return styles
+    .replace(/\boverflow\s*:\s*hidden\s*;?/gi, "")
+    .replace(/\bheight\s*:\s*100vh\s*;?/gi, "");
 }
 
 export async function loadLegacyPage(fileName: string): Promise<LegacyPageData> {

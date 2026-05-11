@@ -364,7 +364,7 @@ export default function FertilizersPage() {
   ];
 
   return (
-    <>
+    <div className="fertilizers-root">
       <div className={`drawer-overlay ${drawerOpen ? "visible" : ""}`} onClick={() => setDrawerOpen(false)} />
       <nav className="navbar">
         <a className="logo" href="#" onClick={(e) => e.preventDefault()}>
@@ -1451,6 +1451,6 @@ export default function FertilizersPage() {
           Info
         </div>
       </nav>
-    </>
+    </div>
   );
 }

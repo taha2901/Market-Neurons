@@ -49,14 +49,14 @@
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
-body {
+.fertilizers-root {
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
   color: var(--text-primary);
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow: auto;
   font-size: 14px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -404,7 +404,7 @@ canvas { display: block; width: 100%; cursor: crosshair; }
 .right-panel-toggle { display: none; }
 
 @media (max-width: 768px) {
-  body { height: auto; overflow: auto; min-height: 100vh; padding-bottom: 64px; }
+  .fertilizers-root { height: auto; overflow: auto; min-height: 100vh; padding-bottom: 64px; }
   .navbar { padding: 0 14px; gap: 10px; }
   .logo { width: auto; }
   .logo-tagline, .search-wrap, .export-btn, .profile-pill, .icon-btn, .nav-divider { display: none; }
