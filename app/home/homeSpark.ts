@@ -1,0 +1,32 @@
+export function drawSpark(canvas: HTMLCanvasElement | null, data: number[], color: string) {
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.offsetWidth || 64;
+  const H = canvas.offsetHeight || 28;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const mn = Math.min(...data);
+  const mx = Math.max(...data);
+  const rng = mx - mn || 1;
+  const xf = (i: number) => (i / (data.length - 1)) * W;
+  const yf = (v: number) => H - ((v - mn) / rng) * H * 0.8 - H * 0.1;
+  const g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, `${color}33`);
+  g.addColorStop(1, `${color}00`);
+  ctx.beginPath();
+  ctx.moveTo(xf(0), H);
+  data.forEach((v, i) => ctx.lineTo(xf(i), yf(v)));
+  ctx.lineTo(xf(data.length - 1), H);
+  ctx.closePath();
+  ctx.fillStyle = g;
+  ctx.fill();
+  ctx.beginPath();
+  data.forEach((v, i) => (i === 0 ? ctx.moveTo(xf(i), yf(v)) : ctx.lineTo(xf(i), yf(v))));
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.5;
+  ctx.lineJoin = "round";
+  ctx.stroke();
+}
