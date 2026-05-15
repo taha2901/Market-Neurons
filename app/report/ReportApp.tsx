@@ -142,64 +142,6 @@ export default function ReportApp() {
 
       <div className="app-body">
         <aside className="sidebar">
-          <div className="sb-tabs" role="tablist">
-            {SB_TABS.map((label, i) => (
-              <button
-                key={label}
-                type="button"
-                role="tab"
-                className={`sb-tab ${sbTab === i ? "active" : ""}`}
-                onClick={() => setSbTab(i)}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-
-          <div className="sb-chart-area">
-            <div className="sb-chart-header">
-              <span className="sb-chart-name">US 30 — Dow Jones</span>
-              <span className="sb-chart-val">+471 ▲ 1.2%</span>
-            </div>
-            <canvas id="miniChart" ref={chartRef} />
-            <div className="sb-time-range">
-              {(["1D", "1W", "1M", "3M", "1Y", "Max"] as const).map((k) => (
-                <button key={k} type="button" className={`sb-tr-btn ${rangeKey === k ? "active" : ""}`} onClick={() => setRangeKey(k)}>
-                  {k}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="sb-index-list">
-            {INDEX_ROWS.map((row, i) => (
-              <button
-                key={row.name}
-                type="button"
-                className={`sb-index-row ${idxSel === i ? "selected" : ""}`}
-                onClick={() => setIdxSel(i)}
-              >
-                <div className="sb-idx-name">
-                  {row.code ? (
-                    <span className="sb-idx-code">{row.code}</span>
-                  ) : (
-                    <span className="sb-idx-globe" aria-hidden>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                      </svg>
-                    </span>
-                  )}
-                  <span className="sb-idx-label">{row.name}</span>
-                </div>
-                <div className="sb-idx-vals">
-                  <div className="sb-idx-price">{row.price}</div>
-                  <div className={`sb-idx-chg ${row.pos ? "pos" : "neg"}`}>{row.chg}</div>
-                </div>
-              </button>
-            ))}
-          </div>
-
           <div className="sb-popular-wrap">
             <div className="sb-sec">Most Popular Articles</div>
             <div className="sb-art-tabs">
@@ -242,172 +184,175 @@ export default function ReportApp() {
             </div>
           </div>
 
-          <div className="sb-sec">
-            Market Prices <a href="#">›</a>
-          </div>
-          <div className="market-data-section">
-            <div className="mkt-inner-tabs">
-              <button type="button" className={`mkt-itab ${mktPanel === "commodities" ? "active" : ""}`} onClick={() => setMktPanel("commodities")}>
-                Commodities
-              </button>
-              <button type="button" className={`mkt-itab ${mktPanel === "symbols" ? "active" : ""}`} onClick={() => setMktPanel("symbols")}>
-                Symbols
-              </button>
+          <div className="sidebar-right-grid">
+            <div className="sidebar-right-block">
+              {/* <div className="sb-sec">
+                Market Prices <a href="#">›</a>
+              </div> */}
+              <div className="market-data-section">
+                {/* <div className="mkt-title-row">
+                  <div className="mkt-pill active">Commodities</div>
+                  <div className="mkt-pill">Stocks</div>
+                </div> */}
+                <div className="mkt-table-wrap">
+                  <div className="mkt-subsection">
+                    {/* <div className="mkt-subtitle">Commodities</div> */}
+                    <table className="mkt-table">
+                      <thead>
+                        <tr>
+                          <th>Commodities</th>
+                          <th>Price</th>
+                          <th>Chg %</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          ["Urea", "700", "+5%", true],
+                          ["DAP", "500", "+1%", true],
+                          ["Natural Gas", "2.5", "+2%", true],
+                          ["LNG", "19", "−1%", false],
+                          ["Crude Oil WTI", "80", "−5%", false],
+                          ["Brent Oil", "90", "+5%", true],
+                          ["Wheat", "200", "+1%", true],
+                          ["Corn", "700", "+2%", true],
+                        ].map(([name, price, chg, pos]) => (
+                          <tr key={String(name)}>
+                            <td>{name}</td>
+                            <td>{price}</td>
+                            <td className={pos ? "mkt-chg-pos" : "mkt-chg-neg"}>{chg}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div className="mkt-table-wrap">
+                  <div className="mkt-subsection">
+                    {/* <div className="mkt-subtitle">Stocks</div> */}
+                    <table className="mkt-table">
+                      <thead>
+                        <tr>
+                          <th>Fertilizers Stock</th>
+                          <th>Price</th>
+                          <th>Chg %</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          ["ABUK", "100", "+5%", true],
+                          ["MPCO", "70", "+1%", true],
+                          ["YAR", "20", "+2%", true],
+                          ["2020", "30", "−1%", false],
+                          ["CF", "26", "−5%", false],
+                        ].map(([sym, price, chg, pos]) => (
+                          <tr key={String(sym)}>
+                            <td>{sym}</td>
+                            <td>{price}</td>
+                            <td className={pos ? "mkt-chg-pos" : "mkt-chg-neg"}>{chg}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="mkt-see-more">
+                    <a href="#">See More ›</a>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className={`mkt-panel ${mktPanel === "commodities" ? "active" : ""}`} id="panel-commodities">
-              <div className="mkt-table-wrap">
-                <table className="mkt-table">
-                  <thead>
-                    <tr>
-                      <th>Commodity</th>
-                      <th>Price</th>
-                      <th>Chg %</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[
-                      ["Urea", "700", "+5%", true],
-                      ["DAP", "500", "+1%", true],
-                      ["Natural Gas", "2.5", "+2%", true],
-                      ["LNG", "19", "−1%", false],
-                      ["Crude Oil WTI", "80", "−5%", false],
-                      ["Brent Oil", "90", "+5%", true],
-                      ["Wheat", "200", "+1%", true],
-                      ["Corn", "700", "+2%", true],
-                    ].map(([name, price, chg, pos]) => (
-                      <tr key={String(name)}>
-                        <td>{name}</td>
-                        <td>{price}</td>
-                        <td className={pos ? "mkt-chg-pos" : "mkt-chg-neg"}>{chg}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+            <div className="sidebar-right-block">
+              <div className="sb-sec">
+                Urea Trade Data <a href="#">›</a>
               </div>
-            </div>
-
-            <div className={`mkt-panel ${mktPanel === "symbols" ? "active" : ""}`} id="panel-symbols">
-              <div className="mkt-table-wrap">
-                <table className="mkt-table">
-                  <thead>
-                    <tr>
-                      <th>Symbol</th>
-                      <th>Price</th>
-                      <th>Chg %</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[
-                      ["ABUK", "100", "+5%", true],
-                      ["MPCO", "70", "+1%", true],
-                      ["YAR", "20", "+2%", true],
-                      ["2020", "30", "−1%", false],
-                      ["CF", "26", "−5%", false],
-                    ].map(([sym, price, chg, pos]) => (
-                      <tr key={String(sym)}>
-                        <td>{sym}</td>
-                        <td>{price}</td>
-                        <td className={pos ? "mkt-chg-pos" : "mkt-chg-neg"}>{chg}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="mkt-see-more">
-                <a href="#">See More ›</a>
-              </div>
-            </div>
-          </div>
-
-          <div className="sb-sec">
-            Urea Trade Data <a href="#">›</a>
-          </div>
-          <div className="trade-tables-section">
-            <div className="trade-tables-grid">
-              <div className="trade-tbl-block">
-                <div className="trade-tbl-title">
-                  Top Exporters <span>mn ton</span>
+              <div className="trade-tables-section">
+                <div className="trade-tables-grid">
+                  <div className="trade-tbl-block">
+                    <div className="trade-tbl-title">
+                      Top Exporters <span>mn ton</span>
+                    </div>
+                    <table className="trade-tbl">
+                      <tbody>
+                        {[
+                          ["Brazil", "3"],
+                          ["China", "30"],
+                          ["Russia", "40"],
+                          ["S. Arabia", "40"],
+                          ["Egypt", "20"],
+                        ].map(([c, v]) => (
+                          <tr key={String(c)}>
+                            <td>{c}</td>
+                            <td>{v}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="trade-tbl-block">
+                    <div className="trade-tbl-title">
+                      Top Importers <span>mn ton</span>
+                    </div>
+                    <table className="trade-tbl">
+                      <tbody>
+                        {[
+                          ["Brazil", "1"],
+                          ["China", "2"],
+                          ["Russia", "0"],
+                          ["S. Arabia", "0"],
+                          ["Egypt", "0.5"],
+                        ].map(([c, v]) => (
+                          <tr key={String(c)}>
+                            <td>{c}</td>
+                            <td>{v}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="trade-tbl-block">
+                    <div className="trade-tbl-title">
+                      Top Consumers <span>mn ton</span>
+                    </div>
+                    <table className="trade-tbl">
+                      <tbody>
+                        {[
+                          ["Brazil", "2"],
+                          ["China", "30"],
+                          ["Russia", "40"],
+                          ["S. Arabia", "160"],
+                          ["Egypt", "50"],
+                        ].map(([c, v]) => (
+                          <tr key={String(c)}>
+                            <td>{c}</td>
+                            <td>{v}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="trade-tbl-block">
+                    <div className="trade-tbl-title">
+                      Top Producers <span>mn ton</span>
+                    </div>
+                    <table className="trade-tbl">
+                      <tbody>
+                        {[
+                          ["Brazil", "5"],
+                          ["China", "60"],
+                          ["Russia", "80"],
+                          ["S. Arabia", "200"],
+                          ["Egypt", "70"],
+                        ].map(([c, v]) => (
+                          <tr key={String(c)}>
+                            <td>{c}</td>
+                            <td>{v}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <table className="trade-tbl">
-                  <tbody>
-                    {[
-                      ["Brazil", "3"],
-                      ["China", "30"],
-                      ["Russia", "40"],
-                      ["S. Arabia", "40"],
-                      ["Egypt", "20"],
-                    ].map(([c, v]) => (
-                      <tr key={String(c)}>
-                        <td>{c}</td>
-                        <td>{v}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="trade-tbl-block">
-                <div className="trade-tbl-title">
-                  Top Importers <span>mn ton</span>
-                </div>
-                <table className="trade-tbl">
-                  <tbody>
-                    {[
-                      ["Brazil", "1"],
-                      ["China", "2"],
-                      ["Russia", "0"],
-                      ["S. Arabia", "0"],
-                      ["Egypt", "0.5"],
-                    ].map(([c, v]) => (
-                      <tr key={String(c)}>
-                        <td>{c}</td>
-                        <td>{v}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="trade-tbl-block">
-                <div className="trade-tbl-title">
-                  Top Consumers <span>mn ton</span>
-                </div>
-                <table className="trade-tbl">
-                  <tbody>
-                    {[
-                      ["Brazil", "2"],
-                      ["China", "30"],
-                      ["Russia", "40"],
-                      ["S. Arabia", "160"],
-                      ["Egypt", "50"],
-                    ].map(([c, v]) => (
-                      <tr key={String(c)}>
-                        <td>{c}</td>
-                        <td>{v}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="trade-tbl-block">
-                <div className="trade-tbl-title">
-                  Top Producers <span>mn ton</span>
-                </div>
-                <table className="trade-tbl">
-                  <tbody>
-                    {[
-                      ["Brazil", "5"],
-                      ["China", "60"],
-                      ["Russia", "80"],
-                      ["S. Arabia", "200"],
-                      ["Egypt", "70"],
-                    ].map(([c, v]) => (
-                      <tr key={String(c)}>
-                        <td>{c}</td>
-                        <td>{v}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
               </div>
             </div>
           </div>
@@ -427,77 +372,25 @@ export default function ReportApp() {
               <span style={{ color: "var(--text-secondary)" }}>India Urea Import Record</span>
             </div>
 
-            <div className="art-cat-row">
-              <span className="art-tag fert">Fertilizer</span>
-              <span className="art-tag trade">Trade</span>
-              <div className="live-badge">
-                <span className="live-dot" />
-                Live
-              </div>
-              <span className="art-date">22 April 2025 · 09:14 EST</span>
-              <span className="art-source">Reuters</span>
-            </div>
 
             <h1 className="art-title">India to Import Record 2.5 Million Tons of Urea at Nearly Double the Price Paid Two Months Ago</h1>
-
-            <p className="art-lead">
-              India is set to import a record 2.5 million metric tons of urea in a single tender, signaling a dramatic tightening of global supply and pushing prices to multi-year highs — with downstream effects expected across the full fertilizer complex.
-            </p>
-
-            <div className="art-meta-strip">
-              <div className="meta-item">
-                <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10" />
-                  <polyline points="12 6 12 12 16 14" />
-                </svg>
-                5 min read
-              </div>
-              <div className="meta-item">
-                <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                  <circle cx="9" cy="7" r="4" />
-                </svg>
-                <strong>NEW DELHI</strong>
-                &nbsp;·&nbsp; India Correspondent
-              </div>
+            <div className="art-cat-row">
+              {/* <span className="art-tag fert">Fertilizer</span> */}
+              {/* <span className="art-tag trade">Trade</span> */}
+              {/* <div className="live-badge">
+                <span className="live-dot" />
+                Live
+              </div> */}
+              <span className="art-date">22 April 2025 · 09:14 EST</span>
+              {/* <span className="art-source">Reuters</span> */}
             </div>
-
-            <div className="art-img-wrap">
-              <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1200&q=85" alt="Fertilizer bags" />
-              <div className="art-img-badge">📦 Trade Intelligence</div>
-              <div className="art-img-caption">
-                India&apos;s 2.5 million metric ton urea tender — the largest single purchase ever — covers ~25% of the country&apos;s annual imports · April 2025
-              </div>
-            </div>
-
-            <div className="art-tags-section">
-              {["#Urea", "#India", "#GlobalTrade", "#Fertilizer"].map((t) => (
-                <span key={t} className="tag-chip">
-                  {t}
-                </span>
-              ))}
-            </div>
-
-            <div className="kfig-grid">
-              <div className="kfig">
-                <div className="kfig-lbl">Import Volume</div>
-                <div className="kfig-val">2.5M</div>
-                <div className="kfig-sub">Metric tons · single tender</div>
-                <div className="kfig-chg pos">▲ All-time record</div>
-              </div>
-              <div className="kfig">
-                <div className="kfig-lbl">Current Price</div>
-                <div className="kfig-val">$700</div>
-                <div className="kfig-sub">per metric ton (FOB)</div>
-                <div className="kfig-chg neg">▲ +95% vs 2 months ago</div>
-              </div>
-              <div className="kfig">
-                <div className="kfig-lbl">Share of Annual Need</div>
-                <div className="kfig-val">~25%</div>
-                <div className="kfig-sub">of India&apos;s annual imports</div>
-                <div className="kfig-chg" style={{ color: "var(--amber)" }}>
-                  ● Supply pressure: High
-                </div>
+            <div className="art-key-block">
+              <p className="art-lead">
+                India is set to import a record 2.5 million metric tons of urea in a single tender, signaling a dramatic tightening of global supply and pushing prices to multi-year highs — with downstream effects expected across the full fertilizer complex.
+              </p>
+              <div className="hbox">
+                <div className="hbox-lbl">Key Context</div>
+                The record purchase comes amid reduced Russian and Chinese export availability, gas price spikes in Europe reducing European urea output, and seasonal pre-kharif procurement demand in India. Analysts warn the ripple effects will reach DAP, MAP, and ammonia markets within 4–6 weeks.
               </div>
             </div>
 
@@ -506,10 +399,6 @@ export default function ReportApp() {
                 India&apos;s government-backed fertilizer procurement agency has finalized a tender for <strong>2.5 million metric tons of granular urea</strong> — the largest single purchase ever recorded — at a price approaching{" "}
                 <span className="mono">$700/ton</span>, nearly double the <span className="mono">~$360/ton</span> paid in February.
               </p>
-              <div className="hbox">
-                <div className="hbox-lbl">📌 Key Context</div>
-                The record purchase comes amid reduced Russian and Chinese export availability, gas price spikes in Europe reducing European urea output, and seasonal pre-kharif procurement demand in India. Analysts warn the ripple effects will reach DAP, MAP, and ammonia markets within 4–6 weeks.
-              </div>
               <p>
                 Global urea supply has been under pressure since Q4 2024, with China implementing informal export restrictions to secure domestic food security. Russia continues to face logistical constraints due to ongoing sanctions. This structural tightening left India with limited sourcing options, forcing acceptance of significantly higher prices to secure the required volumes ahead of the critical planting season.
               </p>
