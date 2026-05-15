@@ -139,13 +139,11 @@
 
     /* ─── HERO ─── */
     .hero {
-      background: linear-gradient(135deg, #08306B 0%, #0a3878 40%, #0d4a99 70%, #082d65 100%);
+      background: #08306B;
       position: relative; overflow: hidden; padding: 0 40px;
     }
     .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: none;
+      display: none;
     }
     .hero-inner {
       display: flex; align-items: center; gap: 60px;
